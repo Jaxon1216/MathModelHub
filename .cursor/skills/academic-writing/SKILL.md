@@ -1,9 +1,47 @@
 ---
 name: academic-writing
-description: MCM/ICM数学建模论文写作指南。用于论文结构设计、摘要写作、模型描述、结果分析、图表引用、LaTeX排版等场景。当用户提到论文写作、摘要、introduction、LaTeX、图表引用、润色、academic writing、paper structure时触发。
+description: MCM/ICM数学建模论文写作指南。用于论文结构设计、摘要写作、模型描述、结果分析、图表引用、LaTeX排版、润色等场景。当用户提到论文写作、摘要、introduction、LaTeX、图表引用、润色、academic writing、paper structure时触发。
 ---
 
 # MCM论文写作指南
+
+## 0. 润色规则（重要）
+
+**当用户提供markdown格式的文章进行润色时，必须遵循以下规则**：
+
+### 分点转段落规则
+
+将分点式论述（bullet points、numbered lists）转换为**流畅的论文级段落式语言**：
+
+**输入示例**（分点式）：
+```markdown
+**关键发现**：
+1. **右偏分布**：大多数国家奖牌数较少（中位数仅5枚），少数强国奖牌数很多
+2. **均值 > 中位数**：说明数据被高奖牌数国家拉高
+3. **异常值**：如美国、苏联等超级强国的奖牌数远高于平均水平
+```
+
+**输出示例**（段落式）：
+```markdown
+The distribution analysis reveals several notable characteristics of the medal 
+data. Most countries earn relatively few medals, with a median of only 5, while 
+a small number of dominant nations accumulate significantly higher totals, 
+resulting in a right-skewed distribution. This skewness is further evidenced 
+by the mean exceeding the median, indicating that the average is inflated by 
+high-performing countries. Additionally, certain nations such as the United 
+States and the former Soviet Union consistently demonstrate medal counts far 
+above typical levels, representing statistical outliers in the dataset.
+```
+
+### 润色转换要点
+
+1. **消除列表标记**：去除数字编号、星号、破折号等列表符号
+2. **添加过渡连接**：使用 "Furthermore"、"Additionally"、"This suggests that" 等连接词
+3. **合并相关观点**：将相关的分点合并为一个完整句子
+4. **保持学术语气**：使用被动语态和正式用语
+5. **保留核心信息**：确保所有关键数据和结论都被保留
+
+---
 
 ## 1. 标准论文结构
 

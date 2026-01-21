@@ -3,7 +3,219 @@ name: math-modeling
 description: 数学建模算法选择与可视化指南。用于模型选择、算法实现、评估指标、可视化绑图、论文图表生成等场景。当用户提到建模、预测、分类、聚类、优化、回归、可视化、绑图、matplotlib、model selection时触发。
 ---
 
-# 数学建模与可视化指南
+# 第一部分：建模与可视化
+
+此部分生成对应的ipynb文件解决建模问题。
+
+## 产出物清单
+
+每个建模问题完成后，必须产出以下文件：
+
+| 文件 | 格式 | 说明 |
+|------|------|------|
+| `问题X建模分析.ipynb` | Jupyter Notebook | 完整建模代码，含markdown说明 |
+| `面向person1.md` | Markdown | 写作指南，面向写作手 |
+| `面向person2.md` | Markdown | 资料/绘图指南，面向资料手 |
+| `export_figures.py` | Python脚本 | 图片导出脚本 |
+| `figures/` | 目录 | 导出的SVG图片 |
+
+**目录结构参考**：
+```
+问题X/
+├── 问题X建模分析.ipynb   # 主建模文件
+├── export_figures.py      # 图片导出脚本
+├── 面向person1.md         # 写作指南
+├── 面向person2.md         # 资料/绘图指南
+└── figures/               # SVG图片目录
+    ├── fig1_xxx.svg
+    ├── fig2_xxx.svg
+    └── ...
+```
+
+---
+
+## 必须执行的验证步骤
+
+**完成ipynb后，必须执行以下验证**：
+
+1. **运行全部单元格**：确保代码能完整跑通，无报错
+2. **检查输出**：验证模型结果合理性
+3. **执行图片导出**：运行 `export_figures.py` 确保图片正确生成
+4. **检查文件产出**：确认所有必需文件都已生成
+
+---
+
+## 图片规范
+
+### 图片内容要求
+- **图片本身不要带标题/标注**
+- **标注放在ipynb的markdown单元格中**
+- 使用ipynb的markdown描述图片内容和解读
+
+### 图片导出格式
+- **仅导出SVG格式**（矢量图，可无损缩放）
+- 不要保存PNG/PDF等格式
+
+### 绑图标准配置
+
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# 中文显示
+plt.rcParams['font.sans-serif'] = ['Arial Unicode MS', 'SimHei', 'DejaVu Sans']
+plt.rcParams['axes.unicode_minus'] = False
+
+# Seaborn主题
+sns.set_theme(style='whitegrid')
+
+# 标准尺寸
+FIGSIZE_NORMAL = (10, 6)   # 常规图表
+FIGSIZE_WIDE = (12, 6)     # 时序图
+FIGSIZE_SQUARE = (8, 8)    # 散点图/热力图
+
+# 项目标准配色
+COLORS = {
+    'primary': '#4682B4',    # steelblue
+    'secondary': '#FF7F50',  # coral
+    'accent': '#228B22',     # forestgreen
+    'neutral': '#708090'     # slategray
+}
+```
+
+### 绑图时不加标题
+
+```python
+# 正确：不加title，标注在ipynb markdown中说明
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.hist(data, bins=30, color='steelblue', edgecolor='black', alpha=0.7)
+ax.set_xlabel('Value')
+ax.set_ylabel('Frequency')
+# 不要加 ax.set_title()
+
+# 保存为SVG
+plt.savefig('figures/fig1_distribution.svg', bbox_inches='tight')
+```
+
+### 图片导出脚本模板
+
+将以下脚本保存为 `export_figures.py`：
+
+```python
+"""
+图片导出脚本
+用于从建模分析中导出所有可视化图片为SVG格式
+"""
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# 设置中文显示
+plt.rcParams['font.sans-serif'] = ['Arial Unicode MS', 'SimHei', 'DejaVu Sans']
+plt.rcParams['axes.unicode_minus'] = False
+
+# 设置保存路径
+FIGURE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/figures'
+os.makedirs(FIGURE_DIR, exist_ok=True)
+
+def save_fig(fig, filename):
+    """保存图片为SVG格式（无标题）"""
+    filepath = os.path.join(FIGURE_DIR, filename)
+    fig.savefig(filepath, bbox_inches='tight', facecolor='white')
+    print(f"✅ 已保存: {filepath}")
+    plt.close(fig)
+
+# ============================================================
+# 在此处添加各图片的生成代码
+# 注意：图片不要加title，标注在ipynb的markdown单元格中
+# ============================================================
+
+# 示例：图1
+# fig, ax = plt.subplots(figsize=(10, 6))
+# ax.hist(data, bins=30, color='steelblue')
+# ax.set_xlabel('Value')
+# ax.set_ylabel('Frequency')
+# save_fig(fig, 'fig1_distribution.svg')
+
+print("\n" + "=" * 60)
+print("🎉 所有图片导出完成！")
+print("=" * 60)
+print(f"\n图片保存在: {FIGURE_DIR}")
+for f in sorted(os.listdir(FIGURE_DIR)):
+    print(f"  - {f}")
+```
+
+---
+
+## 面向person1.md 模板
+
+写作指南文件结构：
+
+```markdown
+# 问题X建模分析 —— 写作指南
+
+> 本文档面向写作手Person1，帮助理解建模方法、公式符号，并指导论文撰写。
+
+## 目录
+1. [问题分析与建模思路](#一问题分析与建模思路)
+2. [模型介绍与公式](#二模型介绍与公式)
+3. [结果解读](#三结果解读)
+4. [论文撰写建议](#四论文撰写建议)
+5. [图片列表与插入位置](#五图片列表与插入位置)
+
+---
+
+## 一、问题分析与建模思路
+（解释为什么选择这种方法，通俗易懂）
+
+## 二、模型介绍与公式
+（公式、符号说明、参数解释）
+
+## 三、结果解读
+（关键发现、数据表格、结论）
+
+## 四、论文撰写建议
+（建议的章节结构、关键公式LaTeX格式、常用英文表达）
+
+## 五、图片列表与插入位置
+| 编号 | 文件名 | 内容 | 建议插入章节 |
+|------|--------|------|-------------|
+| 1 | fig1_xxx.svg | 描述 | X.X章节 |
+```
+
+---
+
+## 面向person2.md 模板
+
+资料/绘图指南文件结构：
+
+```markdown
+# 问题X —— 资料手工作指南
+
+> 本文档面向资料手Person2，指导完成思路图绘制和参考文献查找工作。
+
+## 一、需要绘制的思路图
+（流程图ASCII示意、建议的绘图工具）
+
+## 二、参考文献检索指南
+（检索关键词、推荐数据库、引用格式）
+
+## 三、图片文件交付清单
+（Coder已导出的图片列表、需要Person2绘制的图）
+
+## 四、工作优先级
+（高/中/低优先级任务）
+
+## 五、与Person1协作说明
+```
+
+---
 
 ## 1. 模型选择决策树
 
@@ -92,110 +304,7 @@ mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
 ---
 
-## 3. 可视化风格规范
-
-### 配色方案
-
-| 场景 | 推荐配色 | 示例 |
-|------|----------|------|
-| 单系列数据 | `steelblue` | 专业、稳重 |
-| 强调对比 | `steelblue` + `coral` | 冷暖对比 |
-| 正负值 | `RdBu_r` (colormap) | 红正蓝负 |
-| 多系列 | `tab10` (palette) | 默认调色板 |
-| 热力图 | `coolwarm`, `RdYlGn` | 渐变色 |
-
-### 标准配置
-
-```python
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# 中文显示
-plt.rcParams['font.sans-serif'] = ['Arial Unicode MS', 'SimHei', 'DejaVu Sans']
-plt.rcParams['axes.unicode_minus'] = False
-
-# Seaborn主题
-sns.set_theme(style='whitegrid')
-
-# 标准尺寸
-FIGSIZE_NORMAL = (10, 6)   # 常规图表
-FIGSIZE_WIDE = (12, 6)     # 时序图
-FIGSIZE_SQUARE = (8, 8)    # 散点图/热力图
-
-# 项目标准配色
-COLORS = {
-    'primary': '#4682B4',    # steelblue
-    'secondary': '#FF7F50',  # coral
-    'accent': '#228B22',     # forestgreen
-    'neutral': '#708090'     # slategray
-}
-```
-
-### 保存图片
-
-```python
-# SVG
-plt.savefig('figure.svg', bbox_inches='tight')
-```
-
-### 可视化禁止事项
-
-- **不用3D图表**（除非绝对必要）
-- **不用饼图**（改用柱状图）
-- **同一图表不超过7种颜色**
-- **避免过多装饰**（保持简洁）
-
----
-
-## 4. 快速绑图模板
-
-### 直方图
-```python
-def quick_histogram(data, title="Distribution", xlabel="Value", bins=30):
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.hist(data, bins=bins, edgecolor='black', alpha=0.7, color='steelblue')
-    ax.axvline(data.mean(), color='red', linestyle='--', label=f'Mean: {data.mean():.2f}')
-    ax.axvline(data.median(), color='green', linestyle='--', label=f'Median: {data.median():.2f}')
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel('Frequency')
-    ax.set_title(title)
-    ax.legend()
-    plt.tight_layout()
-    return fig, ax
-```
-
-### 热力图
-```python
-def quick_heatmap(df, title="Correlation Matrix"):
-    fig, ax = plt.subplots(figsize=(10, 8))
-    corr = df.corr()
-    mask = np.triu(np.ones_like(corr, dtype=bool))
-    sns.heatmap(corr, mask=mask, annot=True, fmt='.2f', cmap='RdBu_r', 
-                center=0, square=True, ax=ax)
-    ax.set_title(title)
-    plt.tight_layout()
-    return fig, ax
-```
-
-### 预测评估散点图
-```python
-def quick_scatter_pred(y_true, y_pred, title="Actual vs Predicted"):
-    fig, ax = plt.subplots(figsize=(8, 8))
-    ax.scatter(y_true, y_pred, alpha=0.5, color='steelblue', edgecolor='white')
-    min_val, max_val = min(y_true.min(), y_pred.min()), max(y_true.max(), y_pred.max())
-    ax.plot([min_val, max_val], [min_val, max_val], 'k--', linewidth=2, label='Perfect')
-    ax.set_xlabel('Actual')
-    ax.set_ylabel('Predicted')
-    ax.set_title(title)
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    return fig, ax
-```
-
----
-
-## 5. 论文句式模板
+## 3. 论文句式模板
 
 ### 模型构建
 ```
@@ -213,31 +322,20 @@ Example: By combining LSTM networks and XGBoost, the model achieves high
 accuracy in capturing temporal trends and nonlinear relationships.
 ```
 
-### 模型假设
-```
-Assumption X: [假设内容]. → Justification: [合理性说明].
-
-Example: Assumption 2: A country's past Olympic performance is a reliable 
-indicator of future medal counts. → Justification: Historical performance 
-reflects long-term trends in national sports development.
-```
-
 ### 结果描述
 ```
 The results indicate/reveal/show [结论].
 [指标] is statistically significant (p < 0.05), suggesting that [结论].
-There is a strong/weak positive/negative correlation between [变量1] and [变量2].
 
-Example: The results indicate an upward trend for the United States and 
-the United Kingdom. The correlation coefficient (r=0.80, p<0.001) suggests 
-a strong positive relationship between historical and current performance.
+Example: The results indicate an upward trend for the United States. 
+The correlation coefficient (r=0.80, p<0.001) suggests a strong positive 
+relationship between historical and current performance.
 ```
 
 ### 图表引用
 ```
 As illustrated in Fig. X, [图表核心内容].
 Fig. X shows/depicts/demonstrates that [趋势/关系].
-The [图表类型] in Fig. X further confirms that [结论].
 
 Example: As illustrated in Figs. 6(a)-(b), the United States is projected 
 to see a significant increase in both gold and total medal counts.
@@ -245,8 +343,19 @@ to see a significant increase in both gold and total medal counts.
 
 ---
 
-## 6. 深度参考
+## 4. 可视化禁止事项
+
+- **不用3D图表**（除非绝对必要）
+- **不用饼图**（改用柱状图）
+- **同一图表不超过7种颜色**
+- **避免过多装饰**（保持简洁）
+- **图片不加标题**（标注放在ipynb markdown中）
+
+---
+
+## 5. 深度参考
 
 - 完整算法手册：[algorithms/algorithms_reference.md](algorithms/algorithms_reference.md)
 - 可视化指南：[data_analysis/visualization/可视化指南.ipynb](data_analysis/visualization/可视化指南.ipynb)
 - 图表示例：[data_analysis/visualization/](data_analysis/visualization/) 目录下的各类图表示例
+- 实战参考：[Simulation/25C/Coder/问题一/](Simulation/25C/Coder/问题一/) 完整案例
