@@ -63,6 +63,13 @@
 ## 7.参考文献递交格式
 - 参考文献引用：https://www.scribbr.com/ 讲解视频：https://www.bilibili.com/video/BV1mK421y75z/?spm_id_from=333.1391.0.0&vd_source=04e755bb0c5a6e660e7d3dd4084b52fb 
 - 较新的文章复制DOI即可
+- 大小写：APA只句首大写，第一个单词首字母大写，其余小写(专有名词除外)；不加引号、不加斜体
+- 页码符号:用en dash(-)，不是 hyphen(-)
+- 期刊/会议名称的斜体 & 大小写
+APA 7th 要求:
+·期刊名:斜体，每个主要单词首字母大写 不是全部大写
+·*卷号:斜体*
+·会议论文集名:斜体，主要单词首字母大写 
 - 
 ## 8.模型学习
   spsspro:https://space.bilibili.com/396141319?spm_id_from=333.1387.follow.user_card.click
