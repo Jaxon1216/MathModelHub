@@ -132,12 +132,12 @@
             \item[术语2] 描述2
         \end{description}
         ```
-    *   **对比总结**：
-        | 命令 | 列表类型 | 核心特征 | 典型用途 |
-        | :--- | :--- | :--- | :--- |
-        | `enumerate` | 有序列表 | 自动生成编号（1.、2.、A.） | 步骤、流程、排序 |
-        | `itemize` | 无序列表 | 自动生成符号（・、□、△） | 并列要点、注意事项 |
-        | `description` | 描述列表 | 突出「术语」+ 解释 | 概念定义、术语说明 |
+*   **对比总结**：
+     | 命令 | 列表类型 | 核心特征 | 典型用途 |
+     | :--- | :--- | :--- | :--- |
+     | `enumerate` | 有序列表 | 自动生成编号（1.、2.、A.） | 步骤、流程、排序 |
+    | `itemize` | 无序列表 | 自动生成符号（・、□、△） | 并列要点、注意事项 |
+    | `description` | 描述列表 | 突出「术语」+ 解释 | 概念定义、术语说明 |
 
 ### 表格
  *   **基本表格示例**：
@@ -170,8 +170,15 @@
             \bottomrule
         \end{tabular}
         ```
-* 表格内容，字比较多的，换行不好看，可以考虑scale缩放，不行再改字体、
-  \small或斜体、调整列宽 
+* 1st Sim Exp：
+  * 表格内容多，右侧溢出的处理：
+     * 首选用tabularx自动调整列宽
+      ```latex
+      \usepackage{tabularx} % 在导言区添加此包
+     \begin{tabularx}{\textwidth}{l>{\raggedright}Xc>{\raggedright\arraybackslash}X}
+     ```
+  * tabularx环境中的X列会自动调整宽度以填满指定的总宽度（\textwidth）
+  * 表格内容，字比较多的，换行不好看，可以考虑scale缩放，不行再改字体、 \small或斜体、调整列宽 
 
 ## 插入代码
 *   **前提**：调用 `listings` 宏包 (`\usepackage{listings}`)。
