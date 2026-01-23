@@ -75,15 +75,6 @@ credentials.json
 competitions/**/temp/
 competitions/**/cache/
 
-# Results and outputs
-*.png
-*.jpg
-*.jpeg
-*.pdf
-!templates/**/*.pdf
-!references/**/*.pdf
-!past_problems/**/*.pdf
-
 # OS
 Thumbs.db
 .DS_Store
@@ -95,3 +86,6 @@ compile.sh
 draft.tex
 draft.pdf
 
+
+# skill
+.cursor/
