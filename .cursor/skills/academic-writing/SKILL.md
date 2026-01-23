@@ -45,19 +45,21 @@ above typical levels, representing statistical outliers in the dataset.
 
 ## 1. 标准论文结构
 
-基于O奖论文分析，推荐以下结构和篇幅占比：
+参考25C O奖论文结构，推荐以下结构和篇幅占比：
 
 | 章节 | 篇幅占比 | 核心功能 |
 |------|----------|----------|
 | **Summary/Abstract** | 1页 | 最重要！概述问题、方法、结果、结论 |
 | **1. Introduction** | 8-12% | 问题背景、重述、研究内容概述 |
-| **2. Assumptions** | 3-4% | 模型假设及合理性说明 |
-| **3. Notations** | 3-4% | 符号定义表 |
-| **4-5. Models** | 40-50% | 核心建模章节，按问题分节 |
-| **6. Sensitivity Analysis** | 4-8% | 参数敏感性验证 |
-| **7. Model Evaluation** | 4-8% | 优势与局限性分析 |
-| **8. Conclusion** | 3-5% | 总结与建议 |
+| **2. Preparation for Modeling** | 8-12% | 假设、符号、数据预处理 |
+| **3. Problem 1: Medal Prediction** | 25-30% | 核心预测模型与结果展示 |
+| **4. Problem 2: The "Great Coach" Effect** | 10-15% | DID建模与贡献度分析 |
+| **5. Problem 3: New Insights** | 10-15% | 洞见提炼与决策支持 |
+| **6. Sensitivity Analysis** | 4-8% | 参数敏感性与稳健性验证 |
+| **7. Model Analysis** | 4-8% | 优势与局限性讨论 |
+| **8. Memorandum** | 3-5% | 备忘录/书信 |
 | **References** | 1页 | 参考文献 |
+| **Report on Use of AI** | 0.5-1页 | AI使用说明与声明 |
 | **Appendix** | 可选 | 代码、补充图表 |
 
 ---
