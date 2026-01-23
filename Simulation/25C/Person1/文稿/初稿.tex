@@ -21,6 +21,7 @@
 \usepackage{graphicx}  % For resizing tables
 \usepackage{tabularx}
 \usepackage{array}
+\usepackage{float}
 \setlength{\parindent}{1.5em}  % 设置首行缩进长度（1.5em 为常用值，可调整）
 % \usepackage{svg}  % Requires inkscape for SVG conversion
 \title{Data-Driven Olympic Medal Prediction and Coach Effect Quantification: A Multi-Model Framework for 2028 Los Angeles Games}
@@ -31,7 +32,7 @@
 
 %  \memoto{\LaTeX{}studio}
 % \memofrom{Liam Huang}
-% \memosubject{Happy \TeX{}ing!}
+% \memosubject{Happy \TeX{}ing!}所以图片都还得重新插[晕]
 % \memodate{\today}
 % %\memologo{\LARGE I'm pretending to be a LOGO!}
 
@@ -562,6 +563,35 @@ The recommendations are synthesized in Figure~\ref{fig:invest} and summarized in
 \end{table}
 
 This analysis provides national Olympic committees with a data-driven framework to prioritize coaching investments for maximum medal return.
+\section{Problem 3: Model Insights and Policy Recommendations}
+
+The modeling framework developed in the preceding sections does more than predict counts; it uncovers the structural reconfiguration of the Olympic landscape. By synthesizing longitudinal inequality metrics with Bayesian change-point detection, we provide National Olympic Committees (NOCs) with a rigorous basis for resource allocation and strategic positioning.
+
+\subsection{Quantifying the Globalized Landscape: Decentralization and Life-Cycle Dynamics}
+Our analysis reveals a fundamental shift in the distribution of athletic power, characterized by a statistically significant "Decentralization Trend." By calculating the Gini coefficient ($G$) and the Herfindahl-Hirschman Index (HHI) for medals over the past century, we observe a consistent decline in concentration, as visualized in Figure \ref{fig:concentration}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig1_concentration_trend.pdf}
+    \caption{Evolution of Medal Concentration Trends (Gini and HHI)}
+    \label{fig:concentration}
+\end{figure}
+
+This transition from a "superpower monopoly" to a multi-polar competitive system implies that the marginal cost for established powers to maintain their market share is rising. Parallel to this trend, our K-means clustering—based on market share and growth rates—identifies a "Life Cycle" for NOCs, ranging from \textit{Dominant Leaders} to \textit{Traditional Powers in Decline}. 
+
+
+
+As shown in Figure \ref{fig:lifecycle}, many veteran sporting nations are entering a plateau or decline phase. For these NOCs, the strategic priority must shift from broad-spectrum funding to a "Portfolio Pruning" approach, where 15-20\% of resources are reallocated from stagnant traditional sports to high-growth emerging disciplines (e.g., urban sports). This proactive reallocation is essential to mitigate the "Life Cycle Risk" identified by our model and to sustain overall competitiveness in an increasingly globalized arena.
+
+\subsection{Mechanism of Breakthrough: Competitive Density and "Rising Star" Forecasting}
+At the micro-level, our model distinguishes between stochastic fluctuations and structural breakthroughs using Bayesian Change Point (BCP) detection. The analysis of "Rising Stars" like Great Britain and Japan indicates that medals are often preceded by a "Finalist Surge"—a sharp uptick in Top-8 finishes. 
+
+
+
+As illustrated in Figure \ref{fig:breakthrough}, this surge serves as a leading indicator of a structural break in a nation's medal trajectory. Furthermore, by evaluating the "Competitive Density" through the Coefficient of Variation ($CV$), we categorize sports into "High-Stability" and "High-Volatility" clusters. 
+
+
+As visualized in the investment matrix in Figure \ref{fig:investment}, NOCs with limited budgets should adopt an "Asymmetric Competition" strategy. Instead of competing in high-stability sports where the technical gap is entrenched, they should concentrate investment on high-volatility events where the "Medal ROI" (Return on Investment) is statistically higher and "upsets" are more probable. For nations identified as "Emerging Stars," the primary policy recommendation is to optimize the "Finalist-to-Medal Conversion Rate" through targeted high-performance support, effectively bridging the gap between being a contender and being a medalist.
 
 
 \section{Model Evaluation}
