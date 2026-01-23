@@ -1,6 +1,6 @@
 """
 图片导出脚本
-用于从问题三建模分析中导出所有可视化图片为SVG格式
+用于从问题三建模分析中导出所有可视化图片为PDF格式
 """
 
 import pandas as pd
@@ -38,7 +38,7 @@ FIGURE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/figures'
 os.makedirs(FIGURE_DIR, exist_ok=True)
 
 def save_fig(fig, filename):
-    """保存图片为SVG格式（无标题）"""
+    """保存图片为PDF格式（无标题）"""
     filepath = os.path.join(FIGURE_DIR, filename)
     fig.savefig(filepath, bbox_inches='tight', facecolor='white')
     print(f"✅ 已保存: {filepath}")
@@ -136,7 +136,7 @@ axes[1].grid(True, alpha=0.3)
 axes[1].set_ylim(0, 1)
 
 plt.tight_layout()
-save_fig(fig, 'fig1_concentration_trend.svg')
+save_fig(fig, 'fig1_concentration_trend.pdf')
 
 # ============================================================
 # 图2：获奖国家数量与平均奖牌
@@ -161,7 +161,7 @@ axes[1].set_ylabel('Average Medals per Country')
 axes[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig2_countries_medals.svg')
+save_fig(fig, 'fig2_countries_medals.pdf')
 
 # ============================================================
 # 图3：黑马国家案例分析
@@ -185,7 +185,7 @@ ax.legend()
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig3_rising_stars.svg')
+save_fig(fig, 'fig3_rising_stars.pdf')
 
 # ============================================================
 # 图4：项目竞争格局
@@ -233,7 +233,7 @@ ax.axhline(y=0.5, color='red', linestyle='--', alpha=0.5, label='50% Monopoly Li
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig4_sport_competition.svg')
+save_fig(fig, 'fig4_sport_competition.pdf')
 
 # ============================================================
 # 图5：项目投资效率矩阵
@@ -280,7 +280,7 @@ ax.axvline(x=0.45, color='gray', linestyle='--', alpha=0.3)
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig5_investment_matrix.svg')
+save_fig(fig, 'fig5_investment_matrix.pdf')
 
 # ============================================================
 # 图6：强国市场份额演变
@@ -321,7 +321,7 @@ ax.axvline(x=1991, color='gray', linestyle=':', alpha=0.5)
 ax.annotate('USSR Dissolved', xy=(1991, 0.35), fontsize=8, alpha=0.7)
 
 plt.tight_layout()
-save_fig(fig, 'fig6_market_share.svg')
+save_fig(fig, 'fig6_market_share.pdf')
 
 # ============================================================
 # 图7：国家类型分布
@@ -367,7 +367,7 @@ ax.set_xlabel('Number of Countries')
 ax.set_ylabel('Country Type')
 
 plt.tight_layout()
-save_fig(fig, 'fig7_country_types.svg')
+save_fig(fig, 'fig7_country_types.pdf')
 
 # ============================================================
 # 完成

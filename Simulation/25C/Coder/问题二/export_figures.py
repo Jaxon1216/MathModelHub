@@ -1,6 +1,6 @@
 """
 问题二图片导出脚本
-用于从建模分析中导出所有可视化图片为SVG格式
+用于从建模分析中导出所有可视化图片为PDF格式
 
 执行方式：
     python export_figures.py
@@ -38,7 +38,7 @@ COLORS = {
 }
 
 def save_fig(fig, filename):
-    """保存图片为SVG格式（无标题）"""
+    """保存图片为PDF格式（无标题）"""
     filepath = os.path.join(FIGURE_DIR, filename)
     fig.savefig(filepath, bbox_inches='tight', facecolor='white')
     print(f"✅ 已保存: {filepath}")
@@ -138,7 +138,7 @@ if len(df_changepoints) > 0:
     axes[1].set_ylabel('Sport')
     
     plt.tight_layout()
-    save_fig(fig, 'fig1_changepoint_distribution.svg')
+    save_fig(fig, 'fig1_changepoint_distribution.pdf')
 
 # ============================================================
 # 图2：郎平效应可视化
@@ -165,7 +165,7 @@ ax.set_xlim(1980, 2026)
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig2_langping_effect.svg')
+save_fig(fig, 'fig2_langping_effect.pdf')
 
 # ============================================================
 # 图3：贝拉·卡罗伊效应可视化
@@ -191,7 +191,7 @@ ax.set_xlim(1960, 2026)
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig3_karolyi_effect.svg')
+save_fig(fig, 'fig3_karolyi_effect.pdf')
 
 # ============================================================
 # 图4：教练效应（简化版DID）
@@ -223,7 +223,7 @@ ax.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
 ax.grid(True, alpha=0.3, axis='x')
 
 plt.tight_layout()
-save_fig(fig, 'fig4_did_effects.svg')
+save_fig(fig, 'fig4_did_effects.pdf')
 
 # ============================================================
 # 图5：效应分布
@@ -255,7 +255,7 @@ axes[1].set_xlabel('Sport Importance Score', fontsize=12)
 axes[1].set_ylabel('Coach Effect (Medals)', fontsize=12)
 
 plt.tight_layout()
-save_fig(fig, 'fig5_effect_distribution.svg')
+save_fig(fig, 'fig5_effect_distribution.pdf')
 
 # ============================================================
 # 图6：三国投资建议
@@ -306,7 +306,7 @@ for idx, (noc, data) in enumerate(investment_data.items()):
             ha='center', fontsize=12, fontweight='bold')
 
 plt.tight_layout()
-save_fig(fig, 'fig6_investment_recommendations.svg')
+save_fig(fig, 'fig6_investment_recommendations.pdf')
 
 # ============================================================
 # 完成
@@ -316,5 +316,5 @@ print("🎉 所有图片导出完成！")
 print("=" * 60)
 print(f"\n图片保存在: {FIGURE_DIR}")
 for f in sorted(os.listdir(FIGURE_DIR)):
-    if f.endswith('.svg'):
+    if f.endswith('.pdf'):
         print(f"  - {f}")
