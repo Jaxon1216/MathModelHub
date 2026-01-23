@@ -20,7 +20,7 @@
 \usepackage{tabularx}
 \usepackage{array}
 \setlength{\parindent}{1.5em}
-\graphicspath{{../../Coder/问题一/figures/}{../../Coder/问题二/figures/png/}{../../Coder/问题三/figures/png/}}
+\graphicspath{{../../Coder/问题一/figures/}{../../Coder/问题二/figures/}{../../Coder/问题三/figures/}}
 
 \title{Data-Driven Olympic Medal Prediction and Coach Effect Quantification: A Multi-Model Framework for 2028 Los Angeles Games}
 
@@ -88,7 +88,7 @@ Medal prediction is a continuous regression task. We evaluate linear regression,
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig1_target_distribution.png}
+    \includegraphics[width=0.9\textwidth]{fig1_target_distribution.pdf}
     \caption{Distribution of total medals: histogram, boxplot, and historical mean trend.}
     \label{fig:target_distribution}
 \end{figure}
@@ -98,7 +98,7 @@ Host nations significantly outperform non-hosts. A two-sample $t$-test yields $t
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig3_host_effect.png}
+    \includegraphics[width=0.9\textwidth]{fig3_host_effect.pdf}
     \caption{Host vs. non-host medal distributions and historical host performance.}
     \label{fig:host_effect}
 \end{figure}
@@ -108,7 +108,7 @@ The best-performing model (Lasso) achieves strong predictive accuracy, and Boots
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig6_2028_prediction.png}
+    \includegraphics[width=0.9\textwidth]{fig6_2028_prediction.pdf}
     \caption{2028 medal predictions (Top 10) and comparison with 2024.}
     \label{fig:medal_prediction}
 \end{figure}
@@ -118,7 +118,7 @@ We model the number of first-time medal-winning countries using a Poisson distri
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig8_poisson_distribution.png}
+    \includegraphics[width=0.9\textwidth]{fig8_poisson_distribution.pdf}
     \caption{Poisson distribution for first-time medalists in 2028.}
     \label{fig:poisson}
 \end{figure}
@@ -127,26 +127,19 @@ We model the number of first-time medal-winning countries using a Poisson distri
 \subsection{Methodology}
 Due to the absence of direct coach records, we apply indirect inference: changepoint detection identifies abrupt performance jumps, medal flow analysis captures cross-national shifts, and DID isolates causal effects by comparing treated and control groups.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.9\textwidth]{flowchart_q2_method.svg.png}
-    \caption{Method pipeline for identifying the Great Coach Effect.}
-    \label{fig:q2_workflow}
-\end{figure}
-
 \subsection{Evidence and Effect Quantification}
 Changepoint detection reveals concentrated breakthroughs in gymnastics, swimming, and athletics after 1980, aligning with known historical coaching transfers. DID estimates show average gains of 2--5 medals per Olympic cycle for affected country-sport pairs.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig1_changepoint_distribution.svg.png}
+    \includegraphics[width=0.9\textwidth]{fig1_changepoint_distribution.pdf}
     \caption{Distribution of detected changepoints by year and sport.}
     \label{fig:changepoint}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig4_did_effects.svg.png}
+    \includegraphics[width=0.9\textwidth]{fig4_did_effects.pdf}
     \caption{DID effect estimates for identified coach-transfer cases.}
     \label{fig:did_effects}
 \end{figure}
@@ -156,7 +149,7 @@ We recommend priority investments for Great Britain, Brazil, and India based on 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig6_investment_recommendations.svg.png}
+    \includegraphics[width=0.9\textwidth]{fig6_investment_recommendations.pdf}
     \caption{Targeted investment recommendations and projected gains.}
     \label{fig:investment}
 \end{figure}
@@ -167,7 +160,7 @@ Global medal concentration has declined over time, indicating a shift toward a m
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig1_concentration_trend.svg.png}
+    \includegraphics[width=0.9\textwidth]{fig1_concentration_trend.pdf}
     \caption{Long-term trend of medal concentration and distribution inequality.}
     \label{fig:concentration}
 \end{figure}
@@ -177,7 +170,7 @@ Rising countries typically experience a 15--25 year buildup, with a surge in fin
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig3_rising_stars.svg.png}
+    \includegraphics[width=0.9\textwidth]{fig3_rising_stars.pdf}
     \caption{Rising-star trajectories and breakthrough patterns.}
     \label{fig:rising_stars}
 \end{figure}
@@ -187,14 +180,14 @@ Sports exhibit distinct competition regimes. Open-competition sports offer highe
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig4_sport_competition.svg.png}
+    \includegraphics[width=0.9\textwidth]{fig4_sport_competition.pdf}
     \caption{Competition stratification across sports.}
     \label{fig:competition}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{fig7_country_types.svg.png}
+    \includegraphics[width=0.9\textwidth]{fig7_country_types.pdf}
     \caption{NOC typology and policy priorities.}
     \label{fig:country_types}
 \end{figure}

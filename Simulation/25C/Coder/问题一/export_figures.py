@@ -1,6 +1,6 @@
 """
 图片导出脚本
-用于从问题一建模分析中导出所有可视化图片
+用于从问题一建模分析中导出所有可视化图片为PDF格式
 """
 
 import pandas as pd
@@ -27,10 +27,10 @@ plt.rcParams['axes.unicode_minus'] = False
 FIGURE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/figures'
 os.makedirs(FIGURE_DIR, exist_ok=True)
 
-def save_fig(fig, filename, dpi=150):
-    """保存图片"""
+def save_fig(fig, filename):
+    """保存图片为PDF格式"""
     filepath = os.path.join(FIGURE_DIR, filename)
-    fig.savefig(filepath, dpi=dpi, bbox_inches='tight', facecolor='white')
+    fig.savefig(filepath, bbox_inches='tight', facecolor='white')
     print(f"✅ 已保存: {filepath}")
     plt.close(fig)
 
@@ -77,7 +77,7 @@ axes[2].set_title('Average Medals Trend Over Time')
 axes[2].grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig1_target_distribution.png')
+save_fig(fig, 'fig1_target_distribution.pdf')
 
 # ============================================================
 # 图2：相关性热力图
@@ -96,7 +96,7 @@ sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='RdBu_r',
             center=0, square=True, linewidths=0.5)
 plt.title('Feature Correlation Matrix', fontsize=14)
 plt.tight_layout()
-save_fig(fig, 'fig2_correlation_heatmap.png')
+save_fig(fig, 'fig2_correlation_heatmap.pdf')
 
 # ============================================================
 # 图3：东道主效应对比
@@ -132,7 +132,7 @@ axes[1].axvline(non_host_medals.mean(), color='blue', linestyle='--',
 axes[1].legend()
 
 plt.tight_layout()
-save_fig(fig, 'fig3_host_effect.png')
+save_fig(fig, 'fig3_host_effect.pdf')
 
 # ============================================================
 # 训练模型准备
@@ -200,7 +200,7 @@ plt.xlabel('Importance')
 plt.title('Random Forest Feature Importance')
 plt.gca().invert_yaxis()
 plt.tight_layout()
-save_fig(fig, 'fig4_feature_importance.png')
+save_fig(fig, 'fig4_feature_importance.pdf')
 
 # ============================================================
 # 图5：模型性能对比
@@ -248,7 +248,7 @@ axes[1].legend()
 axes[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig5_model_comparison.png')
+save_fig(fig, 'fig5_model_comparison.pdf')
 
 # ============================================================
 # 准备2028预测数据
@@ -355,7 +355,7 @@ axes[1].legend()
 axes[1].grid(True, alpha=0.3, axis='y')
 
 plt.tight_layout()
-save_fig(fig, 'fig6_2028_prediction.png')
+save_fig(fig, 'fig6_2028_prediction.pdf')
 
 # ============================================================
 # 图7：置信区间图
@@ -370,10 +370,11 @@ top15 = top15.iloc[::-1]
 y_pos = range(len(top15))
 colors = ['gold' if h == 1 else 'steelblue' for h in top15['is_host']]
 
-ax.barh(y_pos, top15['Predicted_Total'], xerr=[
-    top15['Predicted_Total'] - top15['CI_Lower'],
-    top15['CI_Upper'] - top15['Predicted_Total']
-], color=colors, alpha=0.8, capsize=5)
+err_left = (top15['Predicted_Total'] - top15['CI_Lower']).clip(lower=0)
+err_right = (top15['CI_Upper'] - top15['Predicted_Total']).clip(lower=0)
+
+ax.barh(y_pos, top15['Predicted_Total'], xerr=[err_left, err_right],
+        color=colors, alpha=0.8, capsize=5)
 
 ax.scatter(top15['2024_Actual'], y_pos, color='red', marker='o', s=50, 
            zorder=5, label='2024 Actual')
@@ -392,7 +393,7 @@ ax.legend(handles=legend_elements + [plt.scatter([], [], c='red', marker='o', la
 ax.grid(True, alpha=0.3, axis='x')
 
 plt.tight_layout()
-save_fig(fig, 'fig7_confidence_interval.png')
+save_fig(fig, 'fig7_confidence_interval.pdf')
 
 # ============================================================
 # 图8：泊松分布预测
@@ -441,7 +442,7 @@ axes[1].legend()
 axes[1].grid(True, alpha=0.3)
 
 plt.tight_layout()
-save_fig(fig, 'fig8_poisson_distribution.png')
+save_fig(fig, 'fig8_poisson_distribution.pdf')
 
 print("\n" + "=" * 60)
 print("🎉 所有图片导出完成！")
