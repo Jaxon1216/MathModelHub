@@ -17,7 +17,7 @@ description: 数学建模算法选择与可视化指南。用于模型选择、�
 | `面向person1.md` | Markdown | 写作指南，面向写作手 |
 | `面向person2.md` | Markdown | 资料/绘图指南，面向资料手 |
 | `export_figures.py` | Python脚本 | 图片导出脚本 |
-| `figures/` | 目录 | 导出的SVG图片 |
+| `figures/` | 目录 | 导出的PDF图片 |
 
 **目录结构参考**：
 ```
@@ -26,9 +26,9 @@ description: 数学建模算法选择与可视化指南。用于模型选择、�
 ├── export_figures.py      # 图片导出脚本
 ├── 面向person1.md         # 写作指南
 ├── 面向person2.md         # 资料/绘图指南
-└── figures/               # SVG图片目录
-    ├── fig1_xxx.svg
-    ├── fig2_xxx.svg
+└── figures/               # PDF图片目录
+    ├── fig1_xxx.pdf
+    ├── fig2_xxx.pdf
     └── ...
 ```
 
@@ -51,10 +51,10 @@ description: 数学建模算法选择与可视化指南。用于模型选择、�
 - **图片本身不要带标题/标注**
 - **标注放在ipynb的markdown单元格中**
 - 使用ipynb的markdown单元格描述图片内容和解读
-- 不要将图片拼在一起，**一个svg一个图片**，如果适合放在一块展示，在markdown单元格做出提醒！
+- 不要将图片拼在一起，**一个PDF一个图片**，如果适合放在一块展示，在markdown单元格做出提醒！（但不要真的合并）
 ### 图片导出格式
-- **仅导出SVG格式**（矢量图，可无损缩放）
-- 不要保存PNG/PDF等格式
+- **仅导出PDF格式**（矢量图，可无损缩放）
+- 不要保存别的格式
 
 ### 绑图标准配置
 
@@ -93,8 +93,8 @@ ax.set_xlabel('Value')
 ax.set_ylabel('Frequency')
 # 不要加 ax.set_title()
 
-# 保存为SVG
-plt.savefig('figures/fig1_distribution.svg', bbox_inches='tight')
+# 保存为PDF
+plt.savefig('figures/fig1_distribution.pdf', bbox_inches='tight')
 ```
 
 ### 图片导出脚本模板
@@ -104,7 +104,7 @@ plt.savefig('figures/fig1_distribution.svg', bbox_inches='tight')
 ```python
 """
 图片导出脚本
-用于从建模分析中导出所有可视化图片为SVG格式
+用于从建模分析中导出所有可视化图片为PDF格式
 """
 
 import pandas as pd
@@ -125,7 +125,7 @@ FIGURE_DIR = os.path.dirname(os.path.abspath(__file__)) + '/figures'
 os.makedirs(FIGURE_DIR, exist_ok=True)
 
 def save_fig(fig, filename):
-    """保存图片为SVG格式（无标题）"""
+    """保存图片为PDF格式（无标题）"""
     filepath = os.path.join(FIGURE_DIR, filename)
     fig.savefig(filepath, bbox_inches='tight', facecolor='white')
     print(f"✅ 已保存: {filepath}")
@@ -141,7 +141,7 @@ def save_fig(fig, filename):
 # ax.hist(data, bins=30, color='steelblue')
 # ax.set_xlabel('Value')
 # ax.set_ylabel('Frequency')
-# save_fig(fig, 'fig1_distribution.svg')
+# save_fig(fig, 'fig1_distribution.pdf')
 
 print("\n" + "=" * 60)
 print("🎉 所有图片导出完成！")
@@ -186,7 +186,7 @@ for f in sorted(os.listdir(FIGURE_DIR)):
 ## 五、图片列表与插入位置
 | 编号 | 文件名 | 内容 | 建议插入章节 |
 |------|--------|------|-------------|
-| 1 | fig1_xxx.svg | 描述 | X.X章节 |
+| 1 | fig1_xxx.pdf | 描述 | X.X章节 |
 ```
 
 ---
