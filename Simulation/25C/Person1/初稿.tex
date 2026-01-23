@@ -12,9 +12,11 @@
 \usepackage{subcaption}
 \usepackage{geometry}
 \geometry{a4paper, margin=1in}
+\setlength{\headheight}{15pt}  % 修复 fancyhdr 警告
+\addtolength{\topmargin}{-3pt}
 \usepackage{lastpage}  % 支持LastPage引用
 \usepackage{indentfirst}  % 关键包：让章节标题后的第一段也首行缩进
-\usepackage{enumitem}  %优化列表格式（如调整缩进）
+\usepackage{enumitem}  % 优化列表格式
 \usepackage{booktabs} % For professional tables
 \usepackage{graphicx}  % For resizing tables
 \usepackage{tabularx}
@@ -60,32 +62,21 @@ The Olympic medal tally serves as a key indicator of national athletic prowess a
 While dominant nations persist, first-time medalists (e.g., Albania, Cape Verde) in Paris 2024 and over 65 NOCs without any Summer Olympic medal underscore global disparities in sporting success. Accurate forecasting for the 2028 Los Angeles Games is thus essential for NOCs' strategic planning, breakthrough identification, and investment in disciplines and coaching. Existing models often rely on pre-event athlete data but overlook historical trends, event changes, and coaching mobility. This study develops a data-driven predictive framework to forecast medal outcomes, quantify coaching impacts, and provide policy insights for optimized NOC strategies.
 
 \subsection{Restatement of the Problem}
-\begin{itemize}[label={}, leftmargin=*, itemsep=8pt]
-    \item \textbf{Task 1:} Establish predictive models for each country's 2028 Los Angeles Olympic gold medals and total medals, incorporating uncertainty estimates and model performance validation:
-    \begin{enumerate}[
-        label=(\arabic*),
-        leftmargin=1.2cm,
-        labelsep=6pt,
-        itemsep=3pt
-    ]
-        \item Predict the 2028 medal standings and trends, identifying nations most likely to experience significant gains or losses.
-        \item Estimate the number and probability of nations winning their first Olympic medals.
-        \item Analyze the relationship between event quantity/type and medal output, identifying key events for each nation and their underlying reasons, while evaluating the impact mechanism of host nation event selection.
-    \end{enumerate}
 
-    \item \textbf{Task 2:} By analyzing the impact of coaches such as Lang Ping and B\'{e}la K\'{a}rolyi, we will estimate the contribution of the ``great coach effect'' to the number of medals:
-    \begin{enumerate}[
-        label=(\arabic*),
-        leftmargin=1.2cm,
-        labelsep=6pt,
-        itemsep=3pt
-    ]
-        \item Provide evidence of the ``great coach effect'' and quantify its contribution to medal counts.
-        \item Select three nations, recommend priority sports for recruiting elite coaches, and estimate projected medal gains.
-    \end{enumerate}
+\textbf{Task 1:} Establish predictive models for each country's 2028 Los Angeles Olympic gold medals and total medals, incorporating uncertainty estimates and model performance validation:
+\begin{enumerate}
+    \item Predict the 2028 medal standings and trends, identifying nations most likely to experience significant gains or losses.
+    \item Estimate the number and probability of nations winning their first Olympic medals.
+    \item Analyze the relationship between event quantity/type and medal output, identifying key events for each nation and their underlying reasons, while evaluating the impact mechanism of host nation event selection.
+\end{enumerate}
 
-    \item \textbf{Task 3:} Strategic Implications: Extract unique insights from the model regarding Olympic medal dynamics, and provide evidence-based recommendations for resource optimization and long-term planning to National Olympic Committees.
-\end{itemize}
+\textbf{Task 2:} By analyzing the impact of coaches such as Lang Ping and B\'{e}la K\'{a}rolyi, we will estimate the contribution of the ``great coach effect'' to the number of medals:
+\begin{enumerate}
+    \item Provide evidence of the ``great coach effect'' and quantify its contribution to medal counts.
+    \item Select three nations, recommend priority sports for recruiting elite coaches, and estimate projected medal gains.
+\end{enumerate}
+
+\textbf{Task 3:} Strategic Implications: Extract unique insights from the model regarding Olympic medal dynamics, and provide evidence-based recommendations for resource optimization and long-term planning to National Olympic Committees.
 
 \subsection{Our Work}
 Our modeling workflow for Task 1 is illustrated in Figure~\ref{fig:task1_workflow}, which shows the complete pipeline from data preprocessing through exploratory analysis, host effect verification, model construction, and final predictions.
