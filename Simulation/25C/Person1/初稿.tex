@@ -22,7 +22,7 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{float}
-\graphicspath{{Q2 figures/}{Q3figures/}{Q1figures/}}  % 表示从当前.tex文件所在目录，找同级的Q2 figures文件夹}
+\graphicspath{{Q2 figures/}{Q3figures/}{Q1figures/}{敏感性分析figures/}}  % 表示从当前.tex文件所在目录，找同级的xx figures文件夹}
 \setlength{\parindent}{1.5em}  % 设置首行缩进长度（1.5em 为常用值，可调整）
 % \usepackage{svg}  % Requires inkscape for SVG conversion
 \title{Data-Driven Olympic Medal Prediction and Coach Effect Quantification: A Multi-Model Framework for 2028 Los Angeles Games}
@@ -622,23 +622,44 @@ As illustrated in Figure \ref{fig:breakthrough}, this surge serves as a leading 
 
 As visualized in the investment matrix in Figure \ref{fig:investment}, NOCs with limited budgets should adopt an "Asymmetric Competition" strategy. Instead of competing in high-stability sports where the technical gap is entrenched, they should concentrate investment on high-volatility events where the "Medal ROI" (Return on Investment) is statistically higher and "upsets" are more probable. For nations identified as "Emerging Stars," the primary policy recommendation is to optimize the "Finalist-to-Medal Conversion Rate" through targeted high-performance support, effectively bridging the gap between being a contender and being a medalist.
 
+\section{Sensitivity Analysis}
+
+To evaluate the robustness of the model to key settings, this study conducted sensitivity analysis around three dimensions: regularization intensity, model category, and Bootstrap resampling. 
+
+Regarding sensitivity to regularization intensity, the regularization parameter $\alpha$ of the Lasso and Ridge models was varied within a reasonable interval to observe the response of RMSE and $R^2$. Results indicate that across a range where the value of $\alpha$ spans two orders of magnitude, the model performance metrics exhibit only minor fluctuations, demonstrating that the prediction results are insensitive to the choice of the penalty coefficient. 
+
+Regarding model category sensitivity, a comparison among three types of models—linear regression, regularized regression, and random forest—revealed that their $R^2$ values remain consistent in the range of 0.93–0.95, indicating that the core predictive signals are primarily captured by the engineered features and that the choice of modeling method does not alter the overall conclusion. 
+
+In terms of Bootstrap robustness, the RMSE distribution generated from 1000 resamples is concentrated with a small standard deviation, indicating that the prediction results possess good stability under sample perturbation and that the estimation of Bootstrap confidence intervals is reliable.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig_sensitivity_alpha_rmse.pdf}
+    \caption{Regularization Intensity Sensitivity Map. This figure displays the RMSE changes of Lasso and Ridge models under different $\alpha$ values in a double-line format. The two curves remain stable across a wide $\alpha$ interval, with fluctuations occurring only at extreme values, indicating the model's robustness to the selection of regularization intensity.}
+    \label{fig:fig24}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig_sensitivity_model_r2.pdf}
+    \caption{Model Category Sensitivity Map. This figure compares the $R^2$ scores of different model categories (Linear Regression, Ridge, Lasso, Random Forest, Gradient Boosting) using a bar chart. The $R^2$ values for all models exceed 0.93, with a variation of less than 0.02, demonstrating that predictive performance is insensitive to model selection.}
+    \label{fig:fig25}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig_sensitivity_bootstrap_rmse.pdf}
+    \caption{Bootstrap Robustness Map. This figure illustrates the RMSE distribution obtained from 1000 Bootstrap resamples using a histogram. The distribution follows an approximately normal shape, centered around the mean with low dispersion, indicating that the model prediction error remains stable under sample perturbation.}
+    \label{fig:fig26}
+\end{figure}
 
 \section{Model Evaluation}
+
 \subsection{Strengths}
-\begin{itemize}
-    \item \textbf{Data-Driven Approach}: The model relies on extensive historical data spanning 128 years and 30 Olympic editions, ensuring robust statistical foundations.
-    \item \textbf{Comprehensive Feature Engineering}: The multi-dimensional feature matrix captures both short-term performance (lag features) and long-term stability (rolling averages).
-    \item \textbf{Uncertainty Quantification}: Bootstrap confidence intervals provide probabilistic predictions rather than point estimates alone.
-    \item \textbf{Indirect Inference Innovation}: The Great Coach Effect analysis demonstrates creative use of changepoint detection and DID methods when direct data is unavailable.
-    \item \textbf{Practical Applicability}: The framework provides actionable recommendations for NOCs' strategic planning and resource allocation.
-\end{itemize}
+The model framework of this study possesses the following advantages. First, it adopts a \textbf{data-driven approach} based on extensive historical data covering 128 years and 30 Olympic Games, ensuring the robustness of statistical inference. Second, the \textbf{feature engineering}  is comprehensive and systematic, constructing a multi-dimensional feature matrix that simultaneously captures both short-term momentum effects (lagged features) and medium-to-long-term stability (rolling averages), thereby enhancing the model's predictive power. Third, \textbf{uncertainty quantification} is sufficient; Bootstrap confidence intervals provide a probabilistic interpretation for point predictions, increasing the decision-making reference value of the results. Furthermore, to address the challenge of lacking direct coaching data, an \textbf{innovative indirect inference framework} combining change-point detection and DID was designed, demonstrating methodological creativity. Finally, the research findings have \textbf{strong practical applicability}, providing an actionable quantitative basis for the strategic planning and resource allocation of National Olympic Committees.
 
 \subsection{Weaknesses}
-\begin{itemize}
-    \item \textbf{Data Limitations}: Lack of direct coach information requires indirect inference, which may miss some effects or attribute changes to wrong causes.
-    \item \textbf{Assumption Sensitivity}: The model assumes historical patterns continue, which may not hold under significant rule changes or geopolitical events.
-    \item \textbf{Event-Level Granularity}: Current predictions are at the country level; event-level predictions would provide more detailed insights.
-\end{itemize}
+This study also has the following limitations. First, regarding \textbf{data constraints}, the lack of direct coaching information necessitates reliance on indirect inference, which may overlook certain effects or attribute performance changes to incorrect causes. Second, regarding \textbf{sensitivity to assumptions}, the model assumes that historical patterns will continue into the future; in cases of major rule changes, geopolitical conflicts, or public health crises, the predictive effectiveness may be compromised. Third, regarding \textbf{predictive granularity}, the current predictions are at the national level; further refinement to the event level would provide more sophisticated decision support.
 
 \begin{thebibliography}{99}
 \bibitem{1} D.~E. KNUTH, The \TeX{}book, the American Mathematical Society and Addison-Wesley Publishing Company, 1984-1986.
