@@ -7,6 +7,7 @@
 \usepackage{palatino}
 \usepackage{lipsum}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{hyperref}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -21,10 +22,17 @@
 \usepackage{graphicx}  % For resizing tables
 \usepackage{tabularx}
 \usepackage{array}
+\usepackage{ragged2e}
 \usepackage{float}
-\graphicspath{{Q2 figures/}{Q3figures/}{Q1figures/}}  % 表示从当前.tex文件所在目录，找同级的Q2 figures文件夹}
+\graphicspath{{Q2 figures/}{Q3figures/}{Q1figures/}{敏感性分析figures/}}  % 表示从当前.tex文件所在目录，找同级的xx figures文件夹}
 \setlength{\parindent}{1.5em}  % 设置首行缩进长度（1.5em 为常用值，可调整）
 % \usepackage{svg}  % Requires inkscape for SVG conversion
+% Required Packages
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{appendix}
+\usepackage{url}
+
 \title{Data-Driven Olympic Medal Prediction and Coach Effect Quantification: A Multi-Model Framework for 2028 Los Angeles Games}
 % 这一段是备忘录部分，如果题目没有让写备忘录 或者书信 可以不要
 % \author{\small \href{http://www.latexstudio.net/}
@@ -38,9 +46,12 @@
 % %\memologo{\LARGE I'm pretending to be a LOGO!}
 
 \begin{document}
+\setlength{\parindent}{1.5em} 
+
 \begin{abstract}
 % TODO: Abstract to be completed
-\lipsum[1]
+\setlength{\parindent}{1.5em} 
+The Olympic medal tally serves as a key indicator for measuring a nation’s athletic prowess and resource allocation efﬁciency. This study constructs a \textbf{multidimensional feature matrix} based on historical data spanning \textbf{30 Summer Olympic Games} from \textbf{1896 to 2024}, covering \textbf{164 countries and regions}. It systematically compares \textbf{regression and ensemble learning models} to forecast the medal counts for the 2028 Los Angeles Olympics. The study employs \textbf{Bootstrap resampling} to quantify prediction uncertainty and models the probability distribution of ﬁrst-time medal-winning nations using a \textbf{Poisson distribution}. Addressing the challenge of lacking direct coaching data, this paper innovatively adopts an \textbf{indirect inference framework} combining \textbf{inﬂection point detection}, \textbf{cross-national medal ﬂow analysis}, and \textbf{Difference-in-Differences (DID) methods} to identify and quantify the \textbf{Great Coach Effect}. Empirical analysis reveals: the \textbf{host nation effect is statistically signiﬁcant} with a \textbf{large effect size (Cohen’s d = 2.77)}; the powerhouse landscape remains generally stable yet exhibits structural dispersion trends; top coaches can generate \textbf{25 incremental medals per Olympic cycle} for speciﬁc country-sport combinations. Based on these ﬁndings, the study further proposes resource allocation and coach recruitment strategies tailored to different types of nations.
 
 \begin{keywords}
 Olympic Medal Prediction; Regression Analysis; Great Coach Effect; Difference-in-Differences; Bootstrap Confidence Interval
@@ -59,48 +70,41 @@ Olympic Medal Prediction; Regression Analysis; Great Coach Effect; Difference-in
 \section{Introduction}
 
 \subsection{Problem Background}
-The Olympic medal tally serves as a key indicator of national athletic prowess and resource allocation effectiveness. In the 2024 Paris Summer Olympics, the United States led with 126 total medals (40 gold), China tied for most gold (40), host France ranked 5th in gold (16) but 4th in total (64), and Great Britain placed 3rd overall (65 medals) despite 14 gold. These results highlight the influence of economics, population, traditions, event composition, and home advantage.
+The Olympic medal tally serves as a comprehensive indicator measuring the effectiveness of a nation's sports system, the efficiency of resource allocation, and the continuity of competitive traditions. The medal distribution at the 2024 Paris Summer Olympics reflects a diverse competitive landscape: The United States leads the standings with 126 medals (including 40 gold), while China shares the top spot in the gold medal tally with 40 gold medals. Host nation France ranks fifth with 16 gold medals and fourth overall with 64 medals. Despite a relatively modest haul of 14 gold medals, the United Kingdom secures third place overall with 65 medals. These outcomes profoundly reveal the complex interplay of multiple factors including economic strength, population size, sporting traditions, event portfolio composition, and home-field advantage.
 
-While dominant nations persist, first-time medalists (e.g., Albania, Cape Verde) in Paris 2024 and over 65 NOCs without any Summer Olympic medal underscore global disparities in sporting success. Accurate forecasting for the 2028 Los Angeles Games is thus essential for NOCs' strategic planning, breakthrough identification, and investment in disciplines and coaching. Existing models often rely on pre-event athlete data but overlook historical trends, event changes, and coaching mobility. This study develops a data-driven predictive framework to forecast medal outcomes, quantify coaching impacts, and provide policy insights for optimized NOC strategies.
+While the relative standings of traditional sporting powers remained stable, the 2024 Paris Games witnessed historic breakthroughs by nations like Albania and Cape Verde. Yet over 65 countries or regions have never secured a medal at the Summer Olympics. This phenomenon indicates that significant structural imbalances persist in the distribution of global athletic achievements. Therefore, accurately predicting the medal distribution for the 2028 Los Angeles Olympics holds crucial decision-making value for National Olympic Committees in formulating strategic plans, identifying breakthrough opportunities, optimizing investment in sports programs, and evaluating the effectiveness of coaching recruitment.
 
 \subsection{Restatement of the Problem}
+This study focuses on the following three core tasks:
+\begin{description}
+    \item[\textbf{Task 1:}] \textbf{Construct predictive models} for the number of gold medals and total medals won by each country at the \textbf{2028 Los Angeles Olympics}. Specifically, this involves: \textbf{(1)} forecasting the \textbf{2028 medal standings and their trends}, identifying nations most likely to experience significant gains or losses; \textbf{(2) Estimate the number of nations likely to win their first Olympic medals} and their probability distributions; \textbf{(3) Analyze the mechanisms by which the number and types of events influence medal production}, identifying each nation's dominant events and the reasons behind their development.
 
-\textbf{Task 1:} Establish predictive models for each country's 2028 Los Angeles Olympic gold medals and total medals, incorporating uncertainty estimates and model performance validation:
-\begin{enumerate}
-    \item Predict the 2028 medal standings and trends, identifying nations most likely to experience significant gains or losses.
-    \item Estimate the number and probability of nations winning their first Olympic medals.
-    \item Analyze the relationship between event quantity/type and medal output, identifying key events for each nation and their underlying reasons, while evaluating the impact mechanism of host nation event selection.
-\end{enumerate}
+    \item[\textbf{Task 2:}] Identify and quantify the \textbf{“Great Coach Effect.”} Using renowned coaches like \textbf{Lang Ping and Béla Karoly} as case studies, provide empirical evidence demonstrating how \textbf{cross-border coach mobility} influences medal distribution and estimate the \textbf{marginal contribution} of this effect to medal counts. Based on this, select \textbf{three representative nations}, recommend \textbf{priority target sports} for recruiting elite coaches, and provide \textbf{quantitative estimates} of expected medal gains.
 
-\textbf{Task 2:} By analyzing the impact of coaches such as Lang Ping and B\'{e}la K\'{a}rolyi, we will estimate the contribution of the ``great coach effect'' to the number of medals:
-\begin{enumerate}
-    \item Provide evidence of the ``great coach effect'' and quantify its contribution to medal counts.
-    \item Select three nations, recommend priority sports for recruiting elite coaches, and estimate projected medal gains.
-\end{enumerate}
-
-\textbf{Task 3:} Strategic Implications: Extract unique insights from the model regarding Olympic medal dynamics, and provide evidence-based recommendations for resource optimization and long-term planning to National Olympic Committees.
-
+    \item[\textbf{Task 3:}] Extract \textbf{unique insights} from the model and articulate how these findings can inform \textbf{National Olympic Committees'} decisions on \textbf{resource optimization and long-term strategic planning}.
+\end{description}
 \subsection{Our Work}
-Our modeling workflow for Task 1 is illustrated in Figure~\ref{fig:task1_workflow}, which shows the complete pipeline from data preprocessing through exploratory analysis, host effect verification, model construction, and final predictions.
 
-\begin{figure}[htbp]
-    \centering
-    % 替换为实际图片文件（对应文件夹中的 Task1.pdf，原 SVG 转 PDF 后文件名保持一致）
-    \includegraphics[width=0.95\textwidth]{Task1.pdf}
-    \caption{Modeling workflow for Task 1: Medal Prediction Model.}
-    \label{fig:task1_workflow}
-\end{figure}
+The modeling process in this study encompasses core stages including data cleaning, feature engineering, model construction and comparison, home field effect testing, prediction, and uncertainty quantification. It further extends to coach effect identification and policy recommendation analysis. As shown in Figure 1, the research framework begins with data preprocessing, proceeds through exploratory analysis, statistical testing, and multi-model comparison, ultimately delivering 2028 prediction results and policy recommendations. Subsequent sections will sequentially present key analytical charts ( Figures \texttt{1-24} ).
+
+
 
 \section{Preparation for Modeling}
 \subsection{Model Assumptions}
-\begin{enumerate}
-    \item Historical performance is a valid predictor of future performance, as sports infrastructure, training systems, and national priorities tend to persist over time.
-    \item The host country effect is consistent across different Olympic Games, allowing for generalization from historical data.
-    \item Coach mobility effects are observable through changes in national medal distributions in specific sports.
-    \item The total number of events in 2028 will be approximately similar to 2024 Paris Olympics (around 329 events).
-    \item External factors such as political boycotts or global pandemics will not significantly affect the 2028 Games.
-\end{enumerate}
 
+To ensure the rationality and feasibility of model construction, this study proposes the following fundamental assumptions:
+
+\begin{itemize}[leftmargin=*, labelsep=0.5em, itemsep=0.5pc]
+    \item \textbf{Assumption 1}: Historical performance possesses predictive validity for future performance. The rationale for this assumption lies in the strong temporal continuity typically observed in a nation's sports infrastructure, training systems, talent reserve mechanisms, and policy priorities. This continuity renders historical achievements an effective signal for forecasting future performance.
+
+    \item \textbf{Hypothesis 2}: The host nation advantage exhibits comparability across different Olympic editions. This assumption permits the extraction of systematic patterns of the host advantage from historical data and their application to forecasting the 2028 Los Angeles Olympics.
+
+    \item \textbf{Assumption 3}: The impact of cross-border coach mobility can be observed through structural shifts in medal distributions among nations within specific events. Despite the absence of direct coaching data in the dataset, this assumption provides a theoretical foundation for indirect inference methods.
+
+    \item \textbf{Hypothesis 4}: The total number of events at the 2028 Los Angeles Olympics will be roughly equivalent to that of the 2024 Paris Olympics (approximately 329 events), with no fundamental changes to the event lineup.
+
+    \item \textbf{Hypothesis 5}: Major external shocks such as political boycotts or global public health crises will not significantly impact the normal hosting of the 2028 Olympics or the participation of nations.
+\end{itemize}
 \subsection{Notations}
 % TODO: Notations table to be completed
 The key notations used throughout this paper are summarized in Table~\ref{tab:notations}.
@@ -127,8 +131,6 @@ $\hat{\tau}_{\text{DID}}$ & Difference-in-Differences estimator \\
 \end{table}
 
 \subsection{Data Preprocessing and Feature Engineering}
-
-To ensure the accuracy and robustness of the prediction model, systematic cleaning, integration, and feature extraction were performed on the raw dataset.
 
 \subsubsection{Data Source and Description}
 
@@ -166,45 +168,31 @@ data\_dictionary.csv
 
 \subsubsection{Data Cleaning and Consistency Handling}
 
-To address the heterogeneity and potential noise in the raw data, the following preprocessing steps were implemented:
+To address the heterogeneity and potential noise in the raw data, the following preprocessing steps were implemented.First, the core medal data table was verified to contain no missing records; for countries absent from the medal standings in specific years, their medal counts were filled with zeros to ensure the integrity of the time series. Second, for historical entities that have dissolved or changed names—such as the Soviet Union and East Germany—this study retains their original records rather than merging them into modern successor states. This approach preserves historical performance as a critical predictive signal, as simple consolidation would distort statistical characteristics. Additionally, special space characters present in data fields were uniformly replaced and cleaned to ensure accurate cross-table linking.
 
-\begin{enumerate}
-    \item \textbf{Missing Value Identification and Handling}: The core medal count data table was found to have no missing records. For countries not appearing in the medal tables for specific years, their medal counts were filled with zero to ensure the completeness of the time series.
-    \item \textbf{Retention of Historical Entities}: For historical entities such as the Soviet Union and East Germany, which have either dissolved or changed names, this study decided to \textbf{retain the original records} rather than merging them with modern successor countries. This decision was made because historical performance serves as an important predictive signal, and simple merging would distort statistical characteristics.
-    \item \textbf{Text Character Cleaning}: For fields containing special space characters (e.g., \texttt{\textasciitilde}), this study performed uniform replacement and noise removal to ensure accurate matching when linking across tables.
-\end{enumerate}
+
 
 \subsubsection{Data Integration and Normalization}
 
-The study primarily uses the medal count table, which was integrated with host country information and total event count through left join operations.
-
-\begin{itemize}
-    \item \textbf{Host Country Identification}: A binary variable $\text{is\_host}$ was created. If the country is the host of the current Olympic Games, then $\text{is\_host} = 1$, otherwise it is $0$.
-    \item \textbf{Medal Ratio Normalization}: Considering the increase in the number of events from 43 events in 1896 to 329 events in 2024, this study introduced the ``medal ratio'' indicator for fair cross-year comparison:
-    \[
-    \text{medal\_ratio}_{i,t} = \frac{\text{TotalMedals}_{i,t}}{\text{TotalEvents}_t}
+This study uses the medal data table as the primary dataset, integrating host country information with total event count data through a left join operation. Specifically, a binary variable $\text{is\_host}$ is created to indicate whether a country served as the host for that particular Games. Considering the Olympic event count expanded from 43 in 1896 to 329 in 2024, the “medal share” metric is introduced to enable fair cross-year comparisons:
+\[
+ \text{medal\_ratio}_{i,t} = \frac{\text{TotalMedals}_{i,t}}{\text{TotalEvents}_t}
     \]
-\end{itemize}
 
 \subsubsection{Feature Engineering}
 
-Based on the inertia and cyclical nature of sports, a multi-dimensional feature matrix was constructed.
+Based on the inertial characteristics and periodic patterns of athletic competition, this study constructs a multidimensional feature matrix. Lagged features are employed to capture short-term momentum effects:
+\begin{equation}
+\text{lag}_1(i,t) = \text{TotalMedals}_{i,t-4}, \quad \text{lag}_2(i,t) = \text{TotalMedals}_{i,t-8}
+\end{equation}
 
-\begin{itemize}
-    \item \textbf{Lag Features}: Historical performance is used to predict future outcomes, with lag features extracted for the previous (Lag1) and the last two editions (Lag2):
-    \[
-    \text{lag}_1(i,t) = \text{TotalMedals}_{i,t-4}
-    \]
-    \item \textbf{Rolling Features}: To assess stability, the average number of medals over the last three editions (approximately a 12-year cycle) was calculated:
-    \[
-    \bar{M}_3(i,t) = \frac{1}{3}\sum_{k=1}^{3} \text{TotalMedals}_{i,t-4k}
-    \]
-    \item \textbf{Derived Statistical Features}: Auxiliary variables such as participation count ($\text{participation\_count}$), gold medal ratio ($\text{gold\_ratio}$), and medal change ($\text{total\_change}$) were constructed.
-\end{itemize}
+Rolling average features are designed to characterize mid-to-long-term stability (spanning approximately a 12-year cycle):
+\begin{equation}
+\bar{M}_3(i,t) = \frac{1}{3}\sum_{k=1}^{3} \text{TotalMedals}_{i,t-4k}
+\end{equation}
 
-\subsubsection{Feature Validity Verification}
+Furthermore, auxiliary features such as the number of Olympic appearances, gold medal ratio, and medal count variations are also constructed. To verify the explanatory power of these features, Pearson correlation coefficients between each feature and the total medal count are calculated, with the results presented in Table~\ref{tab:correlation}.
 
-To verify the explanatory power of the selected features, the Pearson correlation coefficient between each feature and the total number of medals was computed, as shown in Table~\ref{tab:correlation}.
 
 \begin{table}[htbp]
 \centering
@@ -226,6 +214,14 @@ participation\_count & Number of past participations & 0.232 & Low \\
 \end{table}
 
 The results indicate that historical performance features (rolling averages and lags) have a strong predictive value, with correlation coefficients exceeding 0.79. A structured analysis table with 1,435 records and 16 feature fields was generated.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{fig2_correlation_heatmap.pdf}
+    \caption{Feature Correlation Heatmap}
+    \label{fig:fig2}
+\end{figure}
+This figure visually represents the strength of correlations between feature variables and between features and the target variable (total medal count) through varying shades of color. It is observed that the three historical performance features—total\_lag1, total\_rolling3\_mean, and gold\_lag1—exhibit strong positive correlations with the target variable, each with a correlation coefficient exceeding 0.79. This validates the core hypothesis that “historical performance is an effective predictor of future performance.”
 
 \section{Problem 1: Medal Prediction Model}
 
@@ -622,29 +618,81 @@ As illustrated in Figure \ref{fig:breakthrough}, this surge serves as a leading 
 
 As visualized in the investment matrix in Figure \ref{fig:investment}, NOCs with limited budgets should adopt an "Asymmetric Competition" strategy. Instead of competing in high-stability sports where the technical gap is entrenched, they should concentrate investment on high-volatility events where the "Medal ROI" (Return on Investment) is statistically higher and "upsets" are more probable. For nations identified as "Emerging Stars," the primary policy recommendation is to optimize the "Finalist-to-Medal Conversion Rate" through targeted high-performance support, effectively bridging the gap between being a contender and being a medalist.
 
+\section{Sensitivity Analysis}
+
+To evaluate the robustness of the model to key settings, this study conducted sensitivity analysis around three dimensions: regularization intensity, model category, and Bootstrap resampling. 
+
+Regarding sensitivity to regularization intensity, the regularization parameter $\alpha$ of the Lasso and Ridge models was varied within a reasonable interval to observe the response of RMSE and $R^2$. Results indicate that across a range where the value of $\alpha$ spans two orders of magnitude, the model performance metrics exhibit only minor fluctuations, demonstrating that the prediction results are insensitive to the choice of the penalty coefficient. 
+
+Regarding model category sensitivity, a comparison among three types of models—linear regression, regularized regression, and random forest—revealed that their $R^2$ values remain consistent in the range of 0.93–0.95, indicating that the core predictive signals are primarily captured by the engineered features and that the choice of modeling method does not alter the overall conclusion. 
+
+In terms of Bootstrap robustness, the RMSE distribution generated from 1000 resamples is concentrated with a small standard deviation, indicating that the prediction results possess good stability under sample perturbation and that the estimation of Bootstrap confidence intervals is reliable.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig_sensitivity_alpha_rmse.pdf}
+    \caption{Regularization Intensity Sensitivity Map. This figure displays the RMSE changes of Lasso and Ridge models under different $\alpha$ values in a double-line format. The two curves remain stable across a wide $\alpha$ interval, with fluctuations occurring only at extreme values, indicating the model's robustness to the selection of regularization intensity.}
+    \label{fig:fig24}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig_sensitivity_model_r2.pdf}
+    \caption{Model Category Sensitivity Map. This figure compares the $R^2$ scores of different model categories (Linear Regression, Ridge, Lasso, Random Forest, Gradient Boosting) using a bar chart. The $R^2$ values for all models exceed 0.93, with a variation of less than 0.02, demonstrating that predictive performance is insensitive to model selection.}
+    \label{fig:fig25}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig_sensitivity_bootstrap_rmse.pdf}
+    \caption{Bootstrap Robustness Map. This figure illustrates the RMSE distribution obtained from 1000 Bootstrap resamples using a histogram. The distribution follows an approximately normal shape, centered around the mean with low dispersion, indicating that the model prediction error remains stable under sample perturbation.}
+    \label{fig:fig26}
+\end{figure}
 
 \section{Model Evaluation}
+
 \subsection{Strengths}
-\begin{itemize}
-    \item \textbf{Data-Driven Approach}: The model relies on extensive historical data spanning 128 years and 30 Olympic editions, ensuring robust statistical foundations.
-    \item \textbf{Comprehensive Feature Engineering}: The multi-dimensional feature matrix captures both short-term performance (lag features) and long-term stability (rolling averages).
-    \item \textbf{Uncertainty Quantification}: Bootstrap confidence intervals provide probabilistic predictions rather than point estimates alone.
-    \item \textbf{Indirect Inference Innovation}: The Great Coach Effect analysis demonstrates creative use of changepoint detection and DID methods when direct data is unavailable.
-    \item \textbf{Practical Applicability}: The framework provides actionable recommendations for NOCs' strategic planning and resource allocation.
-\end{itemize}
+The model framework of this study possesses the following advantages. First, it adopts a \textbf{data-driven approach} based on extensive historical data covering 128 years and 30 Olympic Games, ensuring the robustness of statistical inference. Second, the \textbf{feature engineering}  is comprehensive and systematic, constructing a multi-dimensional feature matrix that simultaneously captures both short-term momentum effects (lagged features) and medium-to-long-term stability (rolling averages), thereby enhancing the model's predictive power. Third, \textbf{uncertainty quantification} is sufficient; Bootstrap confidence intervals provide a probabilistic interpretation for point predictions, increasing the decision-making reference value of the results. Furthermore, to address the challenge of lacking direct coaching data, an \textbf{innovative indirect inference framework} combining change-point detection and DID was designed, demonstrating methodological creativity. Finally, the research findings have \textbf{strong practical applicability}, providing an actionable quantitative basis for the strategic planning and resource allocation of National Olympic Committees.
 
 \subsection{Weaknesses}
-\begin{itemize}
-    \item \textbf{Data Limitations}: Lack of direct coach information requires indirect inference, which may miss some effects or attribute changes to wrong causes.
-    \item \textbf{Assumption Sensitivity}: The model assumes historical patterns continue, which may not hold under significant rule changes or geopolitical events.
-    \item \textbf{Event-Level Granularity}: Current predictions are at the country level; event-level predictions would provide more detailed insights.
-\end{itemize}
+This study also has the following limitations. First, regarding \textbf{data constraints}, the lack of direct coaching information necessitates reliance on indirect inference, which may overlook certain effects or attribute performance changes to incorrect causes. Second, regarding \textbf{sensitivity to assumptions}, the model assumes that historical patterns will continue into the future; in cases of major rule changes, geopolitical conflicts, or public health crises, the predictive effectiveness may be compromised. Third, regarding \textbf{predictive granularity}, the current predictions are at the national level; further refinement to the event level would provide more sophisticated decision support.
+
+
+% --- References Section ---
+\begin{thebibliography}{99}
+
+\bibitem{bernard2004} 
+Bernard, A. B., \& Busse, M. R. (2004). Who wins the Olympic Games: Economic resources and medal totals. \textit{The Review of Economics and Statistics}, 86(1), 413-417.
+
+\bibitem{kaggle_medals} 
+Olympic Medals dataset (1896-2024). Retrieved from Kaggle: \url{https://www.kaggle.com/datasets/piterfm/olympic-games-medals-1986-2020}.
+
+\bibitem{worldbank} 
+World Bank Open Data. GDP and Population indicators. \url{https://data.worldbank.org/}.
+
+\bibitem{scikit_learn} 
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... \& Duchesnay, É. (2011). Scikit-learn: Machine learning in Python. \textit{Journal of Machine Learning Research}, 12, 2825-2830.
+
+\bibitem{bcp} 
+Barry, D., \& Hartigan, J. A. (1993). A Bayesian Analysis for Change Point Problems. \textit{Journal of the American Statistical Association}, 88(421), 309-319.
+
+\end{thebibliography}
+
 
 \begin{thebibliography}{99}
 \bibitem{1} D.~E. KNUTH, The \TeX{}book, the American Mathematical Society and Addison-Wesley Publishing Company, 1984-1986.
 \bibitem{2} Lamport, Leslie, \LaTeX{}: ``A Document Preparation System'', Addison-Wesley Publishing Company, 1986.
 \bibitem{3} International Olympic Committee, Olympic Data and Statistics, \url{https://olympics.com/}
 \bibitem{4} Bernard, A. B., and Busse, M. R. (2004). Who wins the Olympic Games: Economic resources and medal totals. \textit{Review of Economics and Statistics}, 86(1), 413-417.
+\bibitem{5}
+Forrest, D., Sanz, I., \& Tena, J. D. (2010). Forecasting national team medal totals at the Summer Olympic Games. \textit{International Journal of Forecasting}, 26(3), 576–588.
+\bibitem{6}
+Lui, H. K., \& Suen, W. (2008). Men, money, and medals: An econometric analysis of the Olympic Games. \textit{Pacific Economic Review}, 13(1), 1–16.
+\bibitem{7}
+Balmer, N., Nevill, A., \& Williams, A. M. (2003). Modelling home advantage in the Summer Olympic Games. \textit{Journal of Sports Sciences}, 21(6), 469–478.
+
+\bibitem{8}
+Zhao, Y., \& Sun, Z. (2025). Medal prediction model based on machine learning. \textit{In Proceedings of the IEEE International Conference} (pp. 2408–2412). IEEE.
 \end{thebibliography}
 
 \begin{appendices}
@@ -668,15 +716,62 @@ feature_columns = [
 \section{Statistical Test Details}
 
 Detailed results of the t-test for host effect verification:
-\begin{itemize}
-    \item Sample sizes: Host ($n_1 = 30$), Non-host ($n_2 = 1405$)
-    \item Means: Host ($\bar{X}_1 = 66.9$), Non-host ($\bar{X}_2 = 11.3$)
-    \item Standard deviations: Host ($s_1 = 57.2$), Non-host ($s_2 = 18.5$)
-    \item t-statistic: $t = 15.0$
-    \item p-value: $p < 0.001$
-    \item Cohen's d: $d = 2.77$ (large effect)
-\end{itemize}
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+Statistic & Value \\
+\midrule
+Host Sample Size $n_1$ & 30 \\
+Non-host Sample Size $n_2$ & 1,405 \\
+Host Mean $\bar{X}_1$ & 66.9 \\
+Non-host Mean $\bar{X}_2$ & 11.3 \\
+Host Standard Deviation $s_1$ & 57.2 \\
+Non-host Standard Deviation $s_2$ & 18.5 \\
+t-statistic & 15.0 \\
+p-value & < 0.001 \\
+Cohen's $d$ & 2.77 (Large Effect) \\
+\bottomrule
+\end{tabular}
+\end{table}
 
+\section{List of Figures}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Figure Number}  & \textbf{Description} \\
+\midrule
+Figure 1 & Modeling Workflow Diagram for Task 1 \\
+Figure 2 & Feature Correlation Heatmap \\
+Figure 3 & Distribution Characteristics of Target Variable \\
+Figure 4 & Comparison Diagram of Host Country Effect \\
+Figure 5  & Feature Importance of Random Forest \\
+Figure 6  & Model Performance Comparison Diagram \\
+Figure 7 & 2028 Medal Prediction Results \\
+Figure 8  & Prediction Confidence Interval Diagram \\
+Figure 9  & Prediction of First-Time Medal-Winning Countries \\
+Figure 10 & Method Workflow Diagram for Problem 2 \\
+Figure 11  & Changepoint Distribution Diagram \\
+Figure 12  & Case Diagram of Lang Ping Effect \\
+Figure 13  & Case Diagram of B\'{e}la K\'{a}rolyi Effect \\
+Figure 14 & DID Effect Estimation Diagram \\
+Figure 15  & Coach Effect Distribution Diagram \\
+Figure 16 & Coaching Investment Recommendations for Three Countries \\
+Figure 17  & Evolution Diagram of Medal Concentration \\
+Figure 18 & Changes in Medal-Winning Countries and Medals per Capita \\
+Figure 19 & Rise Trajectory of Dark Horse Countries \\
+Figure 20 & Sport Competition Pattern Diagram \\
+Figure 21  & Investment Efficiency Matrix Diagram \\
+Figure 22 & Evolution of Market Share of Powerful Countries \\
+Figure 23 & Country Type and Strategy Matrix \\
+Figure 24 & Sensitivity to Regularization Strength \\
+Figure 25 & Sensitivity to Model Category \\
+Figure 26  & Bootstrap Robustness \\
+\bottomrule
+\end{tabular}
+\end{table}
 \end{appendices}
 \end{document}
 
