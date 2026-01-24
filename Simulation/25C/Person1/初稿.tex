@@ -21,10 +21,42 @@
 \usepackage{graphicx}  % For resizing tables
 \usepackage{tabularx}
 \usepackage{array}
+\usepackage{ragged2e}
 \usepackage{float}
 \graphicspath{{Q2 figures/}{Q3figures/}{Q1figures/}{敏感性分析figures/}}  % 表示从当前.tex文件所在目录，找同级的xx figures文件夹}
 \setlength{\parindent}{1.5em}  % 设置首行缩进长度（1.5em 为常用值，可调整）
 % \usepackage{svg}  % Requires inkscape for SVG conversion
+% Required Packages
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{appendix}
+\usepackage{url}
+
+% Code Style Configuration
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=Python
+}
 \title{Data-Driven Olympic Medal Prediction and Coach Effect Quantification: A Multi-Model Framework for 2028 Los Angeles Games}
 % 这一段是备忘录部分，如果题目没有让写备忘录 或者书信 可以不要
 % \author{\small \href{http://www.latexstudio.net/}
@@ -661,11 +693,42 @@ The model framework of this study possesses the following advantages. First, it 
 \subsection{Weaknesses}
 This study also has the following limitations. First, regarding \textbf{data constraints}, the lack of direct coaching information necessitates reliance on indirect inference, which may overlook certain effects or attribute performance changes to incorrect causes. Second, regarding \textbf{sensitivity to assumptions}, the model assumes that historical patterns will continue into the future; in cases of major rule changes, geopolitical conflicts, or public health crises, the predictive effectiveness may be compromised. Third, regarding \textbf{predictive granularity}, the current predictions are at the national level; further refinement to the event level would provide more sophisticated decision support.
 
+
+% --- References Section ---
+\begin{thebibliography}{99}
+
+\bibitem{bernard2004} 
+Bernard, A. B., \& Busse, M. R. (2004). Who wins the Olympic Games: Economic resources and medal totals. \textit{The Review of Economics and Statistics}, 86(1), 413-417.
+
+\bibitem{kaggle_medals} 
+Olympic Medals dataset (1896-2024). Retrieved from Kaggle: \url{https://www.kaggle.com/datasets/piterfm/olympic-games-medals-1986-2020}.
+
+\bibitem{worldbank} 
+World Bank Open Data. GDP and Population indicators. \url{https://data.worldbank.org/}.
+
+\bibitem{scikit_learn} 
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... \& Duchesnay, É. (2011). Scikit-learn: Machine learning in Python. \textit{Journal of Machine Learning Research}, 12, 2825-2830.
+
+\bibitem{bcp} 
+Barry, D., \& Hartigan, J. A. (1993). A Bayesian Analysis for Change Point Problems. \textit{Journal of the American Statistical Association}, 88(421), 309-319.
+
+\end{thebibliography}
+
+
 \begin{thebibliography}{99}
 \bibitem{1} D.~E. KNUTH, The \TeX{}book, the American Mathematical Society and Addison-Wesley Publishing Company, 1984-1986.
 \bibitem{2} Lamport, Leslie, \LaTeX{}: ``A Document Preparation System'', Addison-Wesley Publishing Company, 1986.
 \bibitem{3} International Olympic Committee, Olympic Data and Statistics, \url{https://olympics.com/}
 \bibitem{4} Bernard, A. B., and Busse, M. R. (2004). Who wins the Olympic Games: Economic resources and medal totals. \textit{Review of Economics and Statistics}, 86(1), 413-417.
+\bibitem{5}
+Forrest, D., Sanz, I., \& Tena, J. D. (2010). Forecasting national team medal totals at the Summer Olympic Games. \textit{International Journal of Forecasting}, 26(3), 576–588.
+\bibitem{6}
+Lui, H. K., \& Suen, W. (2008). Men, money, and medals: An econometric analysis of the Olympic Games. \textit{Pacific Economic Review}, 13(1), 1–16.
+\bibitem{7}
+Balmer, N., Nevill, A., \& Williams, A. M. (2003). Modelling home advantage in the Summer Olympic Games. \textit{Journal of Sports Sciences}, 21(6), 469–478.
+
+\bibitem{8}
+Zhao, Y., \& Sun, Z. (2025). Medal prediction model based on machine learning. \textit{In Proceedings of the IEEE International Conference} (pp. 2408–2412). IEEE.
 \end{thebibliography}
 
 \begin{appendices}
@@ -689,15 +752,62 @@ feature_columns = [
 \section{Statistical Test Details}
 
 Detailed results of the t-test for host effect verification:
-\begin{itemize}
-    \item Sample sizes: Host ($n_1 = 30$), Non-host ($n_2 = 1405$)
-    \item Means: Host ($\bar{X}_1 = 66.9$), Non-host ($\bar{X}_2 = 11.3$)
-    \item Standard deviations: Host ($s_1 = 57.2$), Non-host ($s_2 = 18.5$)
-    \item t-statistic: $t = 15.0$
-    \item p-value: $p < 0.001$
-    \item Cohen's d: $d = 2.77$ (large effect)
-\end{itemize}
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+Statistic & Value \\
+\midrule
+Host Sample Size $n_1$ & 30 \\
+Non-host Sample Size $n_2$ & 1,405 \\
+Host Mean $\bar{X}_1$ & 66.9 \\
+Non-host Mean $\bar{X}_2$ & 11.3 \\
+Host Standard Deviation $s_1$ & 57.2 \\
+Non-host Standard Deviation $s_2$ & 18.5 \\
+t-statistic & 15.0 \\
+p-value & < 0.001 \\
+Cohen's $d$ & 2.77 (Large Effect) \\
+\bottomrule
+\end{tabular}
+\end{table}
 
+\section{List of Figures}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Figure Number}  & \textbf{Description} \\
+\midrule
+Figure 1 & Modeling Workflow Diagram for Task 1 \\
+Figure 2 & Feature Correlation Heatmap \\
+Figure 3 & Distribution Characteristics of Target Variable \\
+Figure 4 & Comparison Diagram of Host Country Effect \\
+Figure 5  & Feature Importance of Random Forest \\
+Figure 6  & Model Performance Comparison Diagram \\
+Figure 7 & 2028 Medal Prediction Results \\
+Figure 8  & Prediction Confidence Interval Diagram \\
+Figure 9  & Prediction of First-Time Medal-Winning Countries \\
+Figure 10 & Method Workflow Diagram for Problem 2 \\
+Figure 11  & Changepoint Distribution Diagram \\
+Figure 12  & Case Diagram of Lang Ping Effect \\
+Figure 13  & Case Diagram of B\'{e}la K\'{a}rolyi Effect \\
+Figure 14 & DID Effect Estimation Diagram \\
+Figure 15  & Coach Effect Distribution Diagram \\
+Figure 16 & Coaching Investment Recommendations for Three Countries \\
+Figure 17  & Evolution Diagram of Medal Concentration \\
+Figure 18 & Changes in Medal-Winning Countries and Medals per Capita \\
+Figure 19 & Rise Trajectory of Dark Horse Countries \\
+Figure 20 & Sport Competition Pattern Diagram \\
+Figure 21  & Investment Efficiency Matrix Diagram \\
+Figure 22 & Evolution of Market Share of Powerful Countries \\
+Figure 23 & Country Type and Strategy Matrix \\
+Figure 24 & Sensitivity to Regularization Strength \\
+Figure 25 & Sensitivity to Model Category \\
+Figure 26  & Bootstrap Robustness \\
+\bottomrule
+\end{tabular}
+\end{table}
 \end{appendices}
 \end{document}
 
