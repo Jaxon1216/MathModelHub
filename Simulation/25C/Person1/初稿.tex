@@ -22,7 +22,7 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{float}
-\graphicspath{{../../../Coder/问题二/figures/}{../../../Coder/问题三/figures/}{../../../Coder/问题一/figures/}}
+\graphicspath{{Q2 figures/}{Q3figures/}}  % 表示从当前.tex文件所在目录，找同级的Q2 figures文件夹}
 \setlength{\parindent}{1.5em}  % 设置首行缩进长度（1.5em 为常用值，可调整）
 % \usepackage{svg}  % Requires inkscape for SVG conversion
 \title{Data-Driven Olympic Medal Prediction and Coach Effect Quantification: A Multi-Model Framework for 2028 Los Angeles Games}
@@ -476,16 +476,20 @@ Given the absence of direct coach records in the dataset, we employ an indirect 
 
 \begin{figure}[htbp]
     \centering
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{2cm}\textit{[Figure: Q2 Method Flowchart]}\\\texttt{figures/flowchart\_q2\_method.svg}\vspace{2cm}}}
+    \fbox{\parbox{0.9\textwidth}{\centering\vspace{2cm}\textit{flowchart\_q2\_method.svg}\\\texttt{figures/flowchart\_q2\_method.svg}\vspace{2cm}}}
     \caption{Modeling workflow for identifying the Great Coach Effect.}
     \label{fig:q2_workflow}
 \end{figure}
 
 As shown in Figure~\ref{fig:q2_workflow}, the process begins with aggregating athlete data to country-sport-year medal series. The changepoint algorithm flags years where a country's medal count in a sport increases significantly relative to its prior three-Game average (threshold: $\geq 2$ medals and $\geq 80\%$ growth). Concurrently, the flow analysis identifies years where one country's medal decline in a sport coincides with another's rise (threshold: $\geq 2$ medal change), suggesting a potential coach relocation. Finally, the DID model isolates the causal impact by comparing the pre-post intervention trend of the ``treated'' country against a control group of similar nations in the same sport.
 
+
 \begin{figure}[htbp]
     \centering
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{2cm}\textit{[Figure: Changepoint Distribution]}\\\texttt{figures/fig1\_changepoint\_distribution.svg}\vspace{2cm}}}
+    % 替换占位符：用includegraphics插入PDF图，宽度沿用原0.9\textwidth，依赖graphicspath无需写完整路径
+% 把路径换成你从“文件属性”复制的绝对路径（注意把 \ 改成 / 或 \\）
+\includegraphics[width=0.9\textwidth]{fig1_changepoint_distribution.pdf}
+    % 保留原标题和标签，无需修改
     \caption{Distribution of detected changepoints: (a) by year and (b) by sport.}
     \label{fig:changepoint}
 \end{figure}
@@ -503,16 +507,18 @@ To move from evidence to quantification, we apply the Difference-in-Differences 
 
 where $\bar{M}$ represents average medal counts in the pre- and post-intervention periods. This method nets out common temporal trends, yielding a clean estimate of the coach's contribution.
 
-\begin{figure}[htbp]
-    \centering
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{2cm}\textit{[Figure: Lang Ping Effect]}\\\texttt{figures/fig2\_langping\_effect.svg}\vspace{2cm}}}
-    \caption{Case validation: Lang Ping effect on USA/China volleyball medals.}
-    \label{fig:langping}
-\end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{2cm}\textit{[Figure: K\'{a}rolyi Effect]}\\\texttt{figures/fig3\_karolyi\_effect.svg}\vspace{2cm}}}
+    % 替换占位符为实际图片插入命令，文件名对应你Q2 figures里的文件（比如fig2_langping_effect.pdf）
+    \includegraphics[width=0.9\textwidth]{fig2_langping_effect.pdf}
+    \caption{Case validation: Lang Ping effect on USA/China volleyball medals.}
+    \label{fig:langping}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    % 同理替换为实际图片文件（比如fig3_karolyi_effect.pdf）
+    \includegraphics[width=0.9\textwidth]{fig3_karolyi_effect.pdf}
     \caption{Case validation: B\'{e}la K\'{a}rolyi effect on USA/Romania gymnastics medals.}
     \label{fig:karolyi}
 \end{figure}
@@ -526,7 +532,8 @@ The DID estimates indicate that the average ``Great Coach Effect'' contributes b
 
 \begin{figure}[htbp]
     \centering
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{2cm}\textit{[Figure: DID Effects]}\\\texttt{figures/fig4\_did\_effects.svg}\vspace{2cm}}}
+    % 替换为实际图片文件（对应Q2 figures里的fig4_did_effects.pdf）
+    \includegraphics[width=0.9\textwidth]{fig4_did_effects.pdf}
     \caption{DID effect estimates for various identified cases/sports.}
     \label{fig:did_effects}
 \end{figure}
@@ -541,7 +548,8 @@ For each country, we calculate a \emph{Potential Score} that weighs the gap betw
 
 \begin{figure}[htbp]
     \centering
-    \fbox{\parbox{0.9\textwidth}{\centering\vspace{2cm}\textit{[Figure: Investment Recommendations]}\\\texttt{figures/fig6\_investment\_recommendations.svg}\vspace{2cm}}}
+    % 替换为实际图片文件（对应Q2 figures里的fig6_investment_recommendations.pdf）
+    \includegraphics[width=0.9\textwidth]{fig6_investment_recommendations.pdf}
     \caption{Investment recommendations: current vs. projected medal counts for priority sports in selected countries.}
     \label{fig:invest}
 \end{figure}
@@ -579,7 +587,13 @@ Our analysis reveals a fundamental shift in the distribution of athletic power, 
 \end{figure}
 
 This transition from a "superpower monopoly" to a multi-polar competitive system implies that the marginal cost for established powers to maintain their market share is rising. Parallel to this trend, our K-means clustering—based on market share and growth rates—identifies a "Life Cycle" for NOCs, ranging from \textit{Dominant Leaders} to \textit{Traditional Powers in Decline}. 
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\textwidth]{fig6_market_share.pdf}
+    \includegraphics[width=0.48\textwidth]{fig7_country_types.pdf}
+    \caption{Market Share Evolution and K-means Clustering of Country Strategic Types}
+    \label{fig:lifecycle}
+\end{figure}
 
 
 As shown in Figure \ref{fig:lifecycle}, many veteran sporting nations are entering a plateau or decline phase. For these NOCs, the strategic priority must shift from broad-spectrum funding to a "Portfolio Pruning" approach, where 15-20\% of resources are reallocated from stagnant traditional sports to high-growth emerging disciplines (e.g., urban sports). This proactive reallocation is essential to mitigate the "Life Cycle Risk" identified by our model and to sustain overall competitiveness in an increasingly globalized arena.
@@ -587,10 +601,22 @@ As shown in Figure \ref{fig:lifecycle}, many veteran sporting nations are enteri
 \subsection{Mechanism of Breakthrough: Competitive Density and "Rising Star" Forecasting}
 At the micro-level, our model distinguishes between stochastic fluctuations and structural breakthroughs using Bayesian Change Point (BCP) detection. The analysis of "Rising Stars" like Great Britain and Japan indicates that medals are often preceded by a "Finalist Surge"—a sharp uptick in Top-8 finishes. 
 
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\textwidth]{fig2_countries_medals.pdf}
+    \includegraphics[width=0.48\textwidth]{fig3_rising_stars.pdf}
+    \caption{Bayesian Change Point Detection and Rising Star Breakthrough Trajectories}
+    \label{fig:breakthrough}
+\end{figure}
 
 As illustrated in Figure \ref{fig:breakthrough}, this surge serves as a leading indicator of a structural break in a nation's medal trajectory. Furthermore, by evaluating the "Competitive Density" through the Coefficient of Variation ($CV$), we categorize sports into "High-Stability" and "High-Volatility" clusters. 
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\textwidth]{fig4_sport_competition.pdf}
+    \includegraphics[width=0.48\textwidth]{fig5_investment_matrix.pdf}
+    \caption{Competition Density Analysis and Medal ROI Investment Matrix}
+    \label{fig:investment}
+\end{figure}
 
 As visualized in the investment matrix in Figure \ref{fig:investment}, NOCs with limited budgets should adopt an "Asymmetric Competition" strategy. Instead of competing in high-stability sports where the technical gap is entrenched, they should concentrate investment on high-volatility events where the "Medal ROI" (Return on Investment) is statistically higher and "upsets" are more probable. For nations identified as "Emerging Stars," the primary policy recommendation is to optimize the "Finalist-to-Medal Conversion Rate" through targeted high-performance support, effectively bridging the gap between being a contender and being a medalist.
 
