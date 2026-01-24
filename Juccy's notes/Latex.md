@@ -81,15 +81,37 @@
  *   `\centering`：让图片居中。
  *   `[width=8cm]`：设置图片宽度。
  *   `\caption{}`：设置图片的标题（会自动编号）。
-*   ** 方式二：居中环境（无编号）**
+  *   **方式二：居中环境（无编号）**
         ```latex
         \begin{center}
             \includegraphics[width = .88\textwidth]{tu1.jpg}
             图1\quad 等比定律 % \quad 是一个大空格，\qquad 更长
         \end{center}
         ```
-        *   `tu1.jpg` 必须和 `.tex` 文件在同一文件夹下，否则需指定路径。
-        *   Overleaf 中需先上传图片文件。
+        *   `tu1.jpg` 必须和 `.tex` 文件在同一文件夹下，否则需指定路径。x
+*  *   Overleaf 中需先上传图片文件。
+* Sim Exp:VS Code中，使用 \graphicspath 设置搜索路径
+     在导言区设置相对路径
+        latex
+
+        \documentclass{article}
+        \usepackage{graphicx}
+
+        % 设置图片搜索路径（可以设置多个，按顺序查找）
+        \graphicspath{
+         {./}                    % 当前目录
+         {../figures/}           % 上一级的figures文件夹
+            {../../figures/}        % 上两级的figures文件夹
+            {../../../figures/}     % 上三级的figures文件夹
+         {figures/}              % 当前目录下的figures文件夹
+        }
+        \begin{document}
+
+        % 现在只需要写文件名，LaTeX会自动在以上路径中查找
+        \includegraphics[width=0.8\textwidth]{fig1_concentration_trend.pdf}
+
+        \end{document}
+       
     *   **多图并列插入（使用子图）**
         *   需要 `subfigure` 宏包：`\usepackage{subfigure}`
         ```latex
