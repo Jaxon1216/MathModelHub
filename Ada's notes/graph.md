@@ -68,7 +68,7 @@
 - git:https://github.com/awesomedata/awesome-public-datasets
 - 国家统计局（可以查询世界组织）：https://data.stats.gov.cn/index.htm?msg=&isLogin=1&tocken=-6804892717282310220&userName=zyc6586%40qq.com
 - 大数据导航（各国统计局）最推荐：https://hao.199it.com/#google_vignette
-- EPS（没权限）：https://www.epsnet.com.cn/index.html/Index
+- EPS（没权限）：https://www.epsnet.com.cn/index.html#/Index
 - 联合国：https://data.un.org/
 - 
 - ICPSR: [https://www.icpsr.umich.edu/web/pages/ICPSR/index](https://www.icpsr.umich.edu/web/pages/ICPSR/index)
@@ -99,3 +99,124 @@ APA 7th 要求:
 ## 8.模型学习
   spsspro:https://space.bilibili.com/396141319?spm_id_from=333.1387.follow.user_card.click
 - 
+- 
+- 附件：多模态逆向提示词 参考23-1C ![alt text](1-1.png)
+
+graph TD
+    %% ==================== 简化样式 ====================
+    classDef gru fill:#e3f2fd,stroke:#1976d2
+    classDef reg fill:#f3e5f5,stroke:#7b1fa2
+    classDef clu fill:#e8f5e8,stroke:#388e3c
+    classDef com fill:#fff3e0,stroke:#f57c00
+    
+    %% ==================== 标题 ====================
+    T["1.4 Our Work"]
+    
+    %% ==================== 左上：GRU模型 ====================
+    M1_input["input"]
+    M1_reset["reset gate"]
+    M1_gru["GRU model"]
+    M1_update["update gate"]
+    M1_output["output"]
+    M1_pred["prediction"]
+    M1_date["March 1, 2023"]
+    
+    M1_input --> M1_reset
+    M1_reset --> M1_gru
+    M1_gru --> M1_update
+    M1_update --> M1_output
+    M1_output --> M1_pred
+    
+    class M1_input,M1_reset,M1_gru,M1_update,M1_output,M1_pred,M1_date gru
+    
+    %% ==================== 中间：词属性分析 ====================
+    M2_title["Relationship of Word Attributes<br/>and Scores from Percentage"]
+    M2_formula["score = ω₀ + Σp_i + ω₂ × p_x"]
+    
+    M2_reg["Regression Analysis"]
+    M2_wf["Word Frequency"]
+    M2_lf["Letter Frequency"]
+    M2_fword["f_word"]
+    M2_fletter["f_letter"]
+    
+    M2_box["Box Plot Analysis"]
+    M2_rep["Repetition of Letter"]
+    M2_rep_val["rep"]
+    M2_pos_val["pos"]
+    
+    M2_attrs["Word Attributes"]
+    M2_note1["not linearly related"]
+    M2_note2["hard mode"]
+    M2_note3["no obvious diff"]
+    M2_note4["The most 'hellish' level: PARER"]
+    M2_note5["hard to guess"]
+    
+    M2_title --> M2_formula
+    M2_formula --> M2_reg
+    M2_formula --> M2_box
+    
+    M2_reg --> M2_wf --> M2_fword
+    M2_reg --> M2_lf --> M2_fletter
+    
+    M2_box --> M2_rep --> M2_rep_val
+    M2_box --> M2_rep --> M2_pos_val
+    
+    M2_fword --> M2_attrs
+    M2_fletter --> M2_attrs
+    M2_rep_val --> M2_attrs
+    M2_pos_val --> M2_attrs
+    
+    M2_attrs --> M2_note1
+    M2_attrs --> M2_note2
+    M2_attrs --> M2_note3
+    M2_attrs --> M2_note4
+    M2_attrs --> M2_note5
+    
+    class M2_title,M2_formula,M2_reg,M2_wf,M2_lf,M2_fword,M2_fletter,M2_box,M2_rep,M2_rep_val,M2_pos_val,M2_attrs,M2_note1,M2_note2,M2_note3,M2_note4,M2_note5 reg
+    
+    %% ==================== 左下：难度率分类 ====================
+    M3_formula["δ = σω₀ + Σp_i + σω₂ × p_x"]
+    M3_label["Difficulty Rate: δ"]
+    M3_eerie["EERIE"]
+    M3_kmeans["K-Means++"]
+    M3_cluster["Clustering Analysis"]
+    M3_class["Difficulty classification"]
+    
+    M3_formula --> M3_label
+    M3_formula --> M3_eerie
+    M3_kmeans --> M3_cluster --> M3_class
+    
+    class M3_formula,M3_label,M3_eerie,M3_kmeans,M3_cluster,M3_class clu
+    
+    %% ==================== 右侧：GRU+随机森林 ====================
+    M4_title["GRU Prediction Model"]
+    M4_input["input"]
+    M4_grid["Grid Search"]
+    M4_grammars["best grammars"]
+    M4_rf["Random Forest"]
+    M4_pred["Prediction"]
+    M4_date1["March 1, 2023"]
+    M4_date2["March 1, 2023"]
+    
+    M4_title --> M4_input
+    M4_input --> M4_grid
+    M4_grid --> M4_grammars
+    M4_grammars --> M4_rf
+    M4_rf --> M4_pred
+    
+    class M4_title,M4_input,M4_grid,M4_grammars,M4_rf,M4_pred,M4_date1,M4_date2 com
+    
+    %% ==================== 底部标注 ====================
+    CAPTION["Figure 2: Our work"]
+    
+    %% ==================== 连接标题到各模块 ====================
+    T --> M1_input
+    T --> M2_title
+    T --> M3_formula
+    T --> M4_title
+    
+    %% ==================== 连接各模块到底部标注 ====================
+    M1_pred --> CAPTION
+    M2_note5 --> CAPTION
+    M3_class --> CAPTION
+    M4_pred --> CAPTION
