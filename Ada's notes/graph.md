@@ -50,8 +50,18 @@
 - 射线&线段：注意左右水平位置刻度
 - 水平垂直等距分布&向上or向下对齐&设置组合&框选
 - 注意每个部分之间的联系
-- 
-- 
+- 长按+拖拽：更换图形
+- Ctrl+G:转成容器
+- Tree Moving:移动下方所有框
+- Tree Folding:动态图形展示
+- Ctrl Shift :原样复制
+- 浮动连线：按照蓝色滑鼠
+- 图层面板：分层展示Shift 选中-剪切-粘贴新图层
+- deepseek:mermaid形式输出+高级 mermaid格式
+- 空白问题：![alt text](image.png)
+- SVG自定义与导入：文件-导入 网站：https://iconoir.com/ 、https://lucide.dev/icons/ 、 https://remixicon.com/ 
+- 提示词：1.AI生成：我想画一个关于 [你的主题] 的图，但我不知道如何写最精准的提示词。请帮我写一个能生成高质量 Mermaid 代码的提示词。
+- 2.多模态逆向：上传图片-请分析这张图片的结构和逻辑，并将其转换为 Draw.io 可以识别的 Mermaid 代码。保持原图的节点和连接关系。
 ## 5.数据查找：
 - 知网大数据平台（国内）：https://elib.cugb.edu.cn/https/77726476706e69737468656265737421f4f6559d6933665b774687a98c/
 - git:https://github.com/awesomedata/awesome-public-datasets
