@@ -201,6 +201,12 @@
      ```
   * tabularx环境中的X列会自动调整宽度以填满指定的总宽度（\textwidth）
   * 表格内容，字比较多的，换行不好看，可以考虑scale缩放，不行再改字体、 \small或斜体、调整列宽 
+  * 直接scale更方便，在\label{}之后加上```
+      \resizebox{0.95\linewidth}{!}{
+      \begin{tabular}{ll}
+      然后记得
+      \end{tabular}之后加上右括号‘}’
+      最后才\end{table}
 
 ## 插入代码
 *   **前提**：调用 `listings` 宏包 (`\usepackage{listings}`)。
