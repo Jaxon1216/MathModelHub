@@ -62,12 +62,13 @@
 - SVG自定义与导入：文件-导入 网站：https://iconoir.com/ 、https://lucide.dev/icons/ 、 https://remixicon.com/ 
 - 提示词：1.AI生成：我想画一个关于 [你的主题] 的图，但我不知道如何写最精准的提示词。请帮我写一个能生成高质量 Mermaid 代码的提示词。
 - 2.多模态逆向：上传图片-请分析这张图片的结构和逻辑，并将其转换为 Draw.io 可以识别的 Mermaid 代码。保持原图的节点和连接关系。
+- 
 ## 5.数据查找：
 - 知网大数据平台（国内）：https://elib.cugb.edu.cn/https/77726476706e69737468656265737421f4f6559d6933665b774687a98c/
 - git:https://github.com/awesomedata/awesome-public-datasets
 - 国家统计局（可以查询世界组织）：https://data.stats.gov.cn/index.htm?msg=&isLogin=1&tocken=-6804892717282310220&userName=zyc6586%40qq.com
 - 大数据导航（各国统计局）最推荐：https://hao.199it.com/#google_vignette
-- EPS（没权限）：https://www.epsnet.com.cn/index.html#/Index
+- EPS（没权限）：https://www.epsnet.com.cn/index.html/Index
 - 联合国：https://data.un.org/
 - 
 - ICPSR: [https://www.icpsr.umich.edu/web/pages/ICPSR/index](https://www.icpsr.umich.edu/web/pages/ICPSR/index)
