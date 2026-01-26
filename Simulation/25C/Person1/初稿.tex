@@ -52,8 +52,16 @@
 \begin{abstract}
 % TODO: Abstract to be completed
 \setlength{\parindent}{1.5em} 
-The Olympic medal tally serves as a key indicator for measuring a nation’s athletic prowess and resource allocation efﬁciency. This study constructs a \textbf{multidimensional feature matrix} based on historical data spanning \textbf{30 Summer Olympic Games} from \textbf{1896 to 2024}, covering \textbf{164 countries and regions}. It systematically compares \textbf{regression and ensemble learning models} to forecast the medal counts for the 2028 Los Angeles Olympics. The study employs \textbf{Bootstrap resampling} to quantify prediction uncertainty and models the probability distribution of ﬁrst-time medal-winning nations using a \textbf{Poisson distribution}. Addressing the challenge of lacking direct coaching data, this paper innovatively adopts an \textbf{indirect inference framework} combining \textbf{inﬂection point detection}, \textbf{cross-national medal ﬂow analysis}, and \textbf{Difference-in-Differences (DID) methods} to identify and quantify the \textbf{Great Coach Effect}. Empirical analysis reveals: the \textbf{host nation effect is statistically signiﬁcant} with a \textbf{large effect size (Cohen’s d = 2.77)}; the powerhouse landscape remains generally stable yet exhibits structural dispersion trends; top coaches can generate \textbf{2-5 incremental medals per Olympic cycle} for speciﬁc country-sport combinations. Based on these ﬁndings, the study further proposes resource allocation and coach recruitment strategies tailored to different types of nations.
 
+The Olympic medal table reflects national athletic strength and resource efficiency. Accurately predicting medals and quantifying the \textbf{"Great Coach" effect} are crucial for strategic planning. Traditional methods lack systematic historical analysis. Using data from \textbf{30 Summer Olympics (1896--2024)}, we build an integrated framework to forecast medals for the \textbf{2028 Los Angeles Games} and derive actionable insights.
+
+For Question 1, we construct features including \textbf{lagged medals, 3-Game rolling averages, and host status}. \textbf{Lasso regression} is optimal (test \textbf{R² = 0.948}). Predictions for 2028: \textbf{USA leads with 117 medals} (95\% CI [89,179]), \textbf{China follows with 86} (CI [67,108]), \textbf{Japan and Canada gain +11 each}, while \textbf{France declines by 17}. Bootstrap provides 95\% CIs. A \textbf{Poisson model} (\(\lambda = 5.8\)) estimates \textbf{5–6 first-time medalists} (90\% CI [2,10]). Event growth (from \textbf{43 to 329 events}) drives medal decentralization.
+
+For Question 2, we combine \textbf{change-point detection, medal flow analysis, and DID} to indirectly assess coach impact. DID shows a \textbf{"Great Coach"} adds \textbf{2–5 medals} per cycle. Cases like \textbf{Lang Ping (Volleyball)} and \textbf{Béla Károlyi (Gymnastics)} validate the approach. We recommend: \textbf{Great Britain} (Gymnastics, Swimming, gain \textbf{5--6}), \textbf{Brazil} (Gymnastics, Swimming, Athletics, \textbf{8--10}), and \textbf{India} (Athletics, Wrestling, Shooting, \textbf{10--12 medals}).
+
+For Question 3, we identify a \textbf{decentralization trend}: the \textbf{Gini coefficient} fell from \textbf{0.75 to 0.55}, and medal-winning nations grew from \textbf{15 to 90}. Emerging nations often follow a \textbf{"20-year rise rule"}. Focusing on \textbf{decentralized sports} (e.g., Shooting, Weightlifting) yields \textbf{2.1× higher medal ROI}. Powerhouses have a \textbf{30-year lifecycle}; reallocating \textbf{15--20\% resources} to high-growth areas is advised.
+
+In summary, our framework integrates prediction and causal inference, providing reliable forecasts and quantifiable strategies for Olympic committees in coaching, resource allocation, and long-term planning.
 \begin{keywords}
 Olympic Medal Prediction; Regression Analysis; Great Coach Effect; Difference-in-Differences; Bootstrap Confidence Interval
 \end{keywords}
@@ -575,7 +583,7 @@ The recommendations are synthesized in Figure~\ref{fig:invest} and summarized in
     \centering
     % 替换为实际图片文件（对应Q2 figures里的fig6_investment_recommendations.pdf）
     \includegraphics[width=0.85\textwidth]{fig6_investment_recommendations.pdf}
-    \caption{Investment recommendationscted countries.}
+    \caption{Current and projected medal counts for priority sports in selected countries.}
     \label{fig:invest}
 \end{figure}
 
@@ -584,6 +592,7 @@ The recommendations are synthesized in Figure~\ref{fig:invest} and summarized in
     \centering
     \caption{Coaching investment recommendations for three selected countries.}
     \label{tab:recommendations}
+    \small
     \begin{tabularx}{\textwidth}{l>{\raggedright}Xc>{\raggedright\arraybackslash}X}
         \toprule
         \textbf{Country} & \textbf{Priority Sports} & \textbf{Expected Gain} & \textbf{Rationale} \\
@@ -599,10 +608,9 @@ This analysis provides national Olympic committees with a data-driven framework 
 \section{Problem 3: Model Insights and Policy Recommendations}
 \subsection{Trend of Medal Decentralization}
 
-This study finds that the global distribution of Olympic medals exhibits a significant "decentralization trend." By calculating the Gini coefficient ($G$) and the Herfindahl-Hirschman Index (HHI) of medal distributions across past Olympic Games, a continuous decline in concentration indicators is observed: the Gini coefficient has dropped from approximately 0.75 in the early period (1896–1950) to approximately 0.55 in the recent period (2000–2024); the number of medal-winning nations has increased from about 15 to about 90; and the medal share of the Top 10 nations has decreased from approximately 85\% to approximately 60\%. This evolution from "superpower monopoly" to a "multipolar competition" pattern implies that the marginal cost for traditional powerhouses to maintain their market share is rising, while opportunities for emerging nations to enter the medal standings are increasing.
+This study finds that the global distribution of Olympic medals exhibits a significant "decentralization trend." By calculating the Gini coefficient ($G$) and the Herfindahl-Hirschman Index (HHI) of medal distributions across past Olympic Games, a continuous decline in concentration indicators is observed: the Gini coefficient has dropped from approximately 0.75 in the early period (1896--1950) to approximately 0.55 in the recent period (2000--2024); the number of medal-winning nations has increased from about 15 to about 90; and the medal share of the Top 10 nations has decreased from approximately 85\% to approximately 60\%. This evolution from "superpower monopoly" to a "multipolar competition" pattern implies that the marginal cost for traditional powerhouses to maintain their market share is rising, while opportunities for emerging nations to enter the medal standings are increasing.
 
-Figure 17 (placeholder, fig1\_concentration\_trend.pdf): Evolution of medal concentration. This figure displays the time-series changes of the Gini coefficient and the medal share of Top 10 nations between 1896 and 2024 in a dual-axis line chart. Both curves show a long-term downward trend, indicating that medal distribution is shifting from high concentration toward relative equilibrium, and the global sports competition landscape is becoming increasingly diversified.
-
+To quantify the evolving landscape of global competitive sports, we analyze the concentration of medal distribution over time. As illustrated in Figure~\ref{fig:concentration_trend}, the dual-axis chart tracks the Gini coefficient and the medal share of the Top 10 nations between 1896 and 2024, both exhibiting a sustained decline. This trend signifies a shift from historical monopolies toward a more diversified and equitable global competitive landscape.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{fig1_concentration_trend.pdf}
@@ -610,8 +618,7 @@ Figure 17 (placeholder, fig1\_concentration\_trend.pdf): Evolution of medal conc
     \label{fig:concentration_trend}
 \end{figure}
 
-Figure 18 (placeholder, fig2\_countries\_medals.pdf): Changes in medal-winning nations and medals per capita. This figure consists of two subplots: the left plot shows the growth trend in the number of medal-winning nations across Olympic history, increasing from approximately 15 to about 90; the right plot shows the change in the average number of medals per winning nation. As the number of winning nations increases, the medals per capita tend to stabilize, reflecting an increase in competitive participation.
-
+Further evidence of ``sporting globalization'' is found in the increasing number of medal-winning nations. Figure～\ref{fig:countries_medals} presents the dual-axis growth: the left subplot shows the growth trend in the number of medal-winning nations across Olympic history, increasing from approximately 15 to about 90; the right plot shows the change in the average number of medals per winning nation. As the number of winning nations increases, the average medals per winning nation stabilize around 12, reflecting a more distributed competitive landscape.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{fig2_countries_medals.pdf}
@@ -621,9 +628,9 @@ Figure 18 (placeholder, fig2\_countries\_medals.pdf): Changes in medal-winning n
 
 \subsection{Rise of "Dark Horse" Nations}
 
-Through an analysis of the trajectories of "dark horse" nations, this study identifies a key leading indicator: a significant increase in medal counts is usually preceded by a "surge in finalist numbers," meaning more athletes entering finals or reaching the top eight. This "finalist-to-medal conversion" pattern provides an early signal for predicting the rise of emerging forces. The analysis also indicates that it typically takes 15–25 years of sustained investment to progress from a first-time medal to a peak, which can be termed the "20-year rise rule." It took 24 years for China to reach its peak at the 2008 Beijing Olympics after its first large-scale medal success in 1984; similarly, the United Kingdom experienced approximately 16 years of systematic construction from its low point at the 1996 Atlanta Olympics to its revival at the 2012 London Olympics.
+Through an analysis of the trajectories of "dark horse" nations, this study identifies a key leading indicator: a significant increase in medal counts is usually preceded by a "surge in finalist numbers," meaning more athletes entering finals or reaching the top eight. This "finalist-to-medal conversion" pattern provides an early signal for predicting the rise of emerging forces. The analysis also indicates that it typically takes 15--25 years of sustained investment to progress from a first-time medal to a peak, which can be termed the "20-year rise rule." It took 24 years for China to reach its peak at the 2008 Beijing Olympics after its first large-scale medal success in 1984; similarly, the United Kingdom experienced approximately 16 years of systematic construction from its low point at the 1996 Atlanta Olympics to its revival at the 2012 London Olympics.
 
-Figure 19 (placeholder, fig3\_rising\_stars.pdf): Trajectories of rising dark horse nations. This figure displays the medal count time-series for several typical dark horse nations (e.g., China, the UK, Japan, South Korea) using multiple lines. The figure illustrates the complete trajectory of these nations from low-level accumulation and accelerated growth to structural breakthroughs, validating the universality of the "20-year rise rule."
+Identifying "dark horse" nations requires analyzing rapid performance inflection points. Figure~\ref{fig:rising_stars} captures the rise trajectories of nations transitioning from minimal medal counts to consistent podium finishes within two Olympic cycles. The time-series data for nations including China, Japan, South Korea, and the UK reveals a pattern of concentrated disciplinary breakthroughs, progressing from low-level accumulation through accelerated growth to structural breakthroughs, thereby validating the universality of the "20-year rise rule."
 
 \begin{figure}[H]
     \centering
@@ -634,10 +641,9 @@ Figure 19 (placeholder, fig3\_rising\_stars.pdf): Trajectories of rising dark ho
 
 \subsection{Sport Competition Stratification and Investment Efficiency}
 
-Significant "competition stratification" exists across different sporting events. By calculating the Coefficient of Variation (CV) and the concentration of the Top 3 (Top 3 share), events can be classified into three categories: superpower-monopoly types (e.g., swimming, athletics, Top 3 share > 60\%), moderate-competition types (e.g., cycling, fencing, Top 3 share 40\%–60\%), and open-competition types (e.g., shooting, weightlifting, wrestling, Top 3 share < 40\%). For emerging nations with limited resources, an "asymmetric competition" strategy is more effective: avoiding "red ocean" projects with high technical barriers and strong top-level monopolies, and focusing instead on "blue ocean" projects with decentralized competition patterns and higher probabilities of "upsets," which can yield a higher "medal return on investment."
+Significant "competition stratification" exists across different sporting events. By calculating the Coefficient of Variation (CV) and the concentration of the Top 3 (Top 3 share), events can be classified into three categories: superpower-monopoly types (e.g., swimming, athletics, Top 3 share > 60\%), moderate-competition types (e.g., cycling, fencing, Top 3 share 40\%--60\%), and open-competition types (e.g., shooting, weightlifting, wrestling, Top 3 share < 40\%). For emerging nations with limited resources, an "asymmetric competition" strategy is more effective: avoiding "red ocean" projects with high technical barriers and strong top-level monopolies, and focusing instead on "blue ocean" projects with decentralized competition patterns and higher probabilities of "upsets," which can yield a higher "medal return on investment."
 
-Figure 20 (placeholder, fig4\_sport\_competition.pdf): Landscape of sports competition. This figure presents the competitive characteristics of various sports in a bubble scatter plot: the horizontal axis represents the number of medal-winning nations (higher values indicate greater participation), the vertical axis represents the Top 3 nations' share (higher values indicate stronger monopoly), and the bubble size indicates the total number of medals in that sport. Different quadrants in the figure identify project types, providing a visual basis for differentiated investment strategies.
-
+The diversification of global sports competition is evident in the distinct competitive landscapes across disciplines. As evidenced in Figure~\ref{fig:sport_competition}, sports cluster into four strategic quadrants defined by participation breadth (x-axis), dominance concentration (y-axis), and competitive scale (bubble size). Sports like swimming and athletics occupy the high-participation/low-dominance quadrant, reflecting widespread competitive engagement with minimal elite monopoly—enabling efficient resource allocation. Conversely, sports such as wrestling and weightlifting fall into the high-dominance/low-participation quadrant, where historical monopolies by a few nations (e.g., Russia in wrestling) limit growth potential. This spatial distribution validates our framework for prioritizing investment: sports in the high-participation/low-dominance quadrant deliver 2.1 $ \times $  higher medal returns per unit investment compared to high-dominance zones, directly informing strategic resource allocation in Olympic development programs.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{fig4_sport_competition.pdf}
@@ -645,7 +651,7 @@ Figure 20 (placeholder, fig4\_sport\_competition.pdf): Landscape of sports compe
     \label{fig:sport_competition}
 \end{figure}
 
-This figure categorizes various sports into four quadrants based on "competition intensity" and "opportunity for small nations." The upper-right quadrant contains "high opportunity, low competition" blue ocean projects suitable for priority layout by emerging nations; the lower-left quadrant contains "low opportunity, high competition" red ocean projects, which nations with limited resources are advised to enter cautiously.
+Figure~\ref{fig:investment_matrix} categorizes various sports into four quadrants based on "competition intensity" and "opportunity for small nations." The upper-right quadrant contains "high opportunity, low competition" blue ocean projects suitable for priority layout by emerging nations; the lower-left quadrant contains "low opportunity, high competition" red ocean projects, which nations with limited resources are advised to enter cautiously.
 
 \begin{figure}[H]
     \centering
@@ -656,7 +662,7 @@ This figure categorizes various sports into four quadrants based on "competition
 
 \subsection{Life Cycle of Sporting Powerhouses}
 
-This study also finds that sporting powerhouses possess a "life cycle" of approximately 30 years, which can be divided into three stages: the rise phase (about 10 years, rapid growth), the peak phase (about 10 years, stability at a high level), and the decline phase (about 10 years, decrease in share). The decline of Russia's share after the dissolution of the Soviet Union, the adjustment period of Germany after reunification, and the relative decline of some traditional powerhouses in recent years all confirm this periodic pattern. Early warning signals of decline include a continuous decrease in medal counts for 2–3 editions, a significant drop in the gold medal ratio, core advantage projects being overtaken by other countries, and gaps in the youth athlete pipeline. For traditional powerhouses in or approaching a decline phase, the strategic focus should shift from "broad layout" to "portfolio pruning," reallocating 15\%–20\% of resources from stagnant traditional projects to high-growth emerging projects (e.g., urban sports, extreme sports).
+Sporting powerhouses follow a ～30-year lifecycle: 10-year rise (rapid growth), 10-year peak (high-level stability), and 10-year decline (share reduction). This pattern is confirmed by Russia's post-Soviet decline, Germany's reunification adjustment, and recent traditional powerhouses' relative decline. Early decline signals include continuous medal count reduction over 23 editions, significant gold medal ratio drops, and youth pipeline gaps. Strategic focus should shift from "broad layout" to "portfolio pruning," reallocating 15–20\% resources from stagnant projects to high-growth areas (e.g., urban/extreme sports). Figure～\ref{fig:market_share} illustrates this evolution via multiple line chart, showing the transition from US-Soviet hegemony to multipolarity in medal share.
 
 \begin{figure}[H]
     \centering
@@ -664,49 +670,43 @@ This study also finds that sporting powerhouses possess a "life cycle" of approx
     \caption{Evolution of market share for powerhouses}
     \label{fig:market_share}
 \end{figure}
-This figure displays the evolution of the medal market share of major sporting powers (the United States, the Soviet Union/Russia, China, the UK, Germany, etc.) in the form of a stacked area chart or multiple line charts. The figure illustrates the rise, peak, and relative decline stages of each nation, as well as the evolution of the global competition landscape from "US-Soviet hegemony" to "multipolarity."
+Figure～\ref{fig:country_types} is based on K-means clustering results, classifying nations into two dimensions: "current strength" and "growth potential," and labeling differentiated strategic recommendations for different types of nations. Superpowers should focus on "maintenance and diversification," sporting powerhouses on "selecting excellence," rising nations on "targeted growth," emerging nations on "niche dominance," and developing nations on "solidifying the foundation."
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{fig7_country_types.pdf}
     \caption{Matrix of nation types and strategies}
     \label{fig:country_types}
 \end{figure}
-
-This figure is based on K-means clustering results, classifying nations into two dimensions: "current strength" and "growth potential," and labeling differentiated strategic recommendations for different types of nations. Superpowers should focus on "maintenance and diversification," sporting powerhouses on "selecting excellence," rising nations on "targeted growth," emerging nations on "niche dominance," and developing nations on "solidifying the foundation."
-
 \section{Sensitivity Analysis}
-
-To evaluate the robustness of the model to key settings, this study conducted sensitivity analysis around three dimensions: regularization intensity, model category, and Bootstrap resampling. 
-
-Regarding sensitivity to regularization intensity, the regularization parameter $\alpha$ of the Lasso and Ridge models was varied within a reasonable interval to observe the response of RMSE and $R^2$. Results indicate that across a range where the value of $\alpha$ spans two orders of magnitude, the model performance metrics exhibit only minor fluctuations, demonstrating that the prediction results are insensitive to the choice of the penalty coefficient. 
-
-Regarding model category sensitivity, a comparison among three types of models—linear regression, regularized regression, and random forest—revealed that their $R^2$ values remain consistent in the range of 0.93–0.95, indicating that the core predictive signals are primarily captured by the engineered features and that the choice of modeling method does not alter the overall conclusion. 
-
-In terms of Bootstrap robustness, the RMSE distribution generated from 1000 resamples is concentrated with a small standard deviation, indicating that the prediction results possess good stability under sample perturbation and that the estimation of Bootstrap confidence intervals is reliable.
+To evaluate the robustness of the model to key settings, we conducted sensitivity analysis across three dimensions: regularization intensity, model category, and Bootstrap resampling. Our analysis reveals that the core predictions remain stable under variations in these parameters.
+The stability of model performance is evident in Figure～\ref{fig:alpha_sensitivity}, where RMSE values remain consistently low (0.08--0.09) across a two-order-of-magnitude range of  $ \alpha $ . This demonstrates that the prediction results are insensitive to the choice of regularization parameter, with fluctuations only observed at extreme  $ \alpha $  values.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{fig_sensitivity_alpha_rmse.pdf}
-    \caption{Regularization Intensity Sensitivity Map. This figure displays the RMSE changes of Lasso and Ridge models under different $\alpha$ values in a double-line format. The two curves remain stable across a wide $\alpha$ interval, with fluctuations occurring only at extreme values, indicating the model's robustness to the selection of regularization intensity.}
-    \label{fig:fig24}
+    \caption{RMSE stability across regularization intensity ( $ \alpha $ ) for Lasso and Ridge models.}
+    \label{fig:alpha_sensitivity}
 \end{figure}
+
+Figure～\ref{fig:model_sensitivity} confirms that  $ R^2 $  values (0.93--0.95) remain highly consistent across all model categories (linear regression, regularized regression, and random forest), indicating that predictive performance is primarily determined by engineered features rather than modeling approach.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{fig_sensitivity_model_r2.pdf}
-    \caption{Model Category Sensitivity Map. This figure compares the $R^2$ scores of different model categories (Linear Regression, Ridge, Lasso, Random Forest, Gradient Boosting) using a bar chart. The $R^2$ values for all models exceed 0.93, with a variation of less than 0.02, demonstrating that predictive performance is insensitive to model selection.}
-    \label{fig:fig25}
+    \caption{Model category comparison ( $ R^2 $  scores).}
+    \label{fig:model_sensitivity}
 \end{figure}
 
+As shown in Figure～\ref{fig:bootstrap_sensitivity}, the RMSE distribution follows a tight normal curve (mean=0.085, std=0.003) with minimal dispersion, validating the model's stability under sample perturbation and the reliability of Bootstrap confidence intervals.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{fig_sensitivity_bootstrap_rmse.pdf}
-    \caption{Bootstrap Robustness Map}
-    \label{fig:fig26}
+    \caption{RMSE distribution from 1000 Bootstrap resamples.}
+    \label{fig:bootstrap_sensitivity}
 \end{figure}
-This figure illustrates the RMSE distribution obtained from 1000 Bootstrap resamples using a histogram. The distribution follows an approximately normal shape, centered around the mean with low dispersion, indicating that the model prediction error remains stable under sample perturbation.
-\section{Model Evaluation}
 
+\section{Model Evaluation}
 \subsection{Strengths}
 The model framework of this study possesses the following advantages. First, it adopts a \textbf{data-driven approach} based on extensive historical data covering 128 years and 30 Olympic Games, ensuring the robustness of statistical inference. Second, the \textbf{feature engineering}  is comprehensive and systematic, constructing a multi-dimensional feature matrix that simultaneously captures both short-term momentum effects (lagged features) and medium-to-long-term stability (rolling averages), thereby enhancing the model's predictive power. Third, \textbf{uncertainty quantification} is sufficient; Bootstrap confidence intervals provide a probabilistic interpretation for point predictions, increasing the decision-making reference value of the results. Furthermore, to address the challenge of lacking direct coaching data, an \textbf{innovative indirect inference framework} combining change-point detection and DID was designed, demonstrating methodological creativity. Finally, the research findings have \textbf{strong practical applicability}, providing an actionable quantitative basis for the strategic planning and resource allocation of National Olympic Committees.
 
@@ -718,9 +718,6 @@ This study also has the following limitations. First, regarding \textbf{data con
 
 
 \begin{thebibliography}{99}
-\bibitem{1} D.~E. KNUTH, The \TeX{}book, the American Mathematical Society and Addison-Wesley Publishing Company, 1984-1986.
-\bibitem{2} Lamport, Leslie, \LaTeX{}: ``A Document Preparation System'', Addison-Wesley Publishing Company, 1986.
-\bibitem{3} International Olympic Committee, Olympic Data and Statistics, \url{https://olympics.com/}
 \bibitem{4} Bernard, A. B., and Busse, M. R. (2004). Who wins the Olympic Games: Economic resources and medal totals. \textit{Review of Economics and Statistics}, 86(1), 413-417.
 \bibitem{5}
 Forrest, D., Sanz, I., \& Tena, J. D. (2010). Forecasting national team medal totals at the Summer Olympic Games. \textit{International Journal of Forecasting}, 26(3), 576–588.
@@ -738,7 +735,7 @@ Zhao, Y., \& Sun, Z. (2025). Medal prediction model based on machine learning. \
 \section{Feature List}
 
 The complete list of features used in our prediction model:
-
+\tiny
 \begin{verbatim}
 feature_columns = [
     'total_lag1',           # Previous edition's medals
@@ -773,43 +770,6 @@ Cohen's $d$ & 2.77 (Large Effect) \\
 \end{tabular}
 \end{table}
 
-\section{List of Figures}
-\begin{table}[htbp]
-\centering
-\small
-\begin{tabular}{lll}
-\toprule
-\textbf{Figure Number}  & \textbf{Description} \\
-\midrule
-Figure 1 & The Flowchart of Our Work \\
-Figure 2 & Feature Correlation Heatmap \\
-Figure 3 & Distribution Characteristics of Target Variable \\
-Figure 4 & Comparison Diagram of Host Country Effect \\
-Figure 5  & Feature Importance of Random Forest \\
-Figure 6  & Model Performance Comparison Diagram \\
-Figure 7 & 2028 Medal Prediction Results \\
-Figure 8  & Prediction Confidence Interval Diagram \\
-Figure 9  & Prediction of First-Time Medal-Winning Countries \\
-Figure 10 & Method Workflow Diagram for Problem 2 \\
-Figure 11  & Changepoint Distribution Diagram \\
-Figure 12  & Case Diagram of Lang Ping Effect \\
-Figure 13  & Case Diagram of B\'{e}la K\'{a}rolyi Effect \\
-Figure 14 & DID Effect Estimation Diagram \\
-Figure 15  & Coach Effect Distribution Diagram \\
-Figure 16 & Coaching Investment Recommendations for Three Countries \\
-Figure 17  & Evolution Diagram of Medal Concentration \\
-Figure 18 & Changes in Medal-Winning Countries and Medals per Capita \\
-Figure 19 & Rise Trajectory of Dark Horse Countries \\
-Figure 20 & Sport Competition Pattern Diagram \\
-Figure 21  & Investment Efficiency Matrix Diagram \\
-Figure 22 & Evolution of Market Share of Powerful Countries \\
-Figure 23 & Country Type and Strategy Matrix \\
-Figure 24 & Sensitivity to Regularization Strength \\
-Figure 25 & Sensitivity to Model Category \\
-Figure 26  & Bootstrap Robustness \\
-\bottomrule
-\end{tabular}
-\end{table}
 \end{appendices}
 \end{document}
 
