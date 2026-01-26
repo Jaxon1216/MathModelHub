@@ -59,7 +59,7 @@
 - 图层面板：分层展示Shift 选中-剪切-粘贴新图层
 - deepseek:mermaid形式输出+高级 mermaid格式
 - 空白问题：![alt text](image.png)
-- SVG自定义与导入：文件-导入 网站：https://iconoir.com/ 、https://lucide.dev/icons/ 、 https://remixicon.com/(箭头等指示标）、https://www.flaticon.com/
+- SVG自定义与导入：文件-导入 网站：https://iconoir.com/ 、https://lucide.dev/icons/ 、 https://remixicon.com/  箭头等指示标）、https://www.flaticon.com/
 - 提示词：1.AI生成：我想画一个关于 [你的主题] 的图，但我不知道如何写最精准的提示词。请帮我写一个能生成高质量 Mermaid 代码的提示词。
 - 2.多模态逆向：上传图片-请分析这张图片的结构和逻辑，并将其转换为 Draw.io 可以识别的 Mermaid 代码。保持原图的节点和连接关系。
 - 
