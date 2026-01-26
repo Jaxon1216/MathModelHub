@@ -1,0 +1,8 @@
+- `total_lag1`：上届总奖牌数
+- `total_lag2`：上两届总奖牌数  
+- `gold_lag1`：上届金牌数
+- `total_rolling3_mean`：近三届平均奖牌数
+- `is_host`：东道主标识
+- `total_events`：当届项目总数
+- `participation_count`：参赛届数
+- `total_rolling3_mean`:过去3届的平均奖牌数
