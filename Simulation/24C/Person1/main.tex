@@ -10,25 +10,30 @@
 \usepackage{subfigure}
 \usepackage{booktabs}
 \usepackage{multirow}
-
+\usepackage{indentfirst}
+\usepackage{float}
 \title{Capturing the Ebb and Flow: A Dynamic Momentum Model for Tennis Match Analysis}
 
 \begin{document}
+
 \begin{abstract}
-Tennis matches often exhibit dramatic shifts in performance, commonly attributed to ``momentum.'' This paper develops a comprehensive framework to quantify, validate, and predict momentum in professional tennis. We propose a \textbf{Dynamic Momentum Score (DMS)} model inspired by ELO rating systems, which captures match flow by incorporating serve advantage (calibrated from data: 67.31\% serve win rate), key point weighting, streak bonuses, and natural decay. Applied to 31 matches (7,284 points) from the 2023 Wimbledon Championships, our model achieves \textbf{90.3\%} accuracy in predicting match winners based on average momentum.
+% Summary Sheet LaTeX Code
+\setlength{\parindent}{1.5em}
 
-To validate momentum as a real phenomenon, we employ three statistical tests: the runs test, conditional probability analysis, and chi-square test. Results strongly reject the null hypothesis of randomness, showing that winning probability after a previous win (54.4\%) significantly exceeds baseline probability (51.0\%), with $p < 0.001$.
+Tennis momentum swings are frequently decisive yet remain hard to quantify. This paper develops a comprehensive \textbf{Dynamic Momentum Score (DMS)} framework to identify, validate, and predict match flow. Utilizing point-level data from the \textbf{2023 Wimbledon Championships (7,284 points)}, we established a recursive scoring system based on \textbf{ELO-rating principles}. The model integrates a serve-advantage calibration (weighted by the observed \textbf{67.31\%} win rate), key-point multipliers, and a time-decay mechanism. \textbf{Results indicate that the average DMS achieves a 90.3\% accuracy in predicting match winners.}
 
-For momentum shift prediction, we develop a \textbf{Random Forest classifier} achieving AUC of \textbf{0.945}. Feature importance analysis reveals that current momentum state, rally count, and point difference are the strongest predictors. Leave-one-match-out cross-validation confirms robust generalization with AUC of 0.941.
+To verify momentum as a physical reality, we conducted a \textbf{statistical validation suite}, including \textbf{Runs Tests} and \textbf{Conditional Probability Analysis}. The data-driven analysis reveals that a player's winning probability after a successful point rises to \textbf{54.4\%}, significantly exceeding the \textbf{51.0\%} baseline win rate (\textbf{$p < 0.001$}). These findings provide robust evidence that momentum is a \textbf{statistically significant, non-random phenomenon} in elite tennis rather than a simple random walk.
 
-Sensitivity analysis demonstrates model robustness across parameter variations, with serve advantage being the most influential parameter. We conclude with practical recommendations for coaches on managing momentum during critical match situations.
+For predicting momentum ``swings,'' we developed a \textbf{Random Forest (RF) Classifier} utilizing a multi-dimensional feature matrix of DMS gradients and rally counts. The predictive framework achieved a high \textbf{Area Under the Curve (AUC) of 0.945}. Feature importance identification confirms that ``current momentum state'' and ``rally length'' are the strongest predictors of impending shifts. \textbf{Leave-one-match-out cross-validation further confirms robust generalization with an AUC of 0.941.}
+
+Finally, \textbf{sensitivity analysis} on decay constants and weights ensures model stability across diverse conditions. Our study concludes that while momentum is persistent, it is highly susceptible to ``pivotal points.'' We advise that psychological intervention is most critical during high-rally-count points where DMS gradients fluctuate. \textbf{The proposed framework is versatile and can be generalized to other point-based sports to optimize strategic decision-making.}
 
 \begin{keywords}
 Tennis Momentum; Dynamic Scoring Model; Statistical Validation; Random Forest; Leave-One-Out Cross-Validation
 \end{keywords}
 \end{abstract}
 \maketitle
-
+\setcounter{page}{2}
 \tableofcontents
 \newpage
 
@@ -61,6 +66,11 @@ To address these challenges, we develop a comprehensive analytical framework:
     \item We train a \textbf{Random Forest classifier} to predict momentum shifts, using feature importance analysis to identify key factors.
     \item We conduct \textbf{leave-one-match-out cross-validation} to assess generalization capability and discuss broader applicability.
 \end{itemize}
+\begin{figure}[H]
+            \centering
+            \includegraphics[width = .9\textwidth]{Ourwork .pdf}
+            \caption{Our Work}
+        \end{figure}
 
 %% ==================== PREPARATION ====================
 \section{Preparation for Modeling}
@@ -130,16 +140,16 @@ The dataset contains 7,284 points from 31 matches in the 2023 Wimbledon Men's Si
     \end{table}
     
     \item \textbf{Feature Engineering}: We created derived features including:
-    \begin{itemize}
-        \item \texttt{global\_point\_idx}: Sequential point number within each match
-        \item \texttt{point\_diff}: Cumulative point difference between players
-        \item \texttt{p1\_rolling\_win\_rate\_5/10}: Rolling win rates with 5 and 10 point windows. We tested window sizes of 3, 5, 7, 10, 15, and 20 points. Correlation analysis between rolling win rate and next-point outcome shows that window size 7 achieves the strongest correlation ($r=-0.128$), followed by window 5 ($r=-0.101$). We chose window 5 as the primary feature because it (a) has strong predictive correlation, (b) matches a typical game length in tennis (4--6 points), and (c) provides sufficient responsiveness to recent performance changes.
-        \item \texttt{p1\_streak/p2\_streak}: Current winning streak length
-        \item \texttt{is\_break\_point/is\_key\_point}: Binary indicators for critical points
-        \item \texttt{point\_duration}: Time elapsed since previous point
-    \end{itemize}
-    \item \textbf{Data Type Conversion}: Elapsed time converted to seconds; categorical variables converted to category type.
-\end{enumerate}
+\begin{itemize}
+    % 核心修改：\small{\textit{\texttt{xxx}}} 实现“小号+斜体+等宽”
+    \item \small{\textit{\texttt{global\_point\_idx}}}: Sequential point number within each match
+    \item \small{\textit{\texttt{point\_diff}}}: Cumulative point difference between players
+    \item \small{\textit{\texttt{p1\_rolling\_win\_rate\_5/10}}}: Rolling win rates with 5 and 10 point windows. We tested window sizes of 3, 5, 7, 10, 15, and 20 points. Correlation analysis between rolling win rate and next-point outcome shows that window size 7 achieves the strongest correlation ($r=-0.128$), followed by window 5 ($r=-0.101$). We chose window 5 as the primary feature because it (a) has strong predictive correlation, (b) matches a typical game length in tennis (4--6 points), and (c) provides sufficient responsiveness to recent performance changes.
+    \item \small{\textit{\texttt{p1\_streak/p2\_streak}}}: Current winning streak length
+    \item \small{\textit{\texttt{is\_break\_point/is\_key\_point}}}: Binary indicators for critical points
+    \item \small{\textit{\texttt{point\_duration}}}: Time elapsed since previous point
+\end{itemize}
+\item \textbf{Data Type Conversion}: Elapsed time converted to seconds; categorical variables converted to category type.\end{enumerate}
 
 %% ==================== PROBLEM 1 ====================
 \section{Problem 1: Momentum Quantification Model}
@@ -218,10 +228,10 @@ The default $\gamma = 0.02$ means momentum decays by 2\% per point, roughly halv
 
 We applied the DMS model to all 31 matches. Figure \ref{fig:momentum_curve} displays the momentum trajectory for the 2023 Wimbledon Final between Alcaraz and Djokovic.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/fig1_final_momentum_curve.pdf}
-\caption{Momentum curve for the 2023 Wimbledon Final. Positive values indicate Alcaraz's advantage; negative values indicate Djokovic's advantage. Vertical dashed lines mark set boundaries.}
+\includegraphics[width=0.75\textwidth]{figures/fig1_final_momentum_curve.pdf}
+\caption{Momentum curve for the 2023 Wimbledon Final}
 \label{fig:momentum_curve}
 \end{figure}
 
@@ -229,8 +239,8 @@ The visualization reveals clear momentum swings corresponding to each set's outc
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig2_momentum_heatmap.pdf}
-\caption{Momentum heatmap by set for the final match, showing the distribution of momentum states within each set.}
+\includegraphics[width=0.75\textwidth]{figures/fig2_momentum_heatmap.pdf}
+\caption{Momentum heatmap}
 \label{fig:momentum_heatmap}
 \end{figure}
 
@@ -240,9 +250,9 @@ Figure~\ref{fig:momentum_heatmap} provides a complementary view of momentum dist
 
 To assess predictive validity, we computed average momentum for each match and compared it with actual winners:
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
-\caption{Momentum model performance across all matches.}
+\caption{Momentum model performance across all matches}
 \label{tab:momentum_performance}
 \begin{tabular}{lc}
 \toprule
@@ -256,14 +266,14 @@ Prediction Accuracy & 90.3\% \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{figures/fig5_momentum_vs_result.pdf}
-\caption{Relationship between average momentum and match outcome. Positive average momentum strongly correlates with Player 1 victories.}
+\includegraphics[width=0.75\textwidth]{figures/fig5_momentum_vs_result.pdf}
+\caption{Relationship between average momentum and match outcome}
 \label{fig:momentum_vs_result}
 \end{figure}
 
-As illustrated in Figure \ref{fig:momentum_vs_result}, matches with positive average momentum predominantly resulted in Player 1 victories, confirming the model's discriminative power.
+Matches with positive average momentum predominantly resulted in Player 1 victories, confirming the model's discriminative power.As illustrated in Figure \ref{fig:momentum_vs_result}
 
 %% ==================== PROBLEM 2 ====================
 \section{Problem 2: Statistical Validation of Momentum}
@@ -281,10 +291,10 @@ E(R) = \frac{2n_1 n_2}{n_1 + n_2} + 1
 
 where $n_1$ and $n_2$ are the total points won by each player.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig1_runs_test_distribution.pdf}
-\caption{Distribution of runs ratio (observed/expected) across all matches. Values below 1.0 indicate fewer runs than expected, suggesting clustering of wins.}
+\includegraphics[width=0.75\textwidth]{figures/fig1_runs_test_distribution.pdf}
+\caption{Distribution of runs ratio (observed/expected) across all matches}
 \label{fig:runs_test}
 \end{figure}
 
@@ -299,7 +309,7 @@ P(\text{Win}_t | \text{Win}_{t-1}) \quad \text{vs} \quad P(\text{Win})
 
 \textbf{Calculation Scope:} We analyze all 7,284 points across 31 matches, using lagged outcomes to avoid within-point correlation. The analysis distinguishes serve/receive contexts:
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \caption{Conditional probability analysis by serve context.}
 \label{tab:cond_prob}
@@ -310,19 +320,13 @@ P(\text{Win}_t | \text{Win}_{t-1}) \quad \text{vs} \quad P(\text{Win})
 Overall (P1) & 51.07\% & 7,253 \\
 P1 Won Last Point & 54.35\% & 3,675 \\
 P1 Lost Last Point & 47.65\% & 3,578 \\
-\midrule
 P1 Serving & 68.72\% & -- \\
 P1 Receiving & 34.10\% & -- \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{figures/fig2_conditional_probability.pdf}
-\caption{Conditional probability comparison. The probability of winning after a previous win (54.35\%) significantly exceeds baseline probability (51.07\%).}
-\label{fig:conditional_prob}
-\end{figure}
+
 
 Key findings (visualized in Figure~\ref{fig:conditional_prob}):
 \begin{itemize}
@@ -331,7 +335,12 @@ Key findings (visualized in Figure~\ref{fig:conditional_prob}):
     \item Difference: \textbf{3.29 percentage points}
     \item Server advantage effect: P1 wins 68.72\% when serving vs 34.10\% when receiving, confirming the importance of controlling for serve in momentum analysis.
 \end{itemize}
-
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{figures/fig2_conditional_probability.pdf}
+\caption{Conditional probability comparison}
+\label{fig:conditional_prob}
+\end{figure}
 \subsection{Chi-Square Test}
 
 A chi-square test confirms the statistical significance of the conditional probability difference:
@@ -358,10 +367,11 @@ where $\tau = 1.0$ is a threshold to filter minor fluctuations.
 
 \textbf{Threshold Selection:} We tested $\tau \in \{0.5, 0.75, 1.0, 1.25, 1.5, 2.0\}$ via sensitivity analysis. Table~\ref{tab:threshold_sensitivity} summarizes the results.
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \caption{Threshold sensitivity analysis for momentum shift definition.}
 \label{tab:threshold_sensitivity}
+\resizebox{0.45\linewidth}{!}{
 \begin{tabular}{lccc}
 \toprule
 \textbf{Threshold $\tau$} & \textbf{Shift Events} & \textbf{Shift Rate} & \textbf{CV AUC} \\
@@ -374,13 +384,14 @@ where $\tau = 1.0$ is a threshold to filter minor fluctuations.
 2.00 & 5 & 0.07\% & N/A \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 Figure~\ref{fig:threshold_sensitivity} visualizes the trade-off between threshold stringency and model performance. The left panel shows how the number of detected shift events decreases as the threshold increases, reflecting a more restrictive definition of meaningful momentum shifts. The right panel demonstrates that prediction AUC remains relatively stable across a range of thresholds but degrades when the sample size becomes insufficient at higher thresholds.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/fig3_threshold_sensitivity.pdf}
+\includegraphics[width=0.75\textwidth]{figures/fig3_threshold_sensitivity.pdf}
 \caption{Threshold sensitivity analysis for momentum shift definition. Left: Number of detected shift events vs threshold value. Right: Cross-validation AUC vs threshold value, showing stable performance up to $\tau = 1.25$.}
 \label{fig:threshold_sensitivity}
 \end{figure}
@@ -401,6 +412,7 @@ Based on domain knowledge and data availability, we select 14 predictive feature
 \centering
 \caption{Features used for momentum shift prediction.}
 \label{tab:features}
+\resizebox{0.65\linewidth}{!}{
 \begin{tabular}{ll}
 \toprule
 \textbf{Category} & \textbf{Features} \\
@@ -413,16 +425,18 @@ Point Criticality & is\_break\_point, is\_key\_point \\
 Rally Characteristics & rally\_count, point\_duration \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 \subsection{Model Selection and Comparison}
 
 We compared three classifiers using 5-fold cross-validation:
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \caption{Model comparison (5-fold CV AUC).}
 \label{tab:model_comparison}
+\resizebox{0.45\linewidth}{!}{
 \begin{tabular}{lcc}
 \toprule
 \textbf{Model} & \textbf{Mean AUC} & \textbf{Std AUC} \\
@@ -432,6 +446,7 @@ Random Forest & 0.915 & 0.026 \\
 Gradient Boosting & 0.987 & 0.004 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 While Gradient Boosting achieves the highest AUC (0.987), we selected \textbf{Random Forest} for final deployment because:
@@ -452,10 +467,10 @@ Final Random Forest configuration:
 
 \subsection{Model Performance}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{figures/fig1_roc_curve.pdf}
-\caption{ROC curve for momentum shift prediction. The model achieves AUC = 0.945.}
+\includegraphics[width=0.65\textwidth]{figures/fig1_roc_curve.pdf}
+\caption{ROC curve for momentum shift prediction}
 \label{fig:roc_curve}
 \end{figure}
 
@@ -466,17 +481,16 @@ The model achieves strong predictive performance (see Figure~\ref{fig:roc_curve}
 \end{itemize}
 
 \subsection{Feature Importance Analysis}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\textwidth]{figures/fig2_feature_importance.pdf}
-\caption{Feature importance ranking from Random Forest. Current momentum state, rally count, and point difference are the strongest predictors.}
-\label{fig:feature_importance}
-\end{figure}
-
 Figure~\ref{fig:feature_importance} and Table~\ref{tab:feature_importance} present the complete feature importance ranking from the Random Forest model.
 
-\begin{table}[h]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/fig2_feature_importance.pdf}
+\caption{Feature importance ranking from Random Forest}
+\label{fig:feature_importance}
+\end{figure}
+\begin{table}[H]
+\small
 \centering
 \caption{Complete feature importance ranking.}
 \label{tab:feature_importance}
@@ -528,17 +542,18 @@ Based on our analysis, we provide the following strategic recommendations:
 \subsection{Leave-One-Match-Out Cross-Validation}
 
 To rigorously test generalization, we employ Leave-One-Match-Out (LOMO) cross-validation: for each of the 31 matches, we train on 30 matches and evaluate on the held-out match. Figure~\ref{fig:lomo_results} displays the results for each match.
-
-\begin{figure}[h]
+Each bar represents AUC for a held-out match.
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/fig1_lomo_results.pdf}
-\caption{Leave-one-match-out cross-validation results. Each bar represents AUC for a held-out match.}
+\includegraphics[width=0.65\textwidth]{figures/fig1_lomo_results.pdf}
+\caption{Leave-one-match-out cross-validation results}
 \label{fig:lomo_results}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[H]
+\small
 \centering
-\caption{LOMO cross-validation performance summary.}
+\caption{LOMO cross-validation performance summary}
 \label{tab:lomo_performance}
 \begin{tabular}{lc}
 \toprule
@@ -557,7 +572,8 @@ The model demonstrates consistent performance across different match types and r
 
 \subsection{Performance Across Tournament Rounds}
 
-\begin{table}[h]
+\begin{table}[H]
+\small
 \centering
 \caption{Model performance by tournament round (LOMO cross-validation).}
 \label{tab:round_performance}
@@ -574,14 +590,14 @@ Final & 1 & 0.988 & 100\% \\
 \end{tabular}
 \end{table}
 
-\noindent Note: Some matches in LOMO validation were excluded when they contained insufficient momentum shift events ($<$1 event) for testing.
+\small\noindent Note: Some matches in LOMO validation were excluded when they contained insufficient momentum shift events ($<$1 event) for testing.
 
 Figure~\ref{fig:round_performance} provides a visual representation of model performance across tournament rounds. The bar chart displays individual match AUC scores, with green bars indicating correct winner prediction and red bars indicating incorrect predictions. The vertical dashed lines separate different tournament rounds, revealing a clear trend of improving performance in later stages.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/fig2_round_performance.pdf}
-\caption{Model performance by tournament round. Each bar represents a match's AUC score, colored by winner prediction accuracy (green = correct, red = incorrect). Vertical dashed lines separate tournament rounds. The red horizontal line indicates the mean AUC across all matches.}
+\includegraphics[width=0.75\textwidth]{figures/fig2_round_performance.pdf}
+\caption{Model performance by tournament round}
 \label{fig:round_performance}
 \end{figure}
 
@@ -598,14 +614,15 @@ Performance improves in later rounds. The final match (Alcaraz vs Djokovic) achi
 
 We assessed the applicability of our momentum framework to other sports contexts based on structural similarity to tennis (point-by-point scoring, server advantage, etc.). Figure~\ref{fig:applicability} and Table~\ref{tab:applicability} summarize our assessment.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{figures/fig3_applicability.pdf}
+\includegraphics[width=0.7\textwidth]{figures/fig3_applicability.pdf}
 \caption{Estimated applicability scores for different sports and contexts.}
 \label{fig:applicability}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[H]
+\small
 \centering
 \caption{Model applicability assessment.}
 \label{tab:applicability}
@@ -629,7 +646,8 @@ Team Sports & Low & Requires multi-agent modeling \\
 
 We assess the sensitivity of the DMS model to its four key parameters via grid search. Figure~\ref{fig:param_sensitivity} visualizes the sensitivity landscape.
 
-\begin{table}[h]
+\begin{table}[H]
+\small
 \centering
 \caption{Parameter grid search results.}
 \label{tab:grid_search}
@@ -645,10 +663,10 @@ decay\_rate & 0.0--0.05 & 0.0--0.05 & 0.02 & 90.3\% (stable) \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{figures/fig1_momentum_params_sensitivity.pdf}
-\caption{Sensitivity of momentum model to parameter variations. Serve advantage shows highest sensitivity.}
+\includegraphics[width=0.75\textwidth]{figures/fig1_momentum_params_sensitivity.pdf}
+\caption{Sensitivity of momentum model to parameter variations}
 \label{fig:param_sensitivity}
 \end{figure}
 
@@ -668,9 +686,9 @@ Cross-validation AUC remains stable across reasonable hyperparameter ranges:
     \item \textbf{Min samples split}: Minimal impact on AUC
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{figures/fig5_sensitivity_summary.pdf}
+\includegraphics[width=0.7\textwidth]{figures/fig5_sensitivity_summary.pdf}
 \caption{Summary of sensitivity indices for all model parameters.}
 \label{fig:sensitivity_summary}
 \end{figure}
@@ -768,9 +786,9 @@ By understanding momentum dynamics, coaches can better prepare players for the p
 \end{thebibliography}
 
 %% ==================== AI REPORT ====================
-\section{Report on Use of AI}
+\section*{Report on Use of AI}
 
-\subsection{AI Tools Used}
+\subsection*{AI Tools Used}
 
 We utilized AI assistance for the following tasks:
 

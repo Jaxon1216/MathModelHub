@@ -273,22 +273,27 @@
 | `-`      | -        | hyphen（连字符） | 单词断行、复合词（如 `state-of-the-art`） |
 | `--`     | –        | en dash（短破折号） | 表示范围（1896–1950, pages 10–15）✅ |
 | `---`    | —        | em dash（长破折号） | 插入语、强调（The result—surprisingly—was null.） |
-
+# 美赛论文撰写注意事项
 > 📌 **规范提示**：在学术写作（包括美赛 MCM/ICM 论文）中，日期或数字范围必须使用 en dash（–），这是排版基本规范。
-- 数学符号必须用 LaTeX 命令
+> 范围 → “--”
+- **数学符号**必须用 LaTeX 命令
 
     乘号：\times（生成 ×）
     除号：\div（生成 ÷）
     不等号：\geq（生成 ≥）
     （禁止直接输入符号或字母）
+    注意都要前后加上‘$’!
 
   - 空格规范
 >
     正确：2.1 $ \times $ （无空格）
     错误：2.1  $ \times $ （多空格破坏数字连贯性）
     （美赛论文要求数字与符号无缝衔接）
-
-   - 上下文必须明确
->
-    ✅ “2.1 ×× higher returns”（明确指“2.1倍”）
-    ❌ “2.1x higher returns”（被解读为“2.1 × x”）
+- 页码注意：content开始是第二页，要手动调一下（因为模板中title页单独出来了）
+  ```\end{abstract} 和 \tableofcontents 之间加：\setcounter{page}{2}```
+- 首行缩进 模板中第一段不缩进SOL:引入 indentfirst 宏包
+  在文件的导言区（即 \documentclass 之后，\begin{document} 之前）添加：
+     ``` \usepackage{indentfirst} % 强制让每一章节的第一段也进行首行缩进```
+  - 对需要单独调的summary部分：在 \begin{abstract} 后面紧跟一个 ```\indent```
+  - 手动控制：如果引入宏包后某一段仍未缩进（说是极少数情况 实际总遇到），可以在该段开头手动输入``` \indent```或```\setlength{\parindent}{1.5em}```；反之，若想让某段不缩进，使用 ```\noindent```
+- 插入图表 要强制某一位置[H] ,导言区记得加宏包```\usepackage{float}```
