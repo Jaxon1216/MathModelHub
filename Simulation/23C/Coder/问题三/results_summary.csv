@@ -1,0 +1,2 @@
+task,target_word,target_date,best_model,n_bootstrap,n_training_samples
+Result Distribution Prediction,EERIE,2023-03-01,Random Forest,200,359
