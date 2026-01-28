@@ -1,0 +1,2 @@
+analysis_type,n_samples,hard_mode_ratio_mean,hard_mode_ratio_std,regression_r_squared,regression_f_pvalue,n_significant_corr,n_significant_reg,rf_cv_r2_mean,rf_cv_r2_std,conclusion
+Word Attributes vs Hard Mode Ratio,359,0.07763431416133591,0.05058653465890615,0.013285898727749657,0.9098252658677434,0,0,-26.00474319610662,15.459670130174452,No significant relationship

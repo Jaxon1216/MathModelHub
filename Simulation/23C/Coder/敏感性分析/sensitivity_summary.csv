@@ -1,0 +1,5 @@
+Feature,Q3_Sensitivity,Q4_Sensitivity,Avg_Sensitivity
+min_letter_freq,0.023971777184394,1.5335051546391758,0.7787384659117849
+avg_letter_freq,0.052326713395638616,0.5347938144329898,0.2935602639143142
+num_repeated_letters,0.0,0.0,0.0
+num_vowels,0.0,0.0,0.0
