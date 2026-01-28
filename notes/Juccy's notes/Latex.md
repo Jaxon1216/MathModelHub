@@ -207,6 +207,7 @@
       然后记得
       \end{tabular}之后加上右括号‘}’
       最后才\end{table}
+  - 就想把字体放小：在**表格环境（table）内部、开始tabular/tabularx之前**添加```\small```命令
 
 ## 插入代码
 *   **前提**：调用 `listings` 宏包 (`\usepackage{listings}`)。
@@ -297,3 +298,8 @@
   - 对需要单独调的summary部分：在 \begin{abstract} 后面紧跟一个 ```\indent```
   - 手动控制：如果引入宏包后某一段仍未缩进（说是极少数情况 实际总遇到），可以在该段开头手动输入``` \indent```或```\setlength{\parindent}{1.5em}```；反之，若想让某段不缩进，使用 ```\noindent```
 - 插入图表 要强制某一位置[H] ,导言区记得加宏包```\usepackage{float}```
+- MEMORANDUM 新开一页来放，没页眉 → 在```\newpage```和```\section{Memorandum}```之间加```\thispagestyle{fancy}```
+- ASSUMPTION 部分的Justification前面加箭头用```$\rightarrow\ $ ```
+# 典型报错处理
+-  “Missing $ inserted”
+   -  核心问题是“特征名称中的下划线未正确处理”——LaTeX中 plain text（普通文本）里的下划线_默认是“数学模式下的下标符号”，若直接写global_point_idx，LaTeX会误认为你在使用数学下标，却未找到对应的数学环境（$...$）

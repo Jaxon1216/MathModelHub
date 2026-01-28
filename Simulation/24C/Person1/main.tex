@@ -12,6 +12,8 @@
 \usepackage{multirow}
 \usepackage{indentfirst}
 \usepackage{float}
+\usepackage{threeparttable}  % 实现表格+底部注释
+\usepackage{tabularx}       % 自适应页面宽度的表格，避免内容超出页边距
 \title{Capturing the Ebb and Flow: A Dynamic Momentum Model for Tennis Match Analysis}
 
 \begin{document}
@@ -79,29 +81,32 @@ To address these challenges, we develop a comprehensive analytical framework:
 
 \textbf{Assumption 1:} The provided data accurately reflects match events.
 
-\textbf{Justification:} The dataset is officially compiled from Wimbledon Championships records with detailed point-by-point tracking via Hawk-Eye technology.
+ \textbf{$\rightarrow\ $Justification:} The dataset is officially compiled from Wimbledon Championships records with detailed point-by-point tracking via Hawk-Eye technology.
 
 \textbf{Assumption 2:} Serve advantage remains relatively constant throughout a match.
 
-\textbf{Justification:} Analysis of our dataset shows servers win 67.31\% of points (4,903/7,284). We verified stability by computing per-set serve win rates, which ranged from 64.8\% to 69.2\% across all sets, confirming the assumption. We use $p_{\text{serve}}=0.65$ as a conservative approximation within this range.
+ \textbf{$\rightarrow\ $Justification:} Analysis of our dataset shows servers win 67.31\% of points (4,903/7,284). We verified stability by computing per-set serve win rates, which ranged from 64.8\% to 69.2\% across all sets, confirming the assumption. We use $p_{\text{serve}}=0.65$ as a conservative approximation within this range.
 
 \textbf{Assumption 3:} External factors (weather, crowd influence) affect both players equally.
 
-\textbf{Justification:} Wimbledon's controlled environment and retractable roof minimize external variations. This assumption is admittedly strong for outdoor court matches.
+ \textbf{$\rightarrow\ $Justification:} Wimbledon's controlled environment and retractable roof minimize external variations. This assumption is admittedly strong for outdoor court matches.
 
 \textbf{Assumption 4:} Player fatigue affects both competitors similarly over the match duration.
 
-\textbf{Justification:} Professional players undergo comparable physical conditioning. However, this assumption may not hold for significantly mismatched opponents or in fifth-set tiebreaks.
+ \textbf{$\rightarrow\ $Justification:} Professional players undergo comparable physical conditioning. However, this assumption may not hold for significantly mismatched opponents or in fifth-set tiebreaks.
 
 \textbf{Limitation:} Assumptions 3--4 are not directly validated in this study. Future work could incorporate player-specific fatigue indicators and external condition data.
 
 \subsection{Notations}
 
-\begin{table}[h]
+
+\begin{table}[H]
 \centering
+\small
 \caption{Notation definitions with parameter justifications.}
 \label{tab:notations}
-\begin{tabular}{clp{6cm}}
+% 设置表格总宽度为页面宽度的90%（避免太宽，更美观）
+\begin{tabularx}{0.97\textwidth}{@{}clX@{}}
 \toprule
 \textbf{Symbol} & \textbf{Description} & \textbf{Justification} \\
 \midrule
@@ -113,7 +118,7 @@ $w_{\text{break}}$ & Break point multiplier (1.5) & Grid search: 1.5--2.0 achiev
 $w_{\text{key}}$ & Key point multiplier (1.2) & Domain knowledge: set/match points are critical but less frequent than break points; value chosen below $w_{\text{break}}$ \\
 $\gamma$ & Decay rate (0.02) & Sensitivity analysis: minimal impact; prevents infinite accumulation \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \subsection{Data Preprocessing}
@@ -139,16 +144,41 @@ The dataset contains 7,284 points from 31 matches in the 2023 Wimbledon Men's Si
     \end{tabular}
     \end{table}
     
-    \item \textbf{Feature Engineering}: We created derived features including:
-\begin{itemize}
-    % 核心修改：\small{\textit{\texttt{xxx}}} 实现“小号+斜体+等宽”
-    \item \small{\textit{\texttt{global\_point\_idx}}}: Sequential point number within each match
-    \item \small{\textit{\texttt{point\_diff}}}: Cumulative point difference between players
-    \item \small{\textit{\texttt{p1\_rolling\_win\_rate\_5/10}}}: Rolling win rates with 5 and 10 point windows. We tested window sizes of 3, 5, 7, 10, 15, and 20 points. Correlation analysis between rolling win rate and next-point outcome shows that window size 7 achieves the strongest correlation ($r=-0.128$), followed by window 5 ($r=-0.101$). We chose window 5 as the primary feature because it (a) has strong predictive correlation, (b) matches a typical game length in tennis (4--6 points), and (c) provides sufficient responsiveness to recent performance changes.
-    \item \small{\textit{\texttt{p1\_streak/p2\_streak}}}: Current winning streak length
-    \item \small{\textit{\texttt{is\_break\_point/is\_key\_point}}}: Binary indicators for critical points
-    \item \small{\textit{\texttt{point\_duration}}}: Time elapsed since previous point
-\end{itemize}
+
+\item \textbf{Feature Engineering}
+We created derived features as shown in Table \ref{tab:derived_features}.
+
+% 核心修正：所有含下划线的特征名称用 \texttt{} 包裹（等宽字体+支持下划线直接显示）
+\begin{table}[H]
+    \centering
+    \small  % 美赛表格常用小字体，避免占页过大
+    \caption{Derived Features for Tennis Match Analysis}  % 表格标题（美赛规范：清晰含核心对象）
+    \label{tab:derived_features}  % 标签用于正文引用
+    
+    \begin{threeparttable}  % 美赛注释专用环境，确保注释与表格绑定
+        % tabularx自适应页面宽度，两列左对齐（@{}消除列边距，更紧凑）
+     \resizebox{0.85\linewidth}{!}{   
+        \begin{tabularx}{\textwidth}{@{}lX@{}}
+            \toprule  % booktabs宏包的顶部粗线，无毛刺
+            \textbf{Feature Name} & \textbf{Description} \\
+            \midrule  % 中间分隔线
+            \texttt{global\_point\_idx} & Sequential point number within each match \\
+            \texttt{point\_diff} & Cumulative point difference between players \\
+            \texttt{p1\_rolling\_win\_rate\_5/10} & Rolling win rates with 5 and 10 point windows \\
+            \texttt{p1\_streak/p2\_streak} & Current winning streak length \\
+            \texttt{is\_break\_point/is\_key\_point} & Binary indicators for critical points \\
+            \texttt{point\_duration} & Time elapsed since previous point \\
+            \bottomrule  % 底部粗线
+        \end{tabularx}
+    }
+        % 美赛标准注释格式：Note:开头+小字体+左对齐
+        \tablenotes
+        \small
+        \raggedright
+        \item \textbf{Note:} We tested window sizes of 3, 5, 7, 10, 15, and 20 points for the \small\small\texttt{p1\_rolling\_win\_rate\_5/10} feature. Correlation analysis between rolling win rate and next-point outcome shows that window size 7 achieves the strongest correlation ($r = -0.128$), followed by window 5 ($r = -0.101$). We chose window 5 as the primary feature because it (a) has strong predictive correlation, (b) matches a typical game length in tennis (4–6 points), and (c) provides sufficient responsiveness to recent performance changes.
+        \endtablenotes
+    \end{threeparttable}
+\end{table}
 \item \textbf{Data Type Conversion}: Elapsed time converted to seconds; categorical variables converted to category type.\end{enumerate}
 
 %% ==================== PROBLEM 1 ====================
@@ -728,8 +758,9 @@ Figure~\ref{fig:sensitivity_summary} summarizes the sensitivity indices across a
 Future work could incorporate player embeddings, real-time physiological data, and causal inference methods to address these limitations.
 
 %% ==================== MEMO ====================
+\newpage
+\thispagestyle{fancy}
 \section{Memorandum}
-
 \memoto{Tennis Coaches and Athletic Directors}
 \memofrom{Mathematical Modeling Team}
 \memosubject{Understanding and Leveraging Momentum in Tennis Matches}
@@ -761,10 +792,12 @@ Our analysis of 31 Wimbledon matches (7,284 points) reveals that momentum in ten
     \item Emphasize mental resilience training for late-set scenarios
 \end{itemize}
 
-\textbf{Conclusion}
-
-By understanding momentum dynamics, coaches can better prepare players for the psychological demands of competitive tennis. Our model provides a quantitative framework for these discussions.
-
+\begin{flushright}  % 右对齐环境，实现落款居右
+    \vspace{1em}  % 与正文之间空出1行（可调整em值控制间距）
+    Best Regards, \\  % 敬语（可替换为 , 等）
+    
+    Team  \# 2613942  % 发件人/团队名称（加粗突出）
+\end{flushright}
 \end{memo}
 
 %% ==================== REFERENCES ====================
