@@ -40,7 +40,7 @@ ENV/
 
 # Data files (可根据需要调整)
 
-*.xlsx
+
 *.xls
 !datasets/README.md
 !datasets/**/*.csv
