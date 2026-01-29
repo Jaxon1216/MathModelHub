@@ -1,6 +1,6 @@
 \documentclass{mcmthesis}
 \mcmsetup{CTeX = false,
-        tcn = 2312345, problem = C,
+        tcn = 2613942, problem = C,
         sheet = true, titleinsheet = true, keywordsinsheet = true,
         titlepage = false, abstract = true}
 \usepackage{palatino}
@@ -10,13 +10,15 @@
 \usepackage{multirow}
 \usepackage{float}
 \usepackage{amsmath}
-
+\usepackage{lastpage}
 \graphicspath{{figures/}}
-
+ \usepackage{indentfirst} % 强制让每一章节的第一段也进行首行缩进
 \title{Decoding Wordle: A Multi-Model Framework for Predicting Game Outcomes and Word Difficulty}
-
+\setlength{\parindent}{1.5em}
 \begin{document}
 \begin{abstract}
+\setlength{\parindent}{1.5em}
+\indent 
 Wordle, a daily word puzzle published by The New York Times, has attracted millions of players who share their results on social media. This paper develops an integrated analytical framework to understand player behavior patterns and predict game outcomes, addressing four interconnected challenges: temporal prediction of reported results, analysis of hard mode usage, forecasting of try distributions, and word difficulty classification.
 
 \textbf{For the reported results prediction problem}, we construct a Seasonal Autoregressive Integrated Moving Average model, SARIMA(1,1,1)(1,1,1)$_7$, to capture both the declining popularity trend and weekly periodicity observed in the data. The model achieves strong predictive performance with $R^2 = 0.967$ and MAPE of 9.43\% on training data. For March 1, 2023, we forecast 15,847 reported results with a 95\% Bootstrap confidence interval of [12,234, 19,460], reflecting the continued decay in game engagement.
@@ -32,7 +34,7 @@ Time Series Forecasting; SARIMA Model; Random Forest; Multi-output Regression; B
 \end{keywords}
 \end{abstract}
 \maketitle
-
+\setcounter{page}{2}
 \tableofcontents
 \newpage
 
@@ -136,8 +138,8 @@ We begin by examining the temporal dynamics of daily reported results to identif
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{fig3_q1_trend.pdf}
-\caption{Daily reported results time series with moving averages. The series exhibits classic ``viral decay'' dynamics: rapid growth in early 2022 peaks near 360,000 reports in February, followed by sustained exponential decline to approximately 20,000 by year-end.}
+\includegraphics[width=0.65\textwidth]{fig3_q1_trend.pdf}
+\caption{Daily reported results time series with moving averages}
 \label{fig:q1_trend}
 \end{figure}
 
@@ -146,11 +148,11 @@ The time series reveals two dominant structural characteristics. First, a pronou
 \subsection{Time Series Decomposition}
 
 To formally disentangle the trend, seasonal, and irregular components, we apply STL (Seasonal-Trend decomposition using Loess) with a 7-day seasonal period. As illustrated in Fig.~\ref{fig:q1_stl}, the decomposition successfully isolates each component.
-
+The trend component captures the exponential decay, the seasonal component reveals consistent weekly periodicity, and the residual component represents irregular fluctuations not explained by trend or seasonality.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{fig4_q1_stl.pdf}
-\caption{STL decomposition of reported results. The trend component captures the exponential decay, the seasonal component reveals consistent weekly periodicity, and the residual component represents irregular fluctuations not explained by trend or seasonality.}
+\includegraphics[width=0.65\textwidth]{fig4_q1_stl.pdf}
+\caption{STL decomposition of reported results}
 \label{fig:q1_stl}
 \end{figure}
 
@@ -164,12 +166,12 @@ Given the identified non-stationarity (declining trend) and seasonality (7-day c
 \end{equation}
 where $B$ denotes the backshift operator, $\phi(B)$ and $\theta(B)$ are the non-seasonal AR and MA polynomials, $\Phi(B^s)$ and $\Theta(B^s)$ are the seasonal AR and MA polynomials, and $s=7$ is the seasonal period.
 
-To determine optimal parameters, we first apply a logarithmic transformation to stabilize variance across the declining magnitude of the series. ADF testing on the log-transformed series yields $p = 0.12$, indicating non-stationarity; after first differencing, the test confirms stationarity ($p < 0.001$). The ACF and PACF plots for the differenced series (Fig.~\ref{fig:q1_acf}) exhibit significant autocorrelations at lags 1 and 7, guiding our parameter selection.
+To determine optimal parameters, we first apply a logarithmic transformation to stabilize variance across the declining magnitude of the series. ADF testing on the log-transformed series yields $p = 0.12$, indicating non-stationarity; after first differencing, the test confirms stationarity ($p < 0.001$). The ACF and PACF plots for the differenced series (Fig.~\ref{fig:q1_acf}) exhibit significant autocorrelations at lags 1 and 7. Significant spikes at lag 1 suggest AR(1) and MA(1) components; spikes at lag 7 indicate seasonal AR(1) and MA(1) terms. This guiding our parameter selection.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{fig5_q1_acf.pdf}
-\caption{Autocorrelation (ACF) and partial autocorrelation (PACF) functions for the differenced log-transformed series. Significant spikes at lag 1 suggest AR(1) and MA(1) components; spikes at lag 7 indicate seasonal AR(1) and MA(1) terms.}
+\caption{Autocorrelation (ACF) and partial autocorrelation (PACF) functions for the differenced log-transformed series}
 \label{fig:q1_acf}
 \end{figure}
 
@@ -177,12 +179,12 @@ Based on this analysis and AIC minimization across candidate specifications, we 
 
 \subsection{Model Validation}
 
-We assess model adequacy through in-sample fit evaluation and residual diagnostics. Fig.~\ref{fig:q1_fit} compares fitted values against observed data, demonstrating close tracking throughout the series.
+We assess model adequacy through in-sample fit evaluation and residual diagnostics. As shown in Fig.~\ref{fig:q1_fit}, the model’s fitted values closely track the observed time series, accurately reflecting both the long-term declining trend and short-term fluctuations.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{fig4_q1_fit.pdf}
-\caption{SARIMA model fit versus actual reported results. The model successfully captures both the overall declining trend and short-term fluctuations, with fitted values closely following the observed trajectory.}
+\includegraphics[width=0.65\textwidth]{fig4_q1_fit.pdf}
+\caption{SARIMA model fit versus actual reported results}
 \label{fig:q1_fit}
 \end{figure}
 
@@ -207,15 +209,15 @@ Table~\ref{tab:sarima_metrics} presents comprehensive performance metrics. The h
 \subsection{Forecast and Prediction Interval}
 
 Applying the trained SARIMA model, we generate forecasts extending to March 1, 2023 (60 days beyond the training data). To construct a robust prediction interval that accounts for cumulative forecast uncertainty, we employ Bootstrap resampling with 1,000 iterations, perturbing residuals to generate alternative forecast trajectories.
+Fig.~\ref{fig:q1_forecast} displays the forecast trajectory with the 95\% prediction interval. The interval width expands over time, appropriately reflecting the compounding uncertainty inherent in multi-step-ahead forecasting.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{fig6_q1_forecast.pdf}
-\caption{SARIMA forecast through March 2023 with 95\% Bootstrap prediction interval. The shaded region widens progressively, reflecting increasing uncertainty at longer forecast horizons.}
+\includegraphics[width=0.65\textwidth]{fig6_q1_forecast.pdf}
+\caption{SARIMA forecast with 95\% Bootstrap prediction interval}
 \label{fig:q1_forecast}
 \end{figure}
 
-Fig.~\ref{fig:q1_forecast} displays the forecast trajectory with the 95\% prediction interval. The interval width expands over time, appropriately reflecting the compounding uncertainty inherent in multi-step-ahead forecasting.
 
 \textbf{March 1, 2023 Prediction Summary:}
 \begin{itemize}
@@ -245,17 +247,17 @@ We first examine bivariate relationships between each word attribute and the har
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{fig7_q2_heatmap.pdf}
-\caption{Correlation heatmap among word features and hard mode ratio. The rightmost column shows correlations with $r_h$; all values are close to zero, indicating negligible linear relationships.}
+\includegraphics[width=0.6\textwidth]{fig7_q2_heatmap.pdf}
+\caption{Correlation heatmap among word features and hard mode ratio}
 \label{fig:q2_heatmap}
 \end{figure}
 
-The correlation analysis reveals uniformly weak associations between word attributes and hard mode ratio. As shown in Fig.~\ref{fig:q2_barplot}, all Pearson correlation coefficients fall within the range $[-0.05, 0.05]$, and none achieve statistical significance at the $\alpha = 0.05$ level. The Spearman analysis yields substantively identical conclusions, ruling out nonlinear monotonic relationships.
+The correlation analysis reveals uniformly weak associations between word attributes and hard mode ratio. As shown in Fig.~\ref{fig:q2_barplot}, , sorted by absolute magnitude. Gray bars indicate non-significant correlations. All Pearson correlation coefficients fall within the range $[-0.05, 0.05]$, and none achieve statistical significance at the $\alpha = 0.05$ level. The Spearman analysis yields substantively identical conclusions, ruling out nonlinear monotonic relationships.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{fig8_q2_barplot.pdf}
-\caption{Pearson correlation coefficients between word attributes and hard mode ratio, sorted by absolute magnitude. Gray bars indicate non-significant correlations ($p \geq 0.05$); no features achieve significance.}
+\includegraphics[width=0.6\textwidth]{fig8_q2_barplot.pdf}
+\caption{Pearson correlation coefficients between word attributes and hard mode ratio}
 \label{fig:q2_barplot}
 \end{figure}
 
@@ -311,8 +313,8 @@ Before constructing a predictive model, we examine the empirical distribution of
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{fig9_q3_distribution.pdf}
-\caption{Average result distribution across 359 historical words. The distribution is approximately normal with mode at 4 tries; try\_4 accounts for 34\% of outcomes on average, followed by try\_5 (25\%) and try\_3 (23\%).}
+\includegraphics[width=0.4\textwidth]{fig9_q3_distribution.pdf}
+\caption{Average result distribution across 359 historical words}
 \label{fig:q3_dist}
 \end{figure}
 
@@ -330,8 +332,8 @@ Feature importance analysis, displayed in Fig.~\ref{fig:q3_importance}, identifi
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{fig10_q3_importance.pdf}
-\caption{Feature importance for result distribution prediction. Letter frequency metrics dominate, with average letter frequency (0.23) and minimum letter frequency (0.20) as the top predictors. Vowel-related features contribute moderately.}
+\includegraphics[width=0.55\textwidth]{fig10_q3_importance.pdf}
+\caption{Feature importance for result distribution prediction}
 \label{fig:q3_importance}
 \end{figure}
 
@@ -344,13 +346,13 @@ We now apply the model to predict the outcome distribution for EERIE, the target
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{fig11_q3_eerie.pdf}
-\caption{Predicted result distribution for EERIE (blue bars) compared to historical average (gray bars). Error bars indicate 95\% Bootstrap confidence intervals. EERIE shows elevated try\_2 and try\_3 percentages relative to the historical average.}
+\caption{Predicted result distribution for EERIE compared to historical average}
 \label{fig:q3_eerie}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{EERIE Result Distribution Prediction with 95\% Bootstrap Confidence Intervals ($n=500$)}
+\caption{EERIE Result Distribution Prediction ($n=500$)}
 \label{tab:eerie_distribution}
 \begin{tabular}{lccc}
 \toprule
@@ -430,7 +432,7 @@ Fig.~\ref{fig:q4_confusion} presents the confusion matrix for the test set, reve
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.65\textwidth]{fig12_q4_confusion.pdf}
-\caption{Confusion matrix for difficulty classification. The model performs best on Medium and Hard classes, while Easy words are frequently misclassified as Medium due to class imbalance and feature overlap.}
+\caption{Confusion matrix for difficulty classification}
 \label{fig:q4_confusion}
 \end{figure}
 
@@ -460,7 +462,7 @@ Understanding which word attributes drive difficulty predictions offers valuable
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{fig13_q4_importance.pdf}
-\caption{Feature importance for difficulty classification. The top three predictors---average letter frequency, minimum letter frequency, and first letter frequency---collectively account for over 57\% of model importance.}
+\caption{Feature importance for difficulty classification}
 \label{fig:q4_importance}
 \end{figure}
 
@@ -479,8 +481,8 @@ We apply the trained classifier to EERIE, whose feature profile includes 4 vowel
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{fig14_q4_eerie.pdf}
-\caption{EERIE difficulty classification probabilities. The model assigns 53.2\% probability to Medium, 32.1\% to Hard, and 14.7\% to Easy. The red border highlights the predicted class.}
+\includegraphics[width=0.6\textwidth]{fig14_q4_eerie.pdf}
+\caption{EERIE difficulty classification probabilities}
 \label{fig:q4_eerie}
 \end{figure}
 
@@ -528,8 +530,8 @@ For the machine learning models in Problems 3 and 4, we assess sensitivity by pe
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{fig15_sensitivity.pdf}
-\caption{Comprehensive sensitivity comparison across Problem 3 (result distribution) and Problem 4 (difficulty classification) models. The radar plot displays sensitivity indices for key features, where larger values indicate greater model responsiveness to feature perturbations.}
+\includegraphics[width=0.56\textwidth]{fig15_sensitivity.pdf}
+\caption{Comprehensive sensitivity comparison across Problem 3 (result distribution) and Problem 4 (difficulty classification) models}
 \label{fig:sensitivity}
 \end{figure}
 
@@ -585,13 +587,17 @@ Several extensions could address current limitations and enhance model performan
 %===============================================================================
 % MEMORANDUM
 %===============================================================================
+\newpage
+\thispagestyle{fancy}
 \section{Memorandum to the Puzzle Editor}
-
-\begin{memo}[Memorandum]
 \memoto{Puzzle Editor, The New York Times}
 \memofrom{MCM Analytical Consulting Team}
 \memosubject{Wordle Player Engagement Analysis and EERIE Assessment}
-\memodate{January 2023}
+\memodate{\today}
+\raggedbottom % 允许页面底部不对齐，减少LaTeX为了美观自动触发的分页
+
+\begin{memo}[Memorandum]
+
 
 Dear Editor,
 
@@ -606,21 +612,29 @@ We have completed a comprehensive analysis of Wordle game data spanning the 2022
 \textbf{Finding 4: EERIE Assessment.} We predict that EERIE (March 1, 2023) will yield medium difficulty, with most players solving in 3--4 tries. Despite its unusual structure (three E's), the high frequency of E in English ensures early detection, providing abundant feedback that compensates for positional ambiguity. Our model assigns 53\% probability to Medium difficulty, 32\% to Hard, and 15\% to Easy.
 
 \textbf{Recommendations.} To optimize player engagement:
-\begin{enumerate}
-\item \textbf{Difficulty sequencing}: Avoid clustering hard words on consecutive days. Our data suggest that streaks of 3+ hard words correlate with elevated dropout rates. Consider alternating difficulty levels across the week.
-\item \textbf{Occasional novelty}: While rare-letter words increase difficulty, they also generate social media discussion. Strategic placement of challenging words (e.g., Fridays) may boost weekend engagement.
-\item \textbf{Hard mode monitoring}: Track hard mode completion rates as a quality metric. A completion rate below 80\% may indicate excessive difficulty for this dedicated segment.
-\end{enumerate}
+
+\textbf{(1) Difficulty sequencing}: Avoid clustering hard words on consecutive days. Our data suggest that streaks of 3+ hard words correlate with elevated dropout rates. Consider alternating difficulty levels across the week.
+
+\textbf{(2) Occasional novelty}: While rare-letter words increase difficulty, they also generate social media discussion. Strategic placement of challenging words (e.g., Fridays) may boost weekend engagement.
+
+\textbf{(3) Hard mode monitoring}: Track hard mode completion rates as a quality metric. A completion rate below 80\% may indicate excessive difficulty for this dedicated segment.
 
 We remain available to discuss these findings or provide additional analyses as needed.
-
+% 用 flushright 环境包裹落款，实现右对齐
+\begin{flushright}
 Respectfully submitted,\\
-MCM Analytical Consulting Team
-\end{memo}
+MCM Team 2613942
+\end{flushright}
 
+\end{memo}
 %===============================================================================
+\let\oldclearpage\clearpage  % 先保存原始的 \clearpage 命令
+\let\clearpage\relax        % 临时禁用 \clearpage，防止 memo 结束后自动换页
+\let\oldnewpage\newpage % 额外保存并禁用\newpage，防止模板在bibliography前自动调用
+\let\newpage\relax
 % REFERENCES
 %===============================================================================
+\nobreak
 \section{References}
 
 \begin{thebibliography}{99}
@@ -642,15 +656,16 @@ MCM Analytical Consulting Team
 %===============================================================================
 % AI REPORT
 %===============================================================================
-\section{Report on Use of AI}
+\clearpage
+\section*{Report on Use of AI}
 
 In accordance with MCM requirements, we disclose our use of artificial intelligence tools in the preparation of this solution.
 
-\subsection{AI Tools Employed}
+\subsection*{AI Tools Employed}
 
 \textbf{Claude AI (Anthropic, accessed January 2023)} was utilized as a programming and writing assistant throughout this project.
 
-\subsection{Specific Applications}
+\subsection*{Specific Applications}
 
 We employed AI assistance for the following tasks:
 
@@ -660,7 +675,7 @@ We employed AI assistance for the following tasks:
 
 \textbf{Document formatting}: AI provided assistance with LaTeX table formatting, equation typesetting, and figure caption drafting.
 
-\subsection{Human Oversight and Verification}
+\subsection*{Human Oversight and Verification}
 
 All AI-generated content was subject to rigorous human review:
 \begin{itemize}

@@ -277,7 +277,8 @@
 # 美赛论文撰写注意事项
 > 📌 **规范提示**：在学术写作（包括美赛 MCM/ICM 论文）中，日期或数字范围必须使用 en dash（–），这是排版基本规范。
 > 范围 → “--”
-- **数学符号**必须用 LaTeX 命令
+## **数学符号**
+必须用 LaTeX 命令
 
     乘号：\times（生成 ×）
     除号：\div（生成 ÷）
@@ -290,16 +291,30 @@
     正确：2.1 $ \times $ （无空格）
     错误：2.1  $ \times $ （多空格破坏数字连贯性）
     （美赛论文要求数字与符号无缝衔接）
-- 页码注意：content开始是第二页，要手动调一下（因为模板中title页单独出来了）
+## 页码
+- 注意：content开始是第二页，要手动调一下（因为模板中title页单独出来了）
   ```\end{abstract} 和 \tableofcontents 之间加：\setcounter{page}{2}```
+- 编译完后未显示总页数，总页数那是“？？”
+  - 检查导言区（\begin{document} 之前的部分）是否包含```\usepackage{lastpage}``` 如果没有，加上这行代码，然后再重新编译两次
+## 段落
 - 首行缩进 模板中第一段不缩进SOL:引入 indentfirst 宏包
   在文件的导言区（即 \documentclass 之后，\begin{document} 之前）添加：
      ``` \usepackage{indentfirst} % 强制让每一章节的第一段也进行首行缩进```
   - 对需要单独调的summary部分：在 \begin{abstract} 后面紧跟一个 ```\indent```
   - 手动控制：如果引入宏包后某一段仍未缩进（说是极少数情况 实际总遇到），可以在该段开头手动输入``` \indent```或```\setlength{\parindent}{1.5em}```；反之，若想让某段不缩进，使用 ```\noindent```
-- 插入图表 要强制某一位置[H] ,导言区记得加宏包```\usepackage{float}```
-- MEMORANDUM 新开一页来放，没页眉 → 在```\newpage```和```\section{Memorandum}```之间加```\thispagestyle{fancy}```
-- ASSUMPTION 部分的Justification前面加箭头用```$\rightarrow\ $ ```
+## 插入图表 
+- 要强制某一位置[H] ,导言区记得加宏包```\usepackage{float}```
+## MEMORANDUM 
+- 新开一页来放，没页眉 → 在```\newpage```和```\section{Memorandum}```之间加```\thispagestyle{fancy}```
+- 落款，右对齐实现:用 ```flushright ```环境包裹落款，实现右对齐
+        \begin{flushright}
+        Respectfully submitted,\\
+        Team 2613942
+        \end{flushright}  
+
+## ASSUMPTION 部分
+- Justification前面加箭头用```$\rightarrow\ $ ```
+
 # 典型报错处理
 -  “Missing $ inserted”
    -  核心问题是“特征名称中的下划线未正确处理”——LaTeX中 plain text（普通文本）里的下划线_默认是“数学模式下的下标符号”，若直接写global_point_idx，LaTeX会误认为你在使用数学下标，却未找到对应的数学环境（$...$）
