@@ -1,116 +1,615 @@
+%===============================================================================
+% MCM/ICM 论文通用模板
+% 【说明】本模板基于 mcmthesis 文档类，适用于数学建模竞赛论文
+% 【使用】将占位符替换为实际内容即可
+%===============================================================================
+
 \documentclass{mcmthesis}
-\mcmsetup{CTeX = false,   % Use CTeX when writing in Chinese
-        tcn = 1111111, problem = C,
-        sheet = true, titleinsheet = true, keywordsinsheet = true,
-        titlepage = false, abstract = true}
-% \usepackage{newtxtext,newtxmath}
-\usepackage{palatino}
 
-\title{Your Paper Title}
+%-------------------------------------------------------------------------------
+% 【竞赛信息配置 - 必改】
+%-------------------------------------------------------------------------------
+\mcmsetup{
+    CTeX = false,              % 【中文论文设为true，英文设为false】
+    tcn = 0000000,             % 【此处改队伍控制号，如 2613942】
+    problem = A,               % 【此处改题号，可选 A/B/C/D/E/F】
+    sheet = true,              % 【是否生成题目页，一般保持true】
+    titleinsheet = true,       % 【题目页是否显示标题】
+    keywordsinsheet = true,    % 【题目页是否显示关键词】
+    titlepage = false,         % 【是否单独标题页，一般false】
+    abstract = true            % 【是否显示摘要，一般true】
+}
 
+%-------------------------------------------------------------------------------
+% 【宏包引入 - 按需增减】
+%-------------------------------------------------------------------------------
+\usepackage{palatino}          % 字体：Palatino（可改为 times, newtxtext 等）
+\usepackage{graphicx}          % 图片支持
+\usepackage{subfigure}         % 子图支持（多图并排）
+\usepackage{booktabs}          % 三线表支持（\toprule, \midrule, \bottomrule）
+\usepackage{multirow}          % 表格合并行
+\usepackage{float}             % 浮动体控制（[H]强制定位）
+\usepackage{amsmath}           % 数学公式增强
+\usepackage{lastpage}          % 获取总页数
+\usepackage{indentfirst}       % 每段首行缩进（包括章节第一段）
+
+%-------------------------------------------------------------------------------
+% 【图片路径配置】
+%-------------------------------------------------------------------------------
+\graphicspath{{figures/}}      % 【此处改图片文件夹路径，如 {images/} 或 {fig/}】
+
+%-------------------------------------------------------------------------------
+% 【论文标题 - 必改】
+%-------------------------------------------------------------------------------
+\title{【此处改论文标题_TITLE】}
+
+%-------------------------------------------------------------------------------
+% 【段落格式配置】
+%-------------------------------------------------------------------------------
+\setlength{\parindent}{1.5em}  % 首行缩进1.5字符（可调整）
+
+%===============================================================================
+% 正文开始
+%===============================================================================
 \begin{document}
-\begin{abstract}
-% Summary: background, methods, results, conclusion
 
+%-------------------------------------------------------------------------------
+% 【摘要 - 必改】
+% 说明：摘要应包含背景、方法、结果、结论四部分
+%-------------------------------------------------------------------------------
+\begin{abstract}
+\setlength{\parindent}{1.5em}
+\indent 
+
+% --- 摘要正文开始 ---
+
+【背景介绍_ABSTRACT_BACKGROUND：简述问题背景和研究意义，1-2句】
+
+【方法概述_ABSTRACT_METHODS：描述所用的主要方法/模型，按问题分述】
+
+\textbf{For Problem 1}, 【问题1方法与结果_PROBLEM1_SUMMARY：描述方法名称、关键指标（如$R^2$、准确率等）、主要结论】
+
+\textbf{For Problem 2}, 【问题2方法与结果_PROBLEM2_SUMMARY：描述方法名称、关键指标、主要结论】
+
+\textbf{For Problem 3}, 【问题3方法与结果_PROBLEM3_SUMMARY：描述方法名称、关键指标、主要结论】
+
+\textbf{For Problem 4}, 【问题4方法与结果_PROBLEM4_SUMMARY：描述方法名称、关键指标、主要结论】
+
+% --- 摘要正文结束 ---
+
+%-------------------------------------------------------------------------------
+% 【关键词 - 必改】
+% 说明：一般5-7个关键词，用分号分隔
+%-------------------------------------------------------------------------------
 \begin{keywords}
-% keyword1; keyword2; keyword3
+【关键词1_KEYWORD1】; 【关键词2_KEYWORD2】; 【关键词3_KEYWORD3】; 【关键词4_KEYWORD4】; 【关键词5_KEYWORD5】
 \end{keywords}
 \end{abstract}
+
 \maketitle
-% \tableofcontents
-% \newpage
 
+%-------------------------------------------------------------------------------
+% 【页码与目录配置】
+%-------------------------------------------------------------------------------
+\setcounter{page}{2}           % 正文从第2页开始（第1页是Summary Sheet）
+\tableofcontents               % 生成目录
+\newpage
+
+%===============================================================================
+% INTRODUCTION（引言）
+%===============================================================================
 \section{Introduction}
+
+%-------------------------------------------------------------------------------
+% 【问题背景 - 必改】
+%-------------------------------------------------------------------------------
 \subsection{Problem Background}
-% 
-\subsection{Clarifications and Restatements}
-% 
-\subsection{Our Work}
-% 
 
+【问题背景_INTRO_BACKGROUND：描述问题的现实背景、重要性、数据来源等，2-3段】
+
+%-------------------------------------------------------------------------------
+% 【问题重述 - 必改】
+%-------------------------------------------------------------------------------
+\subsection{Problem Restatement}
+
+We are tasked with developing analytical models to address the following research questions:
+
+\textbf{Problem 1} 【问题1重述_PROBLEM1_RESTATE：用自己的语言重述问题1的任务要求】
+
+\textbf{Problem 2} 【问题2重述_PROBLEM2_RESTATE：用自己的语言重述问题2的任务要求】
+
+\textbf{Problem 3} 【问题3重述_PROBLEM3_RESTATE：用自己的语言重述问题3的任务要求】
+
+\textbf{Problem 4} 【问题4重述_PROBLEM4_RESTATE：用自己的语言重述问题4的任务要求】
+
+%-------------------------------------------------------------------------------
+% 【我们的方法 - 必改】
+%-------------------------------------------------------------------------------
+\subsection{Our Approach}
+
+【方法概述_APPROACH_OVERVIEW：整体介绍解决思路和框架】
+
+For Problem 1, 【问题1方法概述_APPROACH_P1：简述问题1的方法】
+
+For Problem 2, 【问题2方法概述_APPROACH_P2：简述问题2的方法】
+
+For Problem 3, 【问题3方法概述_APPROACH_P3：简述问题3的方法】
+
+For Problem 4, 【问题4方法概述_APPROACH_P4：简述问题4的方法】
+
+%===============================================================================
+% PREPARATION（建模准备）
+%===============================================================================
 \section{Preparation for Modeling}
+
+%-------------------------------------------------------------------------------
+% 【模型假设 - 必改】
+%-------------------------------------------------------------------------------
 \subsection{Model Assumptions}
-% 
+
+\textbf{Assumption 1:} 【假设1内容_ASSUMPTION1】
+
+\textbf{Justification:} 【假设1合理性说明_JUSTIFICATION1】
+
+\textbf{Assumption 2:} 【假设2内容_ASSUMPTION2】
+
+\textbf{Justification:} 【假设2合理性说明_JUSTIFICATION2】
+
+\textbf{Assumption 3:} 【假设3内容_ASSUMPTION3】
+
+\textbf{Justification:} 【假设3合理性说明_JUSTIFICATION3】
+
+% 【可按需添加更多假设】
+
+%-------------------------------------------------------------------------------
+% 【符号说明 - 必改】
+%-------------------------------------------------------------------------------
 \subsection{Notations}
-% 
-\subsection{Data Preprocessing}
-% 
 
-\section{Problem 1: Medal Prediction}
-\subsection{Medal Ranking}
-\subsubsection{PCA: Reducing Dimensions}
-% 
-\subsubsection{LSTM: Trends Based on Time}
-% 
-\subsubsection{XGBoost-Bootstrap Modeling}
-% 
-\subsubsection{Results Display}
-% 
-\subsection{Breaking the Zero}
-% 
-\subsection{Olympic Events and Medal Counts}
-\subsubsection{Spearman: A Mathematical Analysis}
-% 
-\subsubsection{SHAP: Revealing Correlations and Importance}
-% 
-\subsubsection{Analysis of Relationships and Importance}
-% 
+Table \ref{tab:notations} summarizes the key mathematical symbols and their definitions used throughout this paper.
 
-\section{Problem 2: The "Great Coach" Effect}
-\subsection{DID Modeling}
-% 
-\subsection{Hypothesis Testing and Contribution Coefficient Analysis}
-% 
+\begin{table}[H]
+\centering
+\caption{Summary of Key Notations}
+\label{tab:notations}
+\begin{tabular}{cl}
+\toprule
+\textbf{Symbol} & \textbf{Description} \\
+\midrule
+$【符号1_SYM1】$ & 【符号1描述_DESC1】 \\
+$【符号2_SYM2】$ & 【符号2描述_DESC2】 \\
+$【符号3_SYM3】$ & 【符号3描述_DESC3】 \\
+$【符号4_SYM4】$ & 【符号4描述_DESC4】 \\
+% 【按需添加更多符号】
+\bottomrule
+\end{tabular}
+\end{table}
 
-\section{Problem 3: New Insights}
-\subsection{Dynamics of Medal Counts in Space and Time}
-\subsubsection{Insight}
-% 
-\subsubsection{Decision Support}
-% 
-\subsection{Correlation Between Olympic Medal Counts and Specific Events}
-\subsubsection{Insight}
-% 
-\subsubsection{Decision Support}
-% 
-\subsection{Coaching Investment Directions in National Strategies}
-\subsubsection{Insight}
-% 
-\subsubsection{Decision Support}
-% 
+%-------------------------------------------------------------------------------
+% 【数据概述与预处理 - 必改】
+%-------------------------------------------------------------------------------
+\subsection{Data Overview and Preprocessing}
 
+【数据概述_DATA_OVERVIEW：描述数据来源、规模、字段含义等】
+
+【预处理步骤_PREPROCESSING：描述数据清洗、缺失值处理、异常值检测等步骤】
+
+【特征工程_FEATURE_ENGINEERING：描述构造了哪些新特征】
+
+%===============================================================================
+% PROBLEM 1（问题1求解）
+% 【说明】每个问题建议包含：问题分析、方法描述、模型构建、结果展示
+%===============================================================================
+\section{Problem 1: 【问题1标题_P1_TITLE】}
+
+%-------------------------------------------------------------------------------
+% 【探索性数据分析】
+%-------------------------------------------------------------------------------
+\subsection{Exploratory Data Analysis}
+
+【EDA描述_P1_EDA：描述对问题1相关数据的探索性分析】
+
+% --- 图片示例 ---
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{【图片文件名_P1_FIG1.pdf】}
+\caption{【图1标题_P1_FIG1_CAPTION】}
+\label{fig:p1_fig1}
+\end{figure}
+
+【图片分析_P1_FIG1_ANALYSIS：对上图的分析和解读】
+
+%-------------------------------------------------------------------------------
+% 【模型构建】
+%-------------------------------------------------------------------------------
+\subsection{Model Construction}
+
+【模型描述_P1_MODEL：详细描述所用模型的原理】
+
+% --- 公式示例 ---
+\begin{equation}
+【公式_P1_EQ1：如 y = \beta_0 + \beta_1 x + \varepsilon】
+\end{equation}
+
+【公式说明_P1_EQ1_DESC：解释公式中各符号的含义】
+
+%-------------------------------------------------------------------------------
+% 【模型验证】
+%-------------------------------------------------------------------------------
+\subsection{Model Validation}
+
+【验证方法_P1_VALIDATION：描述如何验证模型的有效性】
+
+% --- 表格示例 ---
+\begin{table}[H]
+\centering
+\caption{【表格标题_P1_TAB1_CAPTION】}
+\label{tab:p1_metrics}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Value} & \textbf{Interpretation} \\
+\midrule
+【指标1_METRIC1】 & 【数值1_VALUE1】 & 【解释1_INTERP1】 \\
+【指标2_METRIC2】 & 【数值2_VALUE2】 & 【解释2_INTERP2】 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%-------------------------------------------------------------------------------
+% 【结果与预测】
+%-------------------------------------------------------------------------------
+\subsection{Results and Prediction}
+
+【结果描述_P1_RESULTS：展示模型输出和预测结果】
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{【图片文件名_P1_FIG2.pdf】}
+\caption{【图2标题_P1_FIG2_CAPTION】}
+\label{fig:p1_fig2}
+\end{figure}
+
+%===============================================================================
+% PROBLEM 2（问题2求解）
+%===============================================================================
+\section{Problem 2: 【问题2标题_P2_TITLE】}
+
+\subsection{Research Question and Hypothesis}
+
+【研究问题_P2_QUESTION：明确问题2要回答的核心问题】
+
+【假设_P2_HYPOTHESIS：提出原假设和备择假设】
+
+\subsection{Analysis Method}
+
+【分析方法_P2_METHOD：详细描述所用方法】
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{【图片文件名_P2_FIG1.pdf】}
+\caption{【图标题_P2_FIG1_CAPTION】}
+\label{fig:p2_fig1}
+\end{figure}
+
+\subsection{Results and Interpretation}
+
+【结果描述_P2_RESULTS：展示分析结果】
+
+\begin{table}[H]
+\centering
+\caption{【表格标题_P2_TAB1_CAPTION】}
+\label{tab:p2_results}
+\begin{tabular}{lcc}
+\toprule
+\textbf{【列名1_COL1】} & \textbf{【列名2_COL2】} & \textbf{【列名3_COL3】} \\
+\midrule
+【数据行_ROW1】 \\
+【数据行_ROW2】 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Conclusion}
+
+\textbf{Conclusion:} 【问题2结论_P2_CONCLUSION】
+
+【结论解释_P2_EXPLANATION：解释结论的意义和原因】
+
+%===============================================================================
+% PROBLEM 3（问题3求解）
+%===============================================================================
+\section{Problem 3: 【问题3标题_P3_TITLE】}
+
+\subsection{Problem Formulation}
+
+【问题形式化_P3_FORMULATION：将问题转化为数学形式】
+
+\subsection{Model Development}
+
+【模型开发_P3_MODEL：描述模型构建过程】
+
+\begin{equation}
+【公式_P3_EQ1】
+\end{equation}
+
+\subsection{Feature Analysis}
+
+【特征分析_P3_FEATURES：分析特征重要性等】
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{【图片文件名_P3_FIG1.pdf】}
+\caption{【图标题_P3_FIG1_CAPTION】}
+\label{fig:p3_fig1}
+\end{figure}
+
+\subsection{Prediction Results}
+
+【预测结果_P3_PREDICTION：展示具体预测结果】
+
+\begin{table}[H]
+\centering
+\caption{【表格标题_P3_TAB1_CAPTION】}
+\label{tab:p3_prediction}
+\begin{tabular}{lccc}
+\toprule
+\textbf{【列名_COL1】} & \textbf{【列名_COL2】} & \textbf{【列名_COL3】} & \textbf{【列名_COL4】} \\
+\midrule
+【数据_DATA】 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Uncertainty Analysis}
+
+【不确定性分析_P3_UNCERTAINTY：分析预测的不确定性来源】
+
+%===============================================================================
+% PROBLEM 4（问题4求解）
+%===============================================================================
+\section{Problem 4: 【问题4标题_P4_TITLE】}
+
+\subsection{Definition and Categorization}
+
+【定义与分类_P4_DEFINITION：定义分类标准】
+
+\subsection{Model Development}
+
+【模型开发_P4_MODEL：描述分类模型】
+
+\begin{table}[H]
+\centering
+\caption{【模型对比表标题_P4_COMPARISON】}
+\label{tab:p4_comparison}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Model} & \textbf{【指标1_METRIC1】} & \textbf{【指标2_METRIC2】} & \textbf{【指标3_METRIC3】} \\
+\midrule
+【模型1_MODEL1】 & 【数值_VALUE】 & 【数值_VALUE】 & 【数值_VALUE】 \\
+【模型2_MODEL2】 & 【数值_VALUE】 & 【数值_VALUE】 & 【数值_VALUE】 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Model Evaluation}
+
+【模型评估_P4_EVALUATION：混淆矩阵、各类指标等】
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{【图片文件名_P4_FIG1.pdf】}
+\caption{【图标题_P4_FIG1_CAPTION：如混淆矩阵】}
+\label{fig:p4_fig1}
+\end{figure}
+
+\subsection{Feature Importance}
+
+【特征重要性_P4_IMPORTANCE：分析哪些特征最重要】
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{【图片文件名_P4_FIG2.pdf】}
+\caption{【图标题_P4_FIG2_CAPTION】}
+\label{fig:p4_fig2}
+\end{figure}
+
+\subsection{Case Study}
+
+【案例分析_P4_CASE：对特定案例的分析】
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{【图片文件名_P4_FIG3.pdf】}
+\caption{【图标题_P4_FIG3_CAPTION】}
+\label{fig:p4_fig3}
+\end{figure}
+
+\textbf{Prediction}: 【预测结论_P4_PREDICTION】
+
+【预测解释_P4_INTERPRETATION：解释预测结果的原因】
+
+%===============================================================================
+% SENSITIVITY ANALYSIS（敏感性分析）
+%===============================================================================
 \section{Sensitivity Analysis}
-\subsection{The Number of Principal Components}
-% 
-\subsection{Prediction Model Evaluation}
-\subsubsection{Predictive Accuracy}
-% 
-\subsubsection{Robustness Evaluation}
-% 
 
-\section{Model Analysis}
-\subsection{Strength}
-% 
-\subsection{Weakness and Further Discussion}
-% 
+【敏感性分析概述_SENSITIVITY_INTRO：说明敏感性分析的目的】
 
-\section{Memorandum}
-% Use memo environment if required by the problem.
-% \begin{memo}[Memorandum]
-% \memoto{...}
-% \memofrom{...}
-% \memosubject{...}
-% \memodate{...}
-% \end{memo}
+\subsection{【敏感性分析1标题_SENS1_TITLE】}
 
+【敏感性分析1内容_SENS1_CONTENT：描述参数变化对结果的影响】
+
+\begin{table}[H]
+\centering
+\caption{【敏感性分析表标题_SENS_TAB_CAPTION】}
+\label{tab:sensitivity}
+\begin{tabular}{lccc}
+\toprule
+\textbf{【参数配置_CONFIG】} & \textbf{【指标1_METRIC1】} & \textbf{【指标2_METRIC2】} & \textbf{【变化量_CHANGE】} \\
+\midrule
+【基准配置_BASE】 & 【数值】 & 【数值】 & --- \\
+【变化配置1_VAR1】 & 【数值】 & 【数值】 & 【变化百分比】 \\
+【变化配置2_VAR2】 & 【数值】 & 【数值】 & 【变化百分比】 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{【敏感性分析2标题_SENS2_TITLE】}
+
+【敏感性分析2内容_SENS2_CONTENT】
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.56\textwidth]{【敏感性分析图_SENS_FIG.pdf】}
+\caption{【敏感性分析图标题_SENS_FIG_CAPTION】}
+\label{fig:sensitivity}
+\end{figure}
+
+【敏感性分析结论_SENSITIVITY_CONCLUSION：总结模型的鲁棒性】
+
+%===============================================================================
+% MODEL EVALUATION（模型评价与讨论）
+%===============================================================================
+\section{Model Evaluation and Discussion}
+
+\subsection{Strengths of Our Approach}
+
+【优点描述_STRENGTHS：列举模型的优点】
+
+\textbf{【优点1标题_STR1_TITLE】.} 【优点1描述_STR1_DESC】
+
+\textbf{【优点2标题_STR2_TITLE】.} 【优点2描述_STR2_DESC】
+
+\textbf{【优点3标题_STR3_TITLE】.} 【优点3描述_STR3_DESC】
+
+\subsection{Limitations and Potential Biases}
+
+【局限性描述_LIMITATIONS：诚实地讨论模型的局限】
+
+\textbf{【局限1标题_LIM1_TITLE】.} 【局限1描述_LIM1_DESC】
+
+\textbf{【局限2标题_LIM2_TITLE】.} 【局限2描述_LIM2_DESC】
+
+\textbf{【局限3标题_LIM3_TITLE】.} 【局限3描述_LIM3_DESC】
+
+\subsection{Directions for Future Work}
+
+【未来工作_FUTURE：讨论可能的改进方向】
+
+\textbf{【方向1标题_FUT1_TITLE】.} 【方向1描述_FUT1_DESC】
+
+\textbf{【方向2标题_FUT2_TITLE】.} 【方向2描述_FUT2_DESC】
+
+%===============================================================================
+% MEMORANDUM（备忘录）
+% 【说明】部分赛题要求撰写给决策者的备忘录，根据赛题要求决定是否使用
+%===============================================================================
+\newpage
+\thispagestyle{fancy}
+\section{Memorandum to 【收件人_MEMO_RECIPIENT】}
+
+% --- 备忘录格式化宏命令 ---
+\memoto{【收件人全称_MEMO_TO：如 Director of Operations, Company XYZ】}
+\memofrom{【发件人_MEMO_FROM：如 MCM Team XXXXXXX】}
+\memosubject{【主题_MEMO_SUBJECT：备忘录主题】}
+\memodate{\today}
+\raggedbottom
+
+\begin{memo}[Memorandum]
+
+Dear 【称呼_DEAR】,
+
+【开场白_MEMO_INTRO：简要说明分析背景和目的】
+
+\textbf{Finding 1: 【发现1标题_FINDING1_TITLE】.} 【发现1内容_FINDING1_DESC】
+
+\textbf{Finding 2: 【发现2标题_FINDING2_TITLE】.} 【发现2内容_FINDING2_DESC】
+
+\textbf{Finding 3: 【发现3标题_FINDING3_TITLE】.} 【发现3内容_FINDING3_DESC】
+
+\textbf{Recommendations.} 【建议概述_RECOMMENDATIONS_INTRO】
+
+\textbf{(1) 【建议1标题_REC1_TITLE】}: 【建议1内容_REC1_DESC】
+
+\textbf{(2) 【建议2标题_REC2_TITLE】}: 【建议2内容_REC2_DESC】
+
+\textbf{(3) 【建议3标题_REC3_TITLE】}: 【建议3内容_REC3_DESC】
+
+【结尾_MEMO_CLOSING：表示愿意进一步讨论等】
+
+\begin{flushright}
+Respectfully submitted,\\
+【署名_SIGNATURE：如 MCM Team XXXXXXX】
+\end{flushright}
+
+\end{memo}
+
+%===============================================================================
+% 【防止 memo 后自动分页的技术处理】
+%===============================================================================
+\let\oldclearpage\clearpage
+\let\clearpage\relax
+\let\oldnewpage\newpage
+\let\newpage\relax
+
+%===============================================================================
+% REFERENCES（参考文献）
+%===============================================================================
+\nobreak
 \section{References}
+
 \begin{thebibliography}{99}
-% \bibitem{1} ...
+
+% --- 参考文献格式说明 ---
+% 期刊论文：\bibitem{key} 作者, ``标题,'' \textit{期刊名}, vol. XX, no. X, pp. XX--XX, 年份.
+% 书籍：\bibitem{key} 作者, \textit{书名}, 版次. 出版地: 出版社, 年份.
+% 网页：\bibitem{key} 作者, ``标题,'' 网站名, 年份. [Online]. Available: URL
+
+\bibitem{【引用标签1_REF1_KEY】} 【参考文献1_REF1：完整引用格式】
+
+\bibitem{【引用标签2_REF2_KEY】} 【参考文献2_REF2：完整引用格式】
+
+\bibitem{【引用标签3_REF3_KEY】} 【参考文献3_REF3：完整引用格式】
+
+\bibitem{【引用标签4_REF4_KEY】} 【参考文献4_REF4：完整引用格式】
+
+% 【按需添加更多参考文献】
+
 \end{thebibliography}
 
-\section{Report on Use of AI}
-\subsection{OpenAI ChatGPT (date/version)}
-% Query: ...
-% Output summary: ...
+%===============================================================================
+% AI REPORT（AI工具使用报告）
+% 【说明】MCM/ICM要求披露AI工具使用情况
+%===============================================================================
+\clearpage
+\section*{Report on Use of AI}
+
+In accordance with MCM requirements, we disclose our use of artificial intelligence tools in the preparation of this solution.
+
+\subsection*{AI Tools Employed}
+
+\textbf{【AI工具名称_AI_TOOL：如 Claude AI (Anthropic)】} was utilized as 【使用角色_AI_ROLE：如 a programming and writing assistant】 throughout this project.
+
+\subsection*{Specific Applications}
+
+We employed AI assistance for the following tasks:
+
+\textbf{【应用场景1_AI_APP1：如 Code development】}: 【具体描述_AI_APP1_DESC：描述AI辅助了哪些具体任务】
+
+\textbf{【应用场景2_AI_APP2：如 Statistical methodology】}: 【具体描述_AI_APP2_DESC】
+
+\textbf{【应用场景3_AI_APP3：如 Document formatting】}: 【具体描述_AI_APP3_DESC】
+
+\subsection*{Human Oversight and Verification}
+
+All AI-generated content was subject to rigorous human review:
+\begin{itemize}
+\item 【验证措施1_VERIFY1：如 Statistical code outputs were verified against manual calculations】
+\item 【验证措施2_VERIFY2：如 Model interpretations were independently assessed】
+\item 【验证措施3_VERIFY3：如 All numerical results were confirmed through direct examination】
+\item 【验证措施4_VERIFY4：如 Writing was substantially revised for clarity and accuracy】
+\end{itemize}
+
+We estimate that approximately 【人工比例_HUMAN_PERCENT：如 65\%】 of the final paper content reflects original human analysis, interpretation, and writing, with AI serving as a supportive tool rather than a primary author.
 
 \end{document}
