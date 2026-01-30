@@ -106,3 +106,112 @@
 
 注：观众投票数为未知数据，此处为假设值，旨在得出正确的最终排名。
 注：恢复基于排名的结合方式的确切年份尚未明确，合理推测为第28季。
+
+---
+# 2026 MCM
+## Problem C: Data With The Stars
+Dancing with the Stars (DWTS) is the American version of an international television franchise based on the British show “Strictly Come Dancing” (“Come Dancing” originally). Versions of the show have appeared in Albania, Argentina, Australia, China, France, India, and many other countries. The U.S. version, the focus of this problem, has completed 34 seasons.
+
+Celebrities are partnered with professional dancers and then perform dances each week. A panel of expert judges scores each couple’s dance, and fans vote (by phone or online) for their favorite couple that week. Fans can vote once or multiple times up to a limit announced each week. Further, fans vote for the star they wish to keep, but cannot vote to eliminate a star. The judge and fan votes are combined in order to determine which couple to eliminate (the lowest combined score) that week. Three (in some seasons more) couples reach the finals and in the week of the finals the combined scores from fans and judges are used to rank them from \(1^{st}\) to \(3^{rd}\) (or \(4^{th}\), \(5^{th}\)).
+
+There are many possible methods of combining fan votes and judge scores. In the first two seasons of the U.S. show, the combination was based on ranks. Season 2 concerns (due to celebrity contestant Jerry Rice who was a finalist despite very low judge scores) led to a modification to use percentages instead of ranks. Examples of these two approaches are provided in the Appendix.
+
+In season 27, another “controversy” occurred when celebrity contestant Bobby Bones won despite consistently low judges scores. In response, starting in season 28 a slight modification to the elimination process was made. The bottom two contestants were identified using the combined judge scores and fan votes, and then during the live show the judges voted to select which of these two to eliminate. Around this same season, the producers also returned to using the method of ranks to combine judges scores with fan votes as in seasons one and two. The exact season this change occurred is not known, but it is reasonable to assume it was season 28.
+
+Judge scores are meant to reflect which dancers are technically better, although there is some subjectivity in what makes a dance better. Fan votes are likely much more subjective, influenced by the quality of the dance, but also the popularity and charisma of the celebrity. Show producers might actually prefer, to some extent, conflicts in opinions and votes as such occurrences boost fan interest and excitement.
+
+| ©2026 by COMAP | www.comap.org | www.mathmodels.org | info@comap.org |
+
+Data with judges scores and contestant information is provided and described below. You may choose to include additional information or other data at your discretion, but you must completely document the sources. Use the data to:
+1. Develop a mathematical model (or models) to produce estimated fan votes (which are unknown and a closely guarded secret) for each contestant for the weeks they competed.
+   - Does your model correctly estimate fan votes that lead to results consistent with who was eliminated each week? Provide measures of the consistency.
+   - How much certainty is there in the fan vote totals you produced, and is that certainty always the same for each contestant/week? Provide measures of your certainty for the estimates.
+2. Use your fan vote estimates with the rest of the data to:
+   - Compare and contrast the results produced by the two approaches used by the show to combine judge and fan votes (i.e. rank and percentage) across seasons (i.e. apply both approaches to each season). If differences in outcomes exist, does one method seem to favor fan votes more than the other?
+   - Examine the two voting methods applied to specific celebrities where there was “controversy”, meaning differences between judges and fans. Would the choice of method to combine judge scores and fan votes have led to the same result for each of these contestants? How would including the additional approach of having judges choose which of the bottom two couples to eliminate each week impact the results? Some examples you might consider (there may also be others you identified):
+     - Season 2 – Jerry Rice, runner up despite the lowest judges scores in 5 weeks.
+     - Season 4 – Billy Ray Cyrus was \(5^{th}\) despite last place judge scores in 6 weeks.
+     - Season 11 – Bristol Palin was \(3^{rd}\) with the lowest judge scores 12 times.
+     - Season 27 – Bobby Bones won despite consistently low judges scores
+   - Based on your analysis, which of the two methods would you recommend using for future seasons and why? Would you suggest including the additional approach of judges choosing from the bottom two couples?
+3. Use the data including your fan vote estimates to develop a model that analyzes the impact of various pro dancers as well as characteristics for the celebrities available in the data (age, industry, etc). How much do such things impact how well a celebrity will do in the competition? Do they impact judges scores and fan votes in the same way?
+4. Propose another system using fan votes and judge scores each week that you believe is more “fair” (or “better” in some other way such as making the show more exciting for the fans). Provide support for why your approach should be adopted by the show producers.
+
+Produce a report of no more than 25 pages with your findings and include a one- to two-page memo summarizing your results with advice for producers of DWTS on the impact of how judge and fan votes are combined with recommendations for how to do so in future seasons.
+
+| ©2026 by COMAP | www.comap.org | www.mathmodels.org | info@comap.org |
+
+Your PDF solution of no more than 25 total pages should include:
+- One-page Summary Sheet.
+- Table of Contents.
+- Your complete solution.
+- One- to two-page memo.
+- References list.
+- AI Use Report (If used does not count toward the 25-page limit.)
+
+Note: There is no specific required minimum page length for a complete MCM submission. You may use up to 25 total pages for all your solution work and any additional information you want to include (for example: drawings, diagrams, calculations, tables). Partial solutions are accepted. We permit the careful use of AI such as ChatGPT, although it is not necessary to create a solution to this problem. If you choose to utilize a generative AI, you must follow the COMAP AI use policy. This will result in an additional AI use report that you must add to the end of your PDF solution file and does not count toward the 25 total page limit for your solution.
+
+Data File: 2026_MCM_Problem_C_Data.csv – contestant information, results, and judges scores by week for seasons 1 – 34. The data description is provided in Table 1.
+
+## Table 1: Data Description for 2026_MCM_Problem_C_Data.csv
+| Variables | Explanation | Example |
+| --- | --- | --- |
+| celebrity_name | Name of celebrity contestant (Star) | Jerry Rice, Mark Cuban, … |
+| ballroom_partner | Name of professional dancer partner | Cheryl Burke, Derek Hough, … |
+| celebrity_industry | Star profession category | Athlete, Model, … |
+| celebrity_homestate | Star home state (if from U.S.) | Ohio, Maine, … |
+| celebrity_homecountry/region | Star home country/region | United States, England, … |
+| celebrity_age_during_season | Age of the star in the season | 32, 29, … |
+| season | Season of the show | 1, 2, 3, …, 32 |
+| results | Season results for the star | 1st Place, Eliminated Week 2, … |
+| placement | Final place for the season (1 best) | 1, 2, 3, … |
+| weekX_judgeY_score | Score from judge Y in week X | 1, 2, 3, … |
+
+### Notes on the data:
+1. Judges scores for each dance are from 1 (low) to 10 (high).
+   a. In some weeks the score reported includes a decimal (e.g. 8.5) because each celebrity performed more than one dance and the scores from each are averaged.
+   b. In some weeks, bonus points were awarded (dance offs etc); they are spread evenly across judge/dance scores.
+   c. Team dance scores were averaged with scores for each individual team member.
+2. Judges are listed in the order they scored dances; thus “Judge Y” may not be the same judge from week to week, or season to season.
+3. The number of celebrities is not the same across the seasons, nor is the number of weeks the show ran.
+4. Season 15 was the only season to feature an all-star cast of returning celebrities.
+5. There are occasionally weeks when no celebrity was eliminated, and others where more than one was eliminated.
+6. N/A values occur in the data set for
+   a. the \(4^{th}\) judge score if there is no \(4^{th}\) judge for that week (usually there are 3) and
+   b. in weeks that the show did not run in a season (for example, season 1 lasted 6 weeks so N/A values are recorded for weeks 7 thru 11).
+7. A 0 score is recorded for celebrities who are eliminated. For example, in Season 1 the first celebrity eliminated was Trista Sutter at the end of the Week 2 show. She thus has scores of 0, 0 for the rest of the season (week 3 through week 6).
+
+| ©2026 by COMAP | www.comap.org | www.mathmodels.org | info@comap.org |
+
+## Appendix: Examples of Voting Schemes
+### 1. COMBINED BY RANK (used in seasons 1, 2, and 28a - 34)
+In seasons 1 and 2, judges and fan votes were combined by rank. For example, in season 1, week 4 there were four remaining contestants. Rachel Hunter was eliminated meaning she received the lowest combined rank. In Table 2, the judges scores and ranks are shown, and we created one possible set of fan votes that would produce the correct result. There are many possible values for fan votes that would also give the same results. You should not use these as actual values as this is just one example. Since Rachel was ranked \(2^{nd}\) by judges, in order to finish with the lowest combined score, she has the lowest fan vote (\(4^{th}\) place) for a total rank of 6.
+
+## Table 2: Example of Combining Judge and Fan Votes by Rank (Season 1, Week 4)
+| Contestant | Total Judges Score | Judges Score Rank | Fan Vote* | Fan Rank * | Sum of Ranks |
+| --- | --- | --- | --- | --- | --- |
+| Rachel Hunter | 25 | 2 | 1.1 million | 4 | 6 |
+| Joey McIntyre | 20 | 4 | 3.7 million | 1 | 5 |
+| John O’Hurley | 21 | 3 | 3.2 million | 2 | 5 |
+| Kelly Monaco | 26 | 1 | 2 million | 3 | 4 |
+
+* Fan vote/rank are unknown, hypothetical values chosen to produce the correct final ranks
+
+### 2. COMBINED BY PERCENT (used for season 3 through 27a)
+Starting in season 3, scores were combined using percents instead of ranks. An example is shown using week 9 of season 5. In that week, Jennie Garth was eliminated. Again, we artificially created fan votes that produce total percents to correctly lead to that result. The judges’ percent is computed by dividing the total judge score for the contestant by the sum of total judge scores for all 4 contestants. Based on the judges’ percent, Jennie was \(3^{rd}\). However, adding the percent of the 10 million artificially created fan votes we assigned to the judges’ percent, she was \(4^{th}\).
+
+| ©2026 by COMAP | www.comap.org | www.mathmodels.org | info@comap.org |
+
+## Table 3: Example of Combining Judge and Fan Votes by Percent (Season 5, Week 9)
+| Contestant | Total Judges Score | Judges Score Percent | Fan Vote* | Fan Percent * | Sum of Percents |
+| --- | --- | --- | --- | --- | --- |
+| Jennie Garth | 29 | 29/117 = 24.8% | 1.1 million | 1.1/10 = 11% | 35.8 |
+| Marie Osmond | 28 | 28/117 = 23.9% | 3.7 million | 3.7/10 = 37% | 60.9 |
+| Mel B | 30 | 30/117 = 25.6% | 3.2 million | 3.2/10 = 32% | 57.8 |
+| Helio Castroneves | 30 | 30/117 = 25.6% | 2 million | 2/10 = 20% | 45.6 |
+| Total | 117 | | 10 million | | |
+
+* Fan vote is unknown, values hypothetical to produce the correct final standings  
+a The year of the return to the rank based method is not known for certain; season 28 is a reasonable assumption.
+
+| ©2026 by COMAP | www.comap.org | www.mathmodels.org | info@comap.org |
