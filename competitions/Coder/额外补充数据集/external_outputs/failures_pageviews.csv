@@ -1,0 +1,2 @@
+season,celebrity_name,error
+14,Donald Driver,"HTTPSConnectionPool(host='wikimedia.org', port=443): Read timed out. (read timeout=30)"
