@@ -1,0 +1,275 @@
+season,week,method,eliminated,is_consistent,n_contestants
+1,2,rank,Trista Sutter,False,6
+1,3,rank,Evander Holyfield,True,5
+1,4,rank,Rachel Hunter,False,4
+2,1,rank,Kenny Mayne,False,10
+2,2,rank,Tatum O'Neal,False,9
+2,3,rank,Giselle Fernandez,False,8
+2,4,rank,Master P,True,7
+2,5,rank,Tia Carrere,True,6
+2,6,rank,George Hamilton,True,5
+2,7,rank,Lisa Rinna,False,4
+3,1,percentage,Tucker Carlson,False,11
+3,2,percentage,Shanna Moakler,False,10
+3,3,percentage,Harry Hamlin,False,9
+3,4,percentage,Vivica A. Fox,False,8
+3,5,percentage,Sara Evans,False,7
+3,7,percentage,Jerry Springer,False,5
+3,8,percentage,Monique Coleman,False,4
+4,2,percentage,Paulina Porizkova,False,11
+4,3,percentage,Shandi Finnessey,False,10
+4,4,percentage,Leeza Gibbons,False,9
+4,5,percentage,Clyde Drexler,False,8
+4,6,percentage,Heather Mills,False,7
+4,7,percentage,John Ratzenberger,False,6
+4,8,percentage,Billy Ray Cyrus,False,5
+4,9,percentage,Ian Ziering,False,4
+5,1,percentage,Josie Maran,False,12
+5,2,percentage,Albert Reed,False,11
+5,3,percentage,Wayne Newton,False,10
+5,4,percentage,Floyd Mayweather Jr. ,False,9
+5,5,percentage,Mark Cuban,False,8
+5,6,percentage,Sabrina Bryan,False,7
+5,7,percentage,Jane Seymour,False,6
+5,8,percentage,Cameron Mathison,False,5
+5,9,percentage,Jennie Garth,False,4
+6,2,percentage,Monica Seles,False,12
+6,3,percentage,Steve Guttenberg,False,10
+6,4,percentage,Adam Carolla,False,9
+6,5,percentage,Priscilla Presley,False,8
+6,6,percentage,Marlee Matlin,False,7
+6,7,percentage,Shannon Elizabeth,False,6
+6,8,percentage,Mario,False,5
+6,9,percentage,Marissa Jaret Winokur,False,4
+7,1,percentage,Jeffrey Ross,False,13
+7,2,percentage,Kim Kardashian,False,11
+7,4,percentage,Rocco DiSpirito,False,9
+7,5,percentage,Toni Braxton,False,8
+7,6,percentage,Cloris Leachman,False,7
+7,7,percentage,Susan Lucci,False,6
+7,8,percentage,Maurice Greene,False,5
+7,9,percentage,Cody Linley,False,4
+8,2,percentage,Belinda Carlisle,False,13
+8,3,percentage,Denise Richards,False,12
+8,4,percentage,Holly Madison,False,11
+8,5,percentage,David Alan Grier,False,9
+8,6,percentage,Steve-O,False,8
+8,7,percentage,Lawrence Taylor,False,7
+8,8,percentage,Chuck Wicks,False,6
+8,9,percentage,Lil' Kim,False,5
+8,10,percentage,Ty Murray,False,4
+9,1,percentage,Ashley Hamiliton,False,16
+9,2,percentage,Kathy Ireland,False,14
+9,3,percentage,Debi Mazar,False,13
+9,4,percentage,Chuck Liddell,False,11
+9,5,percentage,Natalie Coughlin,False,10
+9,6,percentage,Louie Vito,False,9
+9,7,percentage,Mark Dacascos,False,7
+9,8,percentage,Aaron Carter,False,5
+9,9,percentage,Joanna Krupa,False,4
+10,2,percentage,Shannen Doherty,False,11
+10,3,percentage,Buzz Aldrin,False,10
+10,4,percentage,Aiden Turner,False,9
+10,5,percentage,Kate Gosselin,False,8
+10,6,percentage,Jake Pavelka,False,7
+10,7,percentage,Pamela Anderson,False,6
+10,8,percentage,Niecy Nash,False,5
+10,9,percentage,Chad Ochocinco,False,4
+11,1,percentage,David Hasselhoff,False,12
+11,2,percentage,Michael Bolton,False,11
+11,3,percentage,Margaret Cho,False,10
+11,4,percentage,The Situation,False,9
+11,5,percentage,Florence Henderson,False,8
+11,6,percentage,Audrina Patridge,False,7
+11,7,percentage,Rick Fox,False,6
+11,8,percentage,Kurt Warner,False,5
+11,9,percentage,Brandy,False,4
+12,2,percentage,Mike Catherwood,False,11
+12,3,percentage,Wendy Williams,False,10
+12,4,percentage,Sugar Ray Leonard,False,9
+12,5,percentage,Petra Nemcova,False,8
+12,6,percentage,Chris Jericho,False,7
+12,7,percentage,Kendra Wilkinson,False,6
+12,8,percentage,Romeo,False,5
+12,9,percentage,Ralph Macchio,False,4
+13,1,percentage,Metta World Peace (Ron),False,12
+13,2,percentage,Elisabetta Canalis,False,11
+13,3,percentage,Kristin Cavallari,False,10
+13,4,percentage,Chynna Phillips,False,9
+13,5,percentage,Carson Kressley,False,8
+13,6,percentage,Chaz Bono,False,7
+13,7,percentage,David Arquette,False,6
+13,8,percentage,Nancy Grace,False,5
+13,9,percentage,Hope Solo,False,4
+14,2,percentage,Martina Navratilova,False,12
+14,3,percentage,Jack Wagner,False,11
+14,4,percentage,Sherri Sheperd,False,10
+14,5,percentage,Gavin DeGraw,False,9
+14,6,percentage,Gladys Knight,False,8
+14,7,percentage,Jaleel White,False,7
+14,8,percentage,Melissa Gilbert,False,6
+14,9,percentage,Maria Menounos,False,4
+15,1,percentage,Pamela Anderson,False,13
+15,2,percentage,Joey Fatone,False,12
+15,3,percentage,Drew Lachey,False,11
+15,4,percentage,Bristol Palin,False,9
+15,6,percentage,Sabrina Bryan,False,8
+15,8,percentage,Gilles Marini,False,7
+15,9,percentage,Apolo Anton Ohno,False,5
+16,2,percentage,Dorothy Hamill,False,12
+16,3,percentage,Wynonna Judd,False,11
+16,4,percentage,Lisa Vanderpump,False,10
+16,5,percentage,D. L. Hughley,False,9
+16,6,percentage,Victor Ortiz,False,8
+16,7,percentage,Andy Dick,False,7
+16,8,percentage,Sean Lowe,False,6
+16,9,percentage,Ingo Rademacher,False,5
+16,10,percentage,Alexandra Raisman,False,4
+17,2,percentage,Keyshawn Johnson,False,12
+17,3,percentage,Bill Nye,False,11
+17,4,percentage,Valerie Harper,False,10
+17,5,percentage,Christina Milian,False,9
+17,7,percentage,"Nicole ""Snooki"" Polizzi",False,8
+17,8,percentage,Brant Daugherty,False,7
+17,9,percentage,Elizabeth Berkley Lauren,False,6
+17,10,percentage,Leah Remini,False,5
+17,11,percentage,Bill Engvall,False,4
+18,1,percentage,Diana Nyad,False,12
+18,2,percentage,Billy Dee Williams,False,11
+18,5,percentage,Cody Simpson,False,9
+18,6,percentage,Drew Carey,False,8
+18,7,percentage,NeNe Leakes,False,7
+18,8,percentage,Danica McKellar,False,6
+18,9,percentage,Charlie White,False,5
+18,10,percentage,James Maslow,False,4
+19,1,percentage,Lolo Jones,False,13
+19,2,percentage,Tavis Smiley,False,12
+19,3,percentage,Randy Couture,False,11
+19,4,percentage,Betsey Johnson,False,10
+19,6,percentage,Jonathan Bennett,False,9
+19,7,percentage,Antonio Sabato Jr.,False,8
+19,8,percentage,Michael Waltrip,False,7
+19,9,percentage,Lea Thompson,False,6
+19,10,percentage,Tommy Chong,False,5
+19,11,percentage,Bethany Mota,False,4
+20,2,percentage,Redfoo,False,12
+20,3,percentage,Charlotte McKinney,False,11
+20,4,percentage,Michael Sam,False,10
+20,5,percentage,Suzanne Somers,False,9
+20,6,percentage,Patti LaBelle,False,8
+20,7,percentage,Willow Shields,False,7
+20,8,percentage,Chris Soules,False,6
+20,9,percentage,Nastia Liukin,False,4
+21,2,percentage,Chaka Khan,False,13
+21,4,percentage,Gary Busey,False,10
+21,6,percentage,Paula Deen,False,9
+21,7,percentage,Hayes Grier,False,8
+21,8,percentage,Andy Grammer,False,7
+21,9,percentage,Alexa PenaVega,False,6
+21,11,percentage,Carlos PenaVega,False,4
+22,2,percentage,Geraldo Rivera,False,12
+22,3,percentage,Mischa Barton,False,11
+22,4,percentage,Marla Maples,False,10
+22,6,percentage,Doug Flutie,False,9
+22,7,percentage,Kim Fields,False,8
+22,8,percentage,Jodie Sweetin,False,6
+22,9,percentage,Antonio Brown,False,5
+23,2,percentage,Jake T. Austin,False,13
+23,3,percentage,Rick Perry,False,12
+23,4,percentage,Babyface,False,11
+23,6,percentage,Amber Rose,False,9
+23,7,percentage,Maureen McCormick,False,8
+23,8,percentage,Ryan Lochte,False,7
+23,9,percentage,Marilu Henner,False,6
+23,10,percentage,Terra Jole,False,5
+23,11,percentage,Jana Kramer,False,4
+24,2,percentage,Chris Kattan,False,12
+24,3,percentage,Charo,False,11
+24,4,percentage,Mr. T,False,10
+24,5,percentage,Erika Jayne,False,9
+24,6,percentage,Heather Morris,False,8
+24,7,percentage,Nancy Kerrigan,False,7
+24,8,percentage,Bonner Bolton,False,5
+24,9,percentage,Simone Biles,False,4
+25,2,percentage,Barbara Corcoran,False,13
+25,4,percentage,Derek Fisher,False,11
+25,5,percentage,Sasha Pieterse,False,10
+25,6,percentage,Nick Lachey,False,9
+25,7,percentage,Nikki Bella,False,8
+25,8,percentage,Terrell Owens,False,6
+25,9,percentage,Victoria Arlen,False,5
+25,10,percentage,Drew Scott,False,4
+26,1,percentage,Jamie Anderson,False,10
+26,2,percentage,Arike Ogunbowale,False,8
+26,3,percentage,Chris Mazdzer,False,6
+27,1,percentage,Nikki Glaser,False,13
+27,2,percentage,Danelle Umstead,False,12
+27,3,percentage,Nancy McKeon,False,11
+27,4,percentage,Tinashe,False,10
+27,6,percentage,Mary Lou Retton,False,9
+27,7,percentage,DeMarcus Ware,False,8
+27,8,percentage,Joe Amabile,False,6
+27,9,percentage,Alexis Ren,False,4
+28,2,rank,Mary Wilson,False,12
+28,4,rank,Lamar Odom,True,10
+28,6,rank,Sailor Brinkley-Cook,False,9
+28,7,rank,Karamo Brown,False,8
+28,8,rank,Kate Flannery,False,7
+28,9,rank,Sean Spicer,True,6
+28,10,rank,James Van Der Beek,True,5
+28,11,rank,Lauren Alaina,True,4
+29,2,rank,Charles Oakley,True,15
+29,3,rank,Carole Baskin,True,14
+29,4,rank,Anne Heche,True,13
+29,5,rank,Jesse Metcalfe,True,12
+29,6,rank,Veron Davis,False,11
+29,7,rank,Jeannie Mai,False,10
+29,8,rank,Chrishell Stause,False,8
+29,9,rank,AJ McLean,False,7
+29,10,rank,Johnny Weir,False,6
+29,11,rank,Justina Machado,False,4
+30,2,rank,Martin Kove,True,15
+30,3,rank,Christine Chiu,False,14
+30,4,rank,Brian Austin Green,True,13
+30,5,rank,Melanie C,False,11
+30,6,rank,Kenya Moore,True,10
+30,7,rank,"Mike ""The Miz"" Mizanin",True,9
+30,8,rank,Jimmie Allen,True,8
+30,9,rank,Melora Hardin,False,6
+30,10,rank,Amanda Kloots,False,4
+31,1,rank,Jason Lewis,False,16
+31,2,rank,Teresa Giudice,False,15
+31,3,rank,Cheryl Ladd,False,14
+31,4,rank,Sam Champion,True,13
+31,5,rank,Joseph Baena,False,12
+31,6,rank,Jessie James Decker,False,10
+31,7,rank,Jordin Sparks,False,9
+31,8,rank,Heidi D'Amelio,False,8
+31,9,rank,Daniel Durant,False,6
+31,10,rank,Shangela,True,4
+32,1,rank,Matt Walsh,True,14
+32,2,rank,Jamie Lynn Spears,False,13
+32,3,rank,Tyson Beckford,True,12
+32,4,rank,Adrian Peterson,False,11
+32,5,rank,Mira Sorvino,False,10
+32,6,rank,Mauricio Umansky,False,9
+32,7,rank,Lele Pons,False,8
+32,8,rank,Barry Williams,False,7
+32,9,rank,Harry Jowsey,True,6
+32,11,rank,Alyson Hannigan,True,5
+33,2,rank,Anna Delvey,False,13
+33,3,rank,Eric Roberts,False,11
+33,4,rank,Brooks Nader,False,9
+33,5,rank,Phaedra Parks,True,8
+33,6,rank,Jenn Tran,False,7
+33,7,rank,Dwight Howard ,True,6
+33,9,rank,Danny Amendola,True,5
+34,2,rank,Baron Davis,False,14
+34,3,rank,Lauren Jauregui,True,12
+34,4,rank,Hilaria Baldwin,False,11
+34,6,rank,Scott Hoying,False,10
+34,7,rank,Jen Affleck,False,9
+34,8,rank,Danielle Fishel,False,8
+34,9,rank,Andy Richter,True,7
+34,10,rank,Whitney Leavitt,False,6
+34,11,rank,Dylan Efron,False,5

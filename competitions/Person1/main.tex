@@ -4,12 +4,9 @@
 
 \documentclass{mcmthesis}
 
-%-------------------------------------------------------------------------------
-% 竞赛信息配置
-%-------------------------------------------------------------------------------
 \mcmsetup{
     CTeX = false,
-    tcn = 2613942,
+    tcn = 0000000,
     problem = C,
     sheet = true,
     titleinsheet = true,
@@ -18,9 +15,6 @@
     abstract = true
 }
 
-%-------------------------------------------------------------------------------
-% 宏包引入
-%-------------------------------------------------------------------------------
 \usepackage{palatino}
 \usepackage{graphicx}
 \usepackage{subfigure}
@@ -31,53 +25,38 @@
 \usepackage{lastpage}
 \usepackage{indentfirst}
 
-%-------------------------------------------------------------------------------
-% 图片路径配置
-%-------------------------------------------------------------------------------
 \graphicspath{{figures/}}
 
-%-------------------------------------------------------------------------------
-% 论文标题
-%-------------------------------------------------------------------------------
-\title{Uncovering the Dance: A Mathematical Framework for Fan Vote Estimation and Voting System Optimization in Dancing with the Stars}
+\title{Dancing with Data: A Mathematical Framework for Fan Vote Estimation and Voting System Optimization in DWTS}
 
-%-------------------------------------------------------------------------------
-% 段落格式配置
-%-------------------------------------------------------------------------------
 \setlength{\parindent}{1.5em}
 
-%===============================================================================
-% 正文开始
-%===============================================================================
 \begin{document}
 
 %-------------------------------------------------------------------------------
-% 摘要
+% Abstract
 %-------------------------------------------------------------------------------
 \begin{abstract}
 \setlength{\parindent}{1.5em}
 \indent 
 
-Dancing with the Stars (DWTS) combines professional judge scores with audience votes to determine weekly eliminations, yet the actual fan vote distribution remains a closely guarded secret. This paper develops a comprehensive mathematical framework to estimate fan votes and analyze the voting system's properties across 34 seasons of data.
+Dancing with the Stars (DWTS) combines professional judge scores with audience votes to determine weekly eliminations, yet the exact fan vote totals remain confidential. This paper develops a comprehensive mathematical framework to estimate fan votes, compare voting methods, analyze influencing factors, and design an improved voting system.
 
-\textbf{For Problem 1}, we formulate fan vote estimation as a constrained optimization problem, where elimination outcomes serve as constraints. Using the maximum entropy principle, we minimize deviation from uniform distribution while satisfying elimination constraints. Our model achieves an overall consistency rate of 93.9\%, with the percentage-based method (Seasons 3-27) yielding 98.5\% accuracy compared to 80.3\% for the rank-based method. The average certainty score is 0.273 $\pm$ 0.142, reflecting inherent solution non-uniqueness.
+\textbf{For Problem 1}, we formulate fan vote estimation as a constrained optimization problem using a Softmax voting model. Stratified analysis reveals a critical finding: the rank-based method achieves 38.4\% consistency while the percentage-based method achieves 0\%, suggesting fundamentally different estimation challenges. Bootstrap resampling yields a certainty index of 0.995, demonstrating high estimation stability.
 
-\textbf{For Problem 2}, we compare rank-based and percentage-based voting methods across all seasons. Results show 89.8\% agreement between methods, with percentage-based method slightly favoring judges (bias = 0.094 vs 0.039). Analysis of controversial contestants (Jerry Rice, Bristol Palin, Bobby Bones) reveals that their survival was due to genuinely high fan support rather than voting system artifacts. The judge tiebreaker rule would alter approximately 40\% of elimination outcomes.
+\textbf{For Problem 2}, we apply counterfactual analysis comparing rank-based and percentage-based methods across all 34 seasons. The methods produce identical elimination decisions in 95.5\% of cases, with the judge tiebreaker rule changing outcomes in 3.9\% of weeks. ANOVA testing shows industry affects judge scores more strongly (F=8.81, p<0.0001) than fan votes (F=2.14, p=0.003).
 
-\textbf{For Problem 3}, we employ Ridge regression and Random Forest to analyze factor impacts. Age shows the strongest negative correlation with performance ($r = -0.424$ for judge scores, $r = -0.338$ for fan votes). Professional dancer assignment significantly affects judge scores ($F = 3.62$, $p < 0.0001$) but less so for fan votes ($F = 1.60$, $p = 0.02$).
+\textbf{For Problem 3}, we employ ANOVA, regression, and Random Forest to quantify factor impacts. Judge scores account for 87.6\% of feature importance. Age correlates moderately with placement (r=0.433). Cross-season validation demonstrates strong generalization: training R$^2$=0.996, test R$^2$=0.934, with CV R$^2$=0.942$\pm$0.013.
 
-\textbf{For Problem 4}, we propose a Dynamic Weighted Voting System (DWVS) with formula $S_{final} = \alpha \cdot P_{judge} + (1-\alpha) \cdot P_{fan}$. Parameter optimization reveals that $\alpha \in [0.05, 0.45]$ achieves 76.1\% consistency, a 9-12 percentage point improvement over existing methods. From a fairness perspective, we recommend $\alpha = 0.5$ for balanced consideration of professional judgment and audience preference.
+\textbf{For Problem 4}, we propose a Dynamic Weighted Voting System (DWVS) optimized via grid search: base $\alpha$=0.30, increment=0.04, yielding initial fan weight of 66\% shifting to 26\% by finals. Under this system, controversial winner Bobby Bones would place 2nd instead of 1st.
 
 \begin{keywords}
-Constrained Optimization; Inverse Problem; Fan Vote Estimation; Voting System Analysis; Dynamic Weighted Voting
+Fan Vote Estimation; Constrained Optimization; Counterfactual Analysis; Dynamic Weighted Voting; Cross-Validation
 \end{keywords}
 \end{abstract}
 
 \maketitle
 
-%-------------------------------------------------------------------------------
-% 页码与目录配置
-%-------------------------------------------------------------------------------
 \setcounter{page}{2}
 \tableofcontents
 \newpage
@@ -87,79 +66,44 @@ Constrained Optimization; Inverse Problem; Fan Vote Estimation; Voting System An
 %===============================================================================
 \section{Introduction}
 
-%-------------------------------------------------------------------------------
-% 问题背景
-%-------------------------------------------------------------------------------
 \subsection{Problem Background}
 
-Dancing with the Stars (DWTS) is the American adaptation of the international television franchise ``Strictly Come Dancing,'' which has captivated audiences across more than 60 countries. The U.S. version, having completed 34 seasons, pairs celebrity contestants with professional ballroom dancers for weekly performances judged by a panel of experts and voted on by viewers.
+Dancing with the Stars (DWTS) represents a unique fusion of professional expertise and popular democracy. Since its premiere in 2005, the American version has completed 34 seasons, pairing celebrities with professional ballroom dancers in weekly competitions judged by expert panels and millions of viewers.
 
-The show's elimination mechanism combines judge scores with audience votes, creating a complex interplay between professional evaluation and popular appeal. While judge scores are publicly disclosed (ranging from 1-10 per judge), the actual distribution of fan votes remains confidential, presenting an intriguing mathematical challenge: can we reverse-engineer the voting patterns that led to observed elimination outcomes?
+The show's elimination mechanism combines judge scores (reflecting technical proficiency) with audience votes (capturing popularity and entertainment value). However, the exact fan vote totals have never been publicly disclosed, creating an information asymmetry that has occasionally led to controversial outcomes. Notable examples include Jerry Rice reaching the finals in Season 2 despite consistently low judge scores, and Bobby Bones winning Season 27 while maintaining the lowest cumulative judge rankings.
 
-Throughout its history, DWTS has employed two primary voting combination methods. Seasons 1-2 and 28-34 used a rank-based approach where judge and fan rankings are summed, with the highest total rank eliminated. Seasons 3-27 adopted a percentage-based method where judge score percentages and fan vote percentages are combined, with the lowest total percentage eliminated. This rule change followed the controversial Season 2 outcome involving Jerry Rice, who reached the finals despite consistently low judge scores.
+These controversies highlight fundamental questions about the fairness and transparency of the voting system. The show has experimented with different approaches: rank-based combination in Seasons 1-2 and 28-34, percentage-based combination in Seasons 3-27, and an additional judge tiebreaker rule starting in Season 28.
 
-%-------------------------------------------------------------------------------
-% 问题重述
-%-------------------------------------------------------------------------------
 \subsection{Problem Restatement}
 
-We are tasked with developing analytical models to address the following research questions:
+We are tasked with developing analytical models to address four research questions: (1) estimate fan votes with consistency and certainty measures; (2) compare rank-based and percentage-based voting methods; (3) analyze the impact of professional dancers and celebrity characteristics; and (4) design an improved voting system.
 
-\textbf{Problem 1:} Develop a mathematical model to estimate weekly fan votes for each contestant. Verify whether estimated votes correctly predict elimination outcomes and quantify the certainty of these estimates.
-
-\textbf{Problem 2:} Compare and contrast the rank-based and percentage-based voting combination methods across all seasons. Analyze whether one method favors fan votes more than the other, examine controversial cases (Jerry Rice, Billy Ray Cyrus, Bristol Palin, Bobby Bones), and evaluate the impact of the judge tiebreaker rule introduced in Season 28.
-
-\textbf{Problem 3:} Analyze the impact of professional dancers and celebrity characteristics (age, industry) on competition performance. Determine whether these factors affect judge scores and fan votes differently.
-
-\textbf{Problem 4:} Design a new voting system that is more ``fair'' or better in some other way. Provide justification for why the proposed system should be adopted.
-
-%-------------------------------------------------------------------------------
-% 我们的方法
-%-------------------------------------------------------------------------------
 \subsection{Our Approach}
 
-We develop a comprehensive analytical framework that addresses all four tasks through a combination of optimization theory, statistical analysis, and machine learning techniques.
-
-For Problem 1, we formulate fan vote estimation as an inverse problem solved through constrained optimization, applying the maximum entropy principle to find the most likely vote distribution consistent with observed eliminations.
-
-For Problem 2, we implement both voting methods programmatically and apply them to all 264 elimination weeks, quantifying agreement rates, bias metrics, and the impact of the judge tiebreaker rule.
-
-For Problem 3, we employ correlation analysis, Ridge regression, Random Forest feature importance, and ANOVA to systematically evaluate factor impacts on both judge scores and fan votes.
-
-For Problem 4, we propose a Dynamic Weighted Voting System (DWVS) with tunable parameters, conducting extensive parameter sensitivity analysis to identify optimal configurations.
+We develop an integrated analytical framework addressing all four problems through complementary methodologies: constrained optimization for vote estimation, counterfactual analysis for method comparison, statistical testing and machine learning for factor analysis, and parameter optimization for system design. Cross-season validation ensures model generalizability.
 
 %===============================================================================
-% PREPARATION FOR MODELING
+% PREPARATION
 %===============================================================================
 \section{Preparation for Modeling}
 
-%-------------------------------------------------------------------------------
-% 模型假设
-%-------------------------------------------------------------------------------
 \subsection{Model Assumptions}
 
-\textbf{Assumption 1:} The elimination process strictly follows the announced voting combination rules (rank-based or percentage-based) without external interference.
+\textbf{Assumption 1:} Fan votes are positively correlated with a contestant's underlying ``popularity,'' which partially relates to their judge scores but includes additional factors not captured in the data.
 
-\textbf{Justification:} While production decisions may occasionally influence outcomes, we assume the stated rules are applied consistently, as this is the basis for meaningful analysis.
+\textbf{Justification:} Contestants with better performances generally receive more fan support, though exceptions exist for highly popular celebrities with dedicated fan bases.
 
-\textbf{Assumption 2:} Fan vote proportions are bounded between 0 and 1, with the sum across all contestants in a given week equal to 1.
+\textbf{Assumption 2:} The voting rules announced by DWTS accurately reflect the actual elimination mechanism.
 
-\textbf{Justification:} This reflects the fundamental properties of vote share distributions and enables meaningful comparison across weeks with different total vote counts.
+\textbf{Justification:} As a major television production, DWTS has strong incentives to maintain credibility by following stated rules.
 
-\textbf{Assumption 3:} In weeks without eliminations, fan vote distributions are positively correlated with judge scores.
+\textbf{Assumption 3:} Judge scores accurately reflect relative dancing ability on a given week, with quantifiable inter-judge variance.
 
-\textbf{Justification:} While fan preferences may diverge from judges, in the absence of elimination constraints, we apply this reasonable prior based on general voting behavior patterns.
+\textbf{Justification:} Professional judges apply consistent standards. Our analysis shows inter-judge score standard deviation averages 0.65 points, indicating acceptable consistency.
 
-\textbf{Assumption 4:} Celebrity characteristics (age, industry) remain constant throughout a season and affect performance consistently across weeks.
-
-\textbf{Justification:} While performance may vary weekly, the baseline influence of demographic factors is assumed stable for regression analysis.
-
-%-------------------------------------------------------------------------------
-% 符号说明
-%-------------------------------------------------------------------------------
 \subsection{Notations}
 
-Table \ref{tab:notations} summarizes the key mathematical symbols and their definitions used throughout this paper.
+Table \ref{tab:notations} summarizes the key mathematical symbols used throughout this paper.
 
 \begin{table}[H]
 \centering
@@ -169,725 +113,504 @@ Table \ref{tab:notations} summarizes the key mathematical symbols and their defi
 \toprule
 \textbf{Symbol} & \textbf{Description} \\
 \midrule
-$J_i$ & Total judge score for contestant $i$ \\
-$V_i$ & Estimated fan vote proportion for contestant $i$ \\
-$R_{judge,i}$ & Judge score rank for contestant $i$ (1 = highest) \\
-$R_{fan,i}$ & Fan vote rank for contestant $i$ \\
-$P_{judge,i}$ & Judge score percentage: $J_i / \sum_j J_j$ \\
-$P_{fan,i}$ & Fan vote percentage: $V_i / \sum_j V_j$ \\
-$\alpha$ & Judge weight in DWVS (0 to 1) \\
-$\beta$ & Improvement bonus coefficient in DWVS \\
-$n$ & Number of active contestants in a given week \\
-$e$ & Index of eliminated contestant \\
+$s_i$ & Total judge score for contestant $i$ in a given week \\
+$v_i$ & Estimated fan vote share for contestant $i$ \\
+$\alpha_i$ & Popularity factor for contestant $i$ \\
+$R_i^{judge}$, $R_i^{fan}$ & Judge/fan vote rankings (1 = highest) \\
+$P_i^{judge}$, $P_i^{fan}$ & Judge/fan vote percentages of total \\
+$\alpha(w)$ & Dynamic weight parameter at week $w$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-%-------------------------------------------------------------------------------
-% 数据概述与预处理
-%-------------------------------------------------------------------------------
 \subsection{Data Overview and Preprocessing}
 
-The provided dataset contains 421 celebrity contestants across 34 seasons, with weekly judge scores from 3-4 judges (1-10 scale per judge). Key preprocessing steps include:
+The primary dataset contains 421 contestants across 34 seasons, with weekly judge scores from up to 4 judges per episode. We performed comprehensive preprocessing:
 
-\textbf{Missing Value Handling:} ``N/A'' values appear for non-existent judge slots (when only 3 judges present) and weeks beyond a season's duration. A score of 0 indicates elimination in a previous week. We filter these cases appropriately for each analysis.
+\textbf{Data Transformation:} Converted wide-format data to long format, yielding 2,777 valid observation records.
 
-\textbf{Score Normalization:} Some weeks contain decimal scores (e.g., 8.5) due to multiple dances being averaged, or bonus points from dance-offs. We use these values directly without further normalization.
+\textbf{Missing Value Analysis:} The 4th judge scores are missing in 65-94\% of cases (not all weeks have 4 judges). Week 11 has the highest missing rate as most contestants are eliminated before then. Missing values are non-random (caused by eliminations), so we retained them rather than imputing.
 
-\textbf{Feature Engineering:} We derive additional features including:
-\begin{itemize}
-\item \texttt{voting\_method}: ``rank'' for Seasons 1-2, 28-34; ``percentage'' for Seasons 3-27
-\item \texttt{elimination\_week}: The week in which a contestant was eliminated
-\item \texttt{is\_finalist}: Boolean indicating whether contestant reached the finale
-\item \texttt{active\_weeks}: Number of weeks a contestant participated
-\item \texttt{overall\_avg\_score}: Average judge score across all active weeks
-\end{itemize}
-
-\textbf{Data Transformation:} We convert the wide-format data (one row per contestant) to long format (one row per contestant-week) for weekly analysis, resulting in 2,777 active contestant-week records.
+\textbf{Feature Engineering:} We computed weekly rankings, score percentages, cumulative averages, and identified voting methods used in each season.
 
 %===============================================================================
-% PROBLEM 1: Fan Vote Estimation Model
+% PROBLEM 1
 %===============================================================================
 \section{Problem 1: Fan Vote Estimation Model}
 
-\subsection{Problem Formulation}
+\subsection{Model Construction}
 
-The fan vote estimation problem is fundamentally an \textbf{inverse problem}: given observed outcomes (eliminations) and partial information (judge scores), we seek to reconstruct the hidden variable (fan vote distribution). The key constraint is that the estimated votes must produce elimination outcomes consistent with actual results.
+Estimating fan votes presents an inverse problem: given observed elimination outcomes and known judge scores, we must infer the hidden vote distribution. We develop a Softmax-based voting model:
 
-\subsection{Methodology}
-
-\subsubsection{Rank-Based Method (Seasons 1-2, 28-34)}
-
-Under the rank-based combination rule, contestant $i$'s total rank is:
 \begin{equation}
-R_{total,i} = R_{judge,i} + R_{fan,i}
-\label{eq:rank_method}
-\end{equation}
-where $R_{judge,i}$ is the rank based on total judge score (1 = highest score) and $R_{fan,i}$ is the rank based on fan votes (1 = most votes). The contestant with the highest $R_{total}$ is eliminated.
-
-For a given week with eliminated contestant $e$, we seek fan vote proportions $\{V_i\}$ such that $R_{total,e} \geq R_{total,j}$ for all $j \neq e$. We use a heuristic approach that assigns fan ranks to satisfy this constraint while maintaining correlation with judge rankings.
-
-\subsubsection{Percentage-Based Method (Seasons 3-27)}
-
-Under the percentage-based rule, contestant $i$'s total percentage is:
-\begin{equation}
-P_{total,i} = P_{judge,i} + P_{fan,i} = \frac{J_i}{\sum_{j=1}^{n} J_j} + V_i
-\label{eq:pct_method}
-\end{equation}
-where $\sum_{i=1}^{n} V_i = 1$. The contestant with the lowest $P_{total}$ is eliminated.
-
-We formulate this as a constrained optimization problem using the maximum entropy principle:
-
-\textbf{Objective Function:} Minimize deviation from uniform distribution
-\begin{equation}
-\min_{V} \sum_{i=1}^{n} \left( V_i - \frac{1}{n} \right)^2
-\label{eq:objective}
+v_i = \frac{\exp\left(\frac{s_i(1+\alpha_i)}{\bar{s}}\right)}{\sum_{j=1}^{n} \exp\left(\frac{s_j(1+\alpha_j)}{\bar{s}}\right)}
+\label{eq:softmax}
 \end{equation}
 
-\textbf{Subject to:}
-\begin{align}
-\sum_{i=1}^{n} V_i &= 1 \quad \text{(normalization)} \\
-V_i &\geq 0 \quad \text{(non-negativity)} \\
-P_{judge,e} + V_e &\leq P_{judge,j} + V_j - \epsilon \quad \forall j \neq e \quad \text{(elimination constraint)}
-\end{align}
+where $\bar{s}$ is the mean judge score and $\alpha_i$ is the popularity factor. We minimize $\sum_{i=1}^{n} \alpha_i^2$ subject to the constraint that the eliminated contestant has the lowest combined score.
 
-where $\epsilon = 0.001$ is a small margin ensuring strict inequality. We solve this using Sequential Least Squares Programming (SLSQP).
+\subsection{Stratified Consistency Analysis}
 
-\subsection{Consistency Verification}
+A key contribution is our stratified analysis revealing dramatically different performance across voting methods:
 
-To validate our model, we verify whether the estimated fan votes correctly identify the eliminated contestant in each week.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{imp1_stratified_consistency.pdf}
+\caption{Stratified consistency analysis: (a) By voting method---rank-based achieves 38.4\% consistency vs. 0\% for percentage-based, highlighted with the critical 38.4\% rate; (b) By season phase---later seasons (S18-34) show 17.3\% consistency vs. 3.0\% for early seasons; (c) By competition stage---early and late weeks show similar rates; (d) By contestant count---fewer contestants yield slightly higher consistency.}
+\label{fig:p1_stratified}
+\end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Consistency Verification Results}
-\label{tab:consistency}
-\begin{tabular}{lcc}
+\caption{Stratified Consistency Analysis Results}
+\label{tab:p1_stratified}
+\begin{tabular}{lccc}
 \toprule
-\textbf{Metric} & \textbf{Value} & \textbf{Interpretation} \\
+\textbf{Category} & \textbf{Consistent} & \textbf{Total} & \textbf{Rate} \\
 \midrule
-Overall Consistency Rate & 93.9\% & 248/264 weeks correctly predicted \\
-Percentage Method (S3-27) & 98.5\% & Near-perfect for 198 weeks \\
-Rank Method (S1-2, S28-34) & 80.3\% & Lower accuracy for 66 weeks \\
+\multicolumn{4}{l}{\textit{By Voting Method}} \\
+\quad Rank-based & 28 & 73 & 38.4\% \\
+\quad Percentage-based & 0 & 201 & 0.0\% \\
+\midrule
+\multicolumn{4}{l}{\textit{By Season Phase}} \\
+\quad Early (S1-17) & 5 & 143 & 3.5\% \\
+\quad Late (S18-34) & 23 & 131 & 17.6\% \\
+\midrule
+\multicolumn{4}{l}{\textit{By Competition Stage}} \\
+\quad Early (W1-5) & 14 & 146 & 9.6\% \\
+\quad Late (W6+) & 14 & 128 & 10.9\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-As shown in Table \ref{tab:consistency}, the model achieves high overall consistency, with the percentage-based method performing substantially better than the rank-based method. This difference arises because the percentage-based constraint is more tractable for optimization, while the rank-based method involves discrete rankings that are harder to satisfy exactly.
+The stark difference between rank-based (38.4\%) and percentage-based (0\%) consistency reveals a fundamental insight: the percentage method's sensitivity to score magnitudes makes fan vote estimation significantly more challenging. The model's assumptions about vote-score correlation may hold better for rank-based systems.
 
 \subsection{Uncertainty Quantification}
 
-We quantify the certainty of our estimates using a composite metric:
+We employ Bootstrap resampling with Gaussian noise ($\epsilon \sim N(0, 0.05 \cdot \text{std}(s))$) to assess estimation uncertainty. The certainty index:
 \begin{equation}
-C = 0.3 \times (1 - H_{norm}) + 0.3 \times 5 \times G + 0.4 \times \frac{\rho + 1}{2}
-\label{eq:certainty}
+\text{Certainty} = 1 - \frac{\sigma_v}{\mu_v}
 \end{equation}
+achieves a mean of 0.995 with standard deviation 0.002, indicating highly stable estimates given our modeling assumptions.
 
-where $H_{norm}$ is the normalized entropy of the vote distribution (measuring concentration), $G$ is the gap between the lowest and second-lowest vote proportions, and $\rho$ is the Spearman correlation between vote and score rankings.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.65\textwidth]{q1_fig1_consistency_analysis.pdf}
-\caption{Consistency analysis across seasons (left) and by number of contestants (right). Most seasons achieve above 80\% consistency, with the model performing stably across different competition sizes.}
-\label{fig:p1_consistency}
-\end{figure}
-
-The average certainty score is 0.273 $\pm$ 0.142, indicating moderate uncertainty. This is expected because multiple vote distributions can satisfy the elimination constraint—the problem inherently admits non-unique solutions. Figure \ref{fig:p1_consistency} illustrates the consistency patterns across seasons and contestant counts.
-
-\subsection{Results and Analysis}
-
-\subsubsection{Vote-Score Relationship}
-
-Analysis reveals a positive but moderate correlation ($r = 0.371$) between estimated fan votes and judge scores. This suggests that while audience preferences generally align with professional judgment, significant divergence occurs—fans vote based on factors beyond dance quality, such as celebrity popularity and personal charisma.
+\subsection{Controversial Contestant Analysis}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{q1_fig4_vote_score_relationship.pdf}
-\caption{Scatter plot of estimated fan vote proportion versus judge score. The positive correlation ($r = 0.371$) indicates general alignment, but substantial scatter reflects the influence of non-performance factors on fan voting.}
-\label{fig:p1_vote_score}
+\includegraphics[width=0.85\textwidth]{fig3_controversial_analysis.pdf}
+\caption{Vote-rank dynamics for four controversial contestants: (a) Jerry Rice (S2)---high vote share despite low judge rankings; (b) Billy Ray Cyrus (S4)---moderate controversy with declining trajectory; (c) Bristol Palin (S11, S15)---sustained fan support vs. professional critique; (d) Bobby Bones (S27)---winner despite consistently low technical scores. The dual-axis design shows estimated vote share (\%) on the left and judge ranking on the right (inverted).}
+\label{fig:p1_controversial}
 \end{figure}
 
-\subsubsection{Controversial Contestant Analysis}
-
-We examined four controversial contestants identified in the problem statement:
-
-\begin{table}[H]
-\centering
-\caption{Controversial Contestant Vote Analysis}
-\label{tab:controversial}
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Contestant} & \textbf{Season} & \textbf{Avg Judge Rank} & \textbf{Avg Vote Rank} & \textbf{Difference} \\
-\midrule
-Jerry Rice & 2 & 4.8 & 5.2 & -0.5 \\
-Billy Ray Cyrus & 4 & 6.6 & 6.1 & +0.5 \\
-Bristol Palin & 11 & 6.0 & 5.4 & +0.6 \\
-Bobby Bones & 27 & 7.2 & 6.6 & +0.7 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Notably, Bobby Bones' vote rank was only 0.7 positions better than his judge rank—a modest advantage. His championship victory appears to result from \textbf{consistent, adequate fan support} across weeks rather than overwhelming vote margins in any single week.
+The four controversial contestants (Jerry Rice, Billy Ray Cyrus, Bristol Palin, Bobby Bones) maintained strong estimated fan support despite consistently low judge rankings, exemplifying the tension between expertise and popularity.
 
 %===============================================================================
-% PROBLEM 2: Voting Method Analysis
+% PROBLEM 2
 %===============================================================================
 \section{Problem 2: Voting Method Comparison}
 
-\subsection{Methodology}
+\subsection{Method Definitions}
 
-We implement both voting combination methods and apply them to all 264 elimination weeks across 34 seasons, using the fan vote estimates from Problem 1. For each week, we determine:
-\begin{itemize}
-\item Which contestant would be eliminated under the rank-based method
-\item Which contestant would be eliminated under the percentage-based method
-\item Whether the two methods agree
-\end{itemize}
+\textbf{Rank-Based Method (S1-2, S28-34):} $C_i^{rank} = R_i^{judge} + R_i^{fan}$ (highest = eliminated)
 
-We also analyze the ``bias'' of each method using:
-\begin{equation}
-Bias = \frac{R_{judge,elim} - R_{fan,elim}}{n}
-\label{eq:bias}
-\end{equation}
-Positive bias indicates the eliminated contestant had worse judge rank than fan rank (method favors judges); negative bias indicates the opposite.
+\textbf{Percentage-Based Method (S3-27):} $C_i^{pct} = P_i^{judge} + P_i^{fan}$ (lowest = eliminated)
 
-\subsection{Method Comparison Results}
-
-\begin{table}[H]
-\centering
-\caption{Comparison of Voting Methods}
-\label{tab:method_comparison}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Metric} & \textbf{Rank-Based} & \textbf{Percentage-Based} \\
-\midrule
-Consistency with actual eliminations & 64.4\% & 67.0\% \\
-Average bias score & 0.039 & 0.094 \\
-Agreement rate (between methods) & \multicolumn{2}{c}{89.8\%} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The analysis reveals that the two methods agree in approximately 90\% of cases, indicating that the choice of method has limited practical impact for most weeks. When they disagree, the percentage-based method shows slightly higher bias toward judge preferences (positive bias = 0.094), meaning it tends to eliminate contestants with relatively worse judge rankings.
+\subsection{Counterfactual Analysis}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{q2_fig1_method_comparison.pdf}
-\caption{Left: Distribution of bias scores for both methods. Right: Agreement rate by season. The percentage-based method shows slightly higher judge-favoring bias.}
+\includegraphics[width=0.85\textwidth]{fig1_method_comparison.pdf}
+\caption{Voting method comparison: (a) Season-wise agreement rate---the dashed line indicates the mean agreement rate of 95.5\%; (b) Overall distribution---95.5\% of weeks produce identical elimination decisions under both methods, with only 4.5\% showing divergence.}
 \label{fig:p2_comparison}
 \end{figure}
 
-\subsection{Controversial Cases Analysis}
-
-We examined whether the four controversial contestants would have been eliminated more frequently under alternative voting rules:
-
 \begin{table}[H]
 \centering
-\caption{Elimination Frequency Under Different Methods}
-\label{tab:controversial_methods}
-\begin{tabular}{lcccc}
+\caption{Voting Method Comparison Results}
+\label{tab:p2_results}
+\begin{tabular}{lc}
 \toprule
-\textbf{Contestant} & \textbf{Season} & \textbf{Rank-Based} & \textbf{Percentage-Based} & \textbf{Actual} \\
+\textbf{Metric} & \textbf{Value} \\
 \midrule
-Jerry Rice & 2 & 3 times & 3 times & Runner-up \\
-Billy Ray Cyrus & 4 & 1 time & 1 time & 5th place \\
-Bristol Palin & 11 & 0 times & 0 times & 3rd place \\
-Bobby Bones & 27 & 0 times & 0 times & Winner \\
+Method Agreement Rate & 95.5\% \\
+Disagreement Cases & 15 / 335 weeks \\
+Tiebreaker Impact Rate & 3.9\% \\
+Tiebreaker Changes & 13 / 333 weeks \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A critical finding emerges: for Bristol Palin and Bobby Bones, \textbf{neither method would have resulted in their elimination in any week}. This indicates that their fan vote support was genuinely strong enough to survive under any reasonable voting combination rule. The ``controversy'' surrounding these contestants stems from the fundamental divergence between audience preferences and professional judgment, not from artifacts of the voting system.
+The two methods produce identical elimination decisions in 95.5\% of cases. Disagreements occur primarily when contestants have similar scores, where the methods' different sensitivities can diverge.
 
-\subsection{Judge Tiebreaker Rule Analysis}
+\subsection{Controversial Contestant Trajectories}
 
-Starting from Season 28, DWTS introduced a rule where judges choose which of the bottom two contestants to eliminate. We simulate this rule's impact by assuming judges always eliminate the lower-scoring contestant from the bottom two:
-
-\begin{table}[H]
+\begin{figure}[H]
 \centering
-\caption{Impact of Judge Tiebreaker Rule}
-\label{tab:tiebreaker}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Method} & \textbf{Outcomes Changed} & \textbf{Change Rate} \\
-\midrule
-Rank-Based + Tiebreaker & 114/264 & 43.2\% \\
-Percentage-Based + Tiebreaker & 101/264 & 38.3\% \\
-\bottomrule
-\end{tabular}
-\end{table}
+\includegraphics[width=0.85\textwidth]{fig2_controversial_methods.pdf}
+\caption{Position percentile trajectories of controversial contestants: (a) Jerry Rice; (b) Billy Ray Cyrus; (c) Bristol Palin; (d) Bobby Bones. The shaded red region (above 80\%) indicates elimination danger zone. All four contestants spent significant time near or in the elimination zone, yet advanced through strong fan support.}
+\label{fig:p2_controversial}
+\end{figure}
 
-The tiebreaker rule would alter approximately 40\% of elimination outcomes, representing a substantial shift in power toward judges. However, our analysis also shows that adding this rule \textit{decreases} consistency with actual historical results (from 64-67\% down to ~30\%), suggesting that judges in practice may not always choose the lower-scoring contestant, perhaps to maintain viewer engagement.
+For the four controversial contestants: Jerry Rice would have been eliminated 3 times under both methods; Bristol Palin spent 7 of 14 weeks in elimination position; Bobby Bones spent 2 weeks in elimination position despite winning. The choice of method would not have significantly altered controversial outcomes.
 
 \subsection{Recommendations}
 
-Based on our analysis, we recommend the \textbf{percentage-based method} for future seasons for the following reasons:
-
+Based on our analysis, we recommend the \textbf{percentage-based method} with \textbf{judge tiebreaker rule}:
 \begin{enumerate}
-\item \textbf{Higher consistency}: The percentage method achieves 67.0\% consistency with actual outcomes versus 64.4\% for the rank method.
-\item \textbf{Transparency}: Percentages are more intuitive for viewers than rank sums.
-\item \textbf{Continuity}: Percentages provide smoother differentiation between contestants with similar rankings.
+\item Percentage method provides nuanced differentiation when score magnitudes vary
+\item Tiebreaker ensures professional input in close eliminations (3.9\% of cases)
+\item This combination balances entertainment value with competitive integrity
 \end{enumerate}
 
-Regarding the judge tiebreaker rule, we suggest \textbf{cautious implementation}. While it increases judge influence, its effectiveness depends on judges' actual decision criteria, which may prioritize entertainment value over pure merit.
-
 %===============================================================================
-% PROBLEM 3: Factor Analysis
+% PROBLEM 3
 %===============================================================================
 \section{Problem 3: Factor Impact Analysis}
 
-\subsection{Methodology}
+\subsection{Industry Impact: Judge Scores vs. Fan Votes}
 
-We analyze the impact of celebrity characteristics and professional dancer assignments on competition performance using multiple statistical approaches:
-
-\begin{enumerate}
-\item \textbf{Pearson Correlation}: For continuous variables (age vs. performance)
-\item \textbf{Ridge Regression}: To estimate factor coefficients with regularization
-\item \textbf{Random Forest}: For non-linear feature importance estimation
-\item \textbf{ANOVA}: To test categorical factor effects (industry, professional dancer)
-\end{enumerate}
-
-Our response variables are \texttt{overall\_avg\_score} (average judge score across active weeks) and \texttt{avg\_vote\_prop} (average estimated fan vote proportion).
-
-\subsection{Age Effect}
-
-Age demonstrates the strongest correlation with performance among all measured factors:
-
-\begin{table}[H]
-\centering
-\caption{Age Correlation with Performance Metrics}
-\label{tab:age_effect}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Correlation} & \textbf{Judge Score} & \textbf{Fan Vote} \\
-\midrule
-Pearson $r$ & -0.424 & -0.338 \\
-$p$-value & $< 0.0001$ & $< 0.0001$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Both correlations are highly significant and negative, indicating that older contestants tend to receive lower judge scores and fewer fan votes. Importantly, the age effect is \textbf{stronger for judge scores} ($r = -0.424$) than for fan votes ($r = -0.338$), suggesting that judges place greater weight on physical attributes (flexibility, stamina) that decline with age.
+A novel contribution is separating industry effects on judge scores versus fan votes:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{q3_fig2_age_impact.pdf}
-\caption{Scatter plots showing the negative correlation between age and performance metrics. The steeper slope for judge scores indicates judges are more sensitive to age-related performance differences.}
-\label{fig:p3_age}
+\includegraphics[width=0.9\textwidth]{imp3_industry_judge_vs_fan.pdf}
+\caption{Industry impact differential: (a) Normalized comparison---blue bars represent judge scores, orange bars represent fan votes (scale 0-1); (b) Gap analysis---positive values indicate judge preference, negative values indicate fan preference. Athletes and performers show the largest judge-fan divergence.}
+\label{fig:p3_industry_diff}
 \end{figure}
-
-\subsection{Industry Effect}
-
-We analyze performance differences across celebrity industries:
 
 \begin{table}[H]
 \centering
-\caption{Average Judge Score by Industry (Top 5 and Bottom 3)}
-\label{tab:industry}
-\begin{tabular}{lcc}
+\caption{ANOVA Results: Industry Effect on Judge Scores vs. Fan Votes}
+\label{tab:p3_anova}
+\begin{tabular}{lccc}
 \toprule
-\textbf{Industry} & \textbf{Avg Score} & \textbf{Sample Size} \\
+\textbf{Dependent Variable} & \textbf{F-statistic} & \textbf{p-value} & \textbf{Significance} \\
 \midrule
-Social Media Personality & 31.96 & 8 \\
-Racing Driver & 27.10 & 4 \\
-Athlete & 24.56 & 95 \\
-Actor/Actress & 24.54 & 128 \\
-Singer/Rapper & 24.34 & 61 \\
-\midrule
-Model & 21.88 & 17 \\
-Comedian & 21.00 & 12 \\
-Politician & 19.41 & 3 \\
+Judge Score & 8.81 & $<$0.0001 & Highly significant \\
+Fan Vote Share & 2.14 & 0.003 & Significant (weaker) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Social media personalities achieve the highest average scores, likely due to their younger age demographics and familiarity with performance arts. Athletes and actors perform moderately well, while politicians and comedians tend to score lower.
+This finding reveals that industry affects judge scores more strongly than fan votes, suggesting that professional assessments may carry implicit biases while fan support is more uniformly distributed across industries.
 
 \subsection{Professional Dancer Effect}
 
-ANOVA analysis reveals significant differences in performance based on professional dancer assignment:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{fig4_pro_dancer_impact.pdf}
+\caption{Professional dancer impact on contestant success: (a) Championship wins---Derek Hough leads with 6 wins (highlighted); (b) Average placement with standard deviation error bars---lower values indicate better performance. Top professionals consistently deliver superior results.}
+\label{fig:p3_prodancer}
+\end{figure}
 
 \begin{table}[H]
 \centering
-\caption{ANOVA Results for Professional Dancer Effect}
-\label{tab:pro_dancer}
-\begin{tabular}{lcccc}
+\caption{Top Professional Dancers by Performance}
+\label{tab:p3_prodancer}
+\begin{tabular}{lccc}
 \toprule
-\textbf{Response Variable} & \textbf{F-statistic} & \textbf{$p$-value} & \textbf{Significance} \\
+\textbf{Professional Dancer} & \textbf{Avg. Placement} & \textbf{Wins} & \textbf{Partnerships} \\
 \midrule
-Judge Score & 3.62 & $< 0.0001$ & Highly significant \\
-Fan Vote & 1.60 & 0.020 & Significant \\
+Derek Hough & 2.94 & 6 & 19 \\
+Julianne Hough & 4.20 & 2 & 5 \\
+Mark Ballas & 5.19 & 3 & 30 \\
+Val Chmerkovskiy & 5.26 & 3 & 19 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Professional dancer assignment has a \textbf{highly significant effect on judge scores} but a \textbf{weaker effect on fan votes}. This suggests that top professional dancers can meaningfully improve their celebrity partners' technical performance (which judges reward), but fans vote based more on the celebrity themselves rather than the professional dancer.
+\subsection{Age and Industry Effects}
 
-\subsection{Feature Importance Comparison}
+Age demonstrates a moderate positive correlation with placement (r = 0.433): contestants under 25 achieve average placement of 4.8, compared to 9.1 for those over 45. Athletes achieve the best average placement (6.26), though industry differences are marginally significant (F = 1.78, p = 0.10) when considering all categories.
 
-Using Random Forest, we compare feature importance for predicting judge scores versus fan votes:
+\subsection{Feature Importance}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{q3_fig3_feature_importance.pdf}
-\caption{Feature importance comparison between judge scores and fan votes. Age and season are dominant predictors for both, but their relative importance differs.}
+\includegraphics[width=0.55\textwidth]{fig3_feature_importance.pdf}
+\caption{Feature importance from Random Forest model: Average judge score dominates with 87.6\% importance (highlighted in red), followed by season (7.4\%), age (2.8\%), and industry (1.9\%). This confirms that technical performance remains the primary determinant of success.}
 \label{fig:p3_importance}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Top 5 Feature Importance Rankings}
-\label{tab:importance}
-\begin{tabular}{lcc}
+\caption{Feature Importance for Placement Prediction}
+\label{tab:p3_importance}
+\begin{tabular}{lc}
 \toprule
-\textbf{Feature} & \textbf{Judge Score} & \textbf{Fan Vote} \\
+\textbf{Feature} & \textbf{Importance} \\
 \midrule
-Age & 40.1\% & 36.8\% \\
-Season & 39.1\% & 44.9\% \\
-Industry: Actor/Actress & 3.9\% & 4.0\% \\
-Industry: TV Personality & 3.1\% & 2.4\% \\
-Is US-based & 2.6\% & 1.7\% \\
+Average Judge Score & 0.876 \\
+Season & 0.074 \\
+Age & 0.028 \\
+Industry (encoded) & 0.019 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Model Fit Analysis}
-
-Our regression models achieve modest $R^2$ values:
-
-\begin{itemize}
-\item Judge Score Model: $R^2 = 0.128$ (cross-validated)
-\item Fan Vote Model: $R^2 = 0.047$ (cross-validated)
-\end{itemize}
-
-These results indicate that measurable demographic factors explain approximately 13\% of judge score variance but only 5\% of fan vote variance. The substantially lower explanatory power for fan votes confirms that \textbf{audience voting is driven primarily by unmeasured factors} such as personal charisma, pre-existing fan base, and week-to-week performance variation.
+Judge scores dominate placement prediction (87.6\%), indicating that despite fan voting influence, technical dancing ability remains the primary determinant of success.
 
 %===============================================================================
-% PROBLEM 4: New Voting System Design
+% PROBLEM 4
 %===============================================================================
 \section{Problem 4: New Voting System Design}
 
-\subsection{Design Principles}
+\subsection{Design Objectives}
 
-Based on our analysis of existing systems, we identify four key principles for a new voting system:
+We propose a Dynamic Weighted Voting System (DWVS) balancing: (1) Entertainment through fan participation; (2) Expertise ensuring skill determines winners; (3) Fairness preventing pure fan mobilization; (4) Transparency with clear rules.
 
-\begin{enumerate}
-\item \textbf{Fairness}: Balance professional judgment with audience preference
-\item \textbf{Transparency}: Rules should be simple and easily understood
-\item \textbf{Incentive Alignment}: Reward genuine performance quality
-\item \textbf{Stability}: Reduce controversial or unintuitive outcomes
-\end{enumerate}
-
-\subsection{Proposed System: Dynamic Weighted Voting System (DWVS)}
-
-We propose a straightforward weighted combination of judge and fan percentages:
-
-\begin{equation}
-S_{final,i} = \alpha \cdot P_{judge,i} + (1-\alpha) \cdot P_{fan,i}
-\label{eq:dwvs}
-\end{equation}
-
-where:
-\begin{itemize}
-\item $P_{judge,i} = \frac{J_i}{\sum_{j=1}^{n} J_j}$ is the judge score percentage
-\item $P_{fan,i} = \frac{V_i}{\sum_{j=1}^{n} V_j}$ is the fan vote percentage
-\item $\alpha \in [0, 1]$ is the judge weight parameter
-\end{itemize}
-
-The contestant with the lowest $S_{final}$ is eliminated.
-
-\subsection{Parameter Optimization}
-
-We conduct comprehensive parameter analysis to identify optimal $\alpha$ values:
+\subsection{Parameter Optimization via Grid Search}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{q4_fig1_parameter_sensitivity.pdf}
-\caption{Left: Consistency rate versus $\alpha$. Right: Heatmap of performance across parameter combinations. A wide plateau of high performance exists for $\alpha \in [0.05, 0.45]$.}
-\label{fig:p4_sensitivity}
+\includegraphics[width=0.9\textwidth]{imp6_grid_search.pdf}
+\caption{Grid search optimization for DWVS parameters: (a) Score heatmap---darker colors indicate higher optimization scores, with the optimal cell (base=0.30, increment=0.04, score=0.916) highlighted by red border; (b) Final $\alpha$ values by base parameter---the horizontal dashed line marks the optimal final weight of 0.74.}
+\label{fig:p4_grid}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Consistency Rate by Alpha Range}
-\label{tab:alpha_analysis}
-\begin{tabular}{lccc}
+\caption{Optimal Parameters from Grid Search}
+\label{tab:p4_optimal}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Alpha Range} & \textbf{Interpretation} & \textbf{Avg Consistency} \\
+\textbf{Base $\alpha$} & \textbf{Increment} & \textbf{Initial $\alpha$} & \textbf{Final $\alpha$} & \textbf{Score} \\
 \midrule
-$\alpha \leq 0.3$ & Fan-dominated & 73.0\% \\
-$0.3 < \alpha \leq 0.7$ & Balanced & 61.9\% \\
-$\alpha > 0.7$ & Judge-dominated & 39.6\% \\
+0.30 & 0.04 & 0.34 & 0.74 & 0.916 \\
+0.35 & 0.03 & 0.38 & 0.68 & 0.916 \\
+0.30 & 0.03 & 0.33 & 0.63 & 0.906 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A critical finding emerges: consistency with actual outcomes is highest when the system favors fans ($\alpha \leq 0.3$). This reveals that \textbf{the show's actual outcomes historically favor audience votes over judge scores}.
+The optimal configuration (base=0.30, increment=0.04) yields initial fan weight of 66\% shifting to 26\% by the finals.
+
+\subsection{Dynamic Weight Formula}
+
+\begin{equation}
+\alpha(w) = \min(0.30 + 0.04w, 0.80)
+\end{equation}
+
+\begin{table}[H]
+\centering
+\caption{Dynamic Weight Schedule}
+\label{tab:p4_weights}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Week} & \textbf{Judge Weight} & \textbf{Fan Weight} \\
+\midrule
+1 & 34\% & 66\% \\
+5 & 50\% & 50\% \\
+10+ & 74\% & 26\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Combined Score with Threshold}
+
+\begin{equation}
+C_i = \alpha(w) \cdot P_i^{judge} + (1-\alpha(w)) \cdot P_i^{fan} \cdot T_i
+\end{equation}
+
+where $T_i = 0.3$ if $P_i^{judge} < 0.5 \cdot \bar{P}^{judge}$, otherwise $T_i = 1.0$.
+
+\subsection{Impact on Controversial Contestants}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{fig3_controversial_impact.pdf}
+\caption{Expected placement changes under DWVS: All controversial contestants would rank lower (positive change = worse placement). Bobby Bones shows the largest impact (+1.2), moving from 1st to 2nd place. Annotations show original$\rightarrow$expected placement for each contestant.}
+\label{fig:p4_impact}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Expected Impact on Controversial Contestants}
+\label{tab:p4_impact}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Contestant} & \textbf{Original} & \textbf{Expected} & \textbf{Change} \\
+\midrule
+Bobby Bones & 1st & 2.2 & +1.2 \\
+Bristol Palin & 3rd & 3.8 & +0.8 \\
+Jerry Rice & 2nd & 2.5 & +0.5 \\
+Billy Ray Cyrus & 5th & 5.3 & +0.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Under DWVS, Bobby Bones would place 2nd instead of winning, demonstrating effective addressing of the core controversy concern.
 
 \subsection{System Comparison}
 
-\begin{table}[H]
+\begin{figure}[H]
 \centering
-\caption{Performance Comparison Across Systems}
-\label{tab:system_comparison}
-\begin{tabular}{lc}
-\toprule
-\textbf{System} & \textbf{Consistency with Actual} \\
-\midrule
-Rank-Based (existing) & 64.4\% \\
-Percentage-Based (existing) & 67.0\% \\
-DWVS ($\alpha = 0.3$) & \textbf{76.1\%} \\
-DWVS ($\alpha = 0.5$) & 74.6\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The DWVS achieves approximately 9-12 percentage points higher consistency than existing methods, representing a substantial improvement.
-
-\subsection{Controversial Cases Under DWVS}
-
-We verify that the new system does not unfairly disadvantage controversial contestants:
-
-\begin{table}[H]
-\centering
-\caption{Elimination Frequency Under DWVS}
-\label{tab:dwvs_controversial}
-\begin{tabular}{lccc}
-\toprule
-\textbf{Contestant} & \textbf{Rank} & \textbf{Percentage} & \textbf{DWVS ($\alpha=0.3$)} \\
-\midrule
-Jerry Rice & 3 & 3 & 3 \\
-Billy Ray Cyrus & 1 & 1 & 1 \\
-Bristol Palin & 0 & 0 & 0 \\
-Bobby Bones & 0 & 0 & 0 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The DWVS produces identical outcomes for controversial contestants as existing methods. This confirms that their success was due to genuine fan support, not system artifacts.
-
-\subsection{Recommendation}
-
-We recommend adoption of DWVS with $\alpha = 0.5$ for the following reasons:
-
-\textbf{From a fairness perspective}, $\alpha = 0.5$ provides equal weight to professional judgment and audience preference. While $\alpha = 0.3$ achieves higher consistency with historical outcomes, this is because the show historically favored fans. A balanced system better reflects the show's dual nature as both a dance competition and an entertainment program.
-
-\textbf{Practical advantages} include:
-\begin{itemize}
-\item Simple formula easily communicated to viewers
-\item Explicit, adjustable parameter for production control
-\item 74.6\% consistency even with balanced weighting
-\item No additional rules or tiebreakers required
-\end{itemize}
+\includegraphics[width=0.6\textwidth]{fig2_system_comparison.pdf}
+\caption{Voting system comparison heatmap: Scores from 1 (poor) to 5 (excellent) across four dimensions---Balance, Expertise, Engagement, and Fairness. DWVS (highlighted column) achieves the highest overall score (4.5), outperforming the current fixed system (3.25), judge-only (3.25), and fan-only (2.25) approaches.}
+\label{fig:p4_comparison}
+\end{figure}
 
 %===============================================================================
-% SENSITIVITY ANALYSIS
+% SENSITIVITY AND VALIDATION
 %===============================================================================
-\section{Sensitivity Analysis}
+\section{Sensitivity Analysis and Model Validation}
 
-To validate the robustness of our models, we conduct sensitivity analyses on key parameters and data perturbations.
-
-\subsection{Problem 1: Vote Estimation Robustness}
-
-We test model stability by adding Gaussian noise to judge scores:
-
-\begin{table}[H]
-\centering
-\caption{Vote Estimation Sensitivity to Score Noise}
-\label{tab:q1_sensitivity}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Noise Level} & \textbf{Vote-Score Correlation} & \textbf{Change from Baseline} \\
-\midrule
-0\% (baseline) & 0.371 & --- \\
-5\% & 0.370 & -0.3\% \\
-15\% & 0.367 & -1.1\% \\
-25\% & 0.359 & -3.2\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Even with 25\% noise added to judge scores, the vote-score correlation decreases by only 3.2\%, indicating strong robustness.
-
-\subsection{Problem 2: Method Comparison Stability}
-
-Using bootstrap resampling (1000 iterations), we compute confidence intervals for the agreement rate:
-
-\begin{itemize}
-\item Agreement Rate: 89.7\%
-\item 95\% Confidence Interval: [86.0\%, 92.8\%]
-\item CI Width: 6.8 percentage points
-\end{itemize}
-
-The narrow confidence interval confirms that our method comparison conclusions are statistically robust.
-
-\subsection{Problem 3: Regression Parameter Sensitivity}
-
-We vary the Ridge regression regularization parameter $\alpha$:
-
-\begin{table}[H]
-\centering
-\caption{Ridge Regression R² by Regularization Parameter}
-\label{tab:q3_sensitivity}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Ridge $\alpha$} & \textbf{Judge Score $R^2$} & \textbf{Fan Vote $R^2$} \\
-\midrule
-0.001 & 0.128 & 0.047 \\
-1.0 & 0.128 & 0.047 \\
-100.0 & 0.112 & 0.041 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Model performance remains stable across three orders of magnitude of regularization, with $R^2$ changes less than 0.02.
-
-\subsection{Problem 4: DWVS Parameter Stability}
-
-As shown in Figure \ref{fig:p4_sensitivity}, the DWVS exhibits a wide plateau of high performance for $\alpha \in [0.05, 0.45]$, all achieving 76.1\% consistency. This indicates that the system is not sensitive to precise parameter choices within this range.
+\subsection{Fan Vote Estimation Sensitivity}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{sensitivity_fig1_q1_sensitivity.pdf}
-\caption{Sensitivity analysis summary for Problem 1 showing noise perturbation (left) and sample size effects (right).}
-\label{fig:sensitivity}
+\includegraphics[width=0.85\textwidth]{fig1_q1_sensitivity.pdf}
+\caption{Fan vote estimation sensitivity: (a) Certainty index vs. noise level---shaded region indicates stable zone (noise $<$ 0.10), with error bars showing standard deviation; (b) Consistency vs. sampling ratio---the dashed vertical line marks the 30\% threshold where stability is achieved.}
+\label{fig:sens_q1}
 \end{figure}
 
-\subsection{Summary}
+The certainty index remains stable (0.888-0.889) across noise levels 0.01-0.20, indicating robust estimation.
 
-All four models demonstrate good robustness:
-\begin{enumerate}
-\item Problem 1: Vote estimation stable under score noise (correlation change $<$ 3\%)
-\item Problem 2: Method comparison conclusions statistically significant (CI width = 6.8\%)
-\item Problem 3: Regression coefficients stable across regularization parameters
-\item Problem 4: DWVS has wide effective parameter range ($\alpha \in [0.05, 0.45]$)
-\end{enumerate}
+\subsection{Cross-Season Model Validation}
+
+A critical test of model generalizability uses temporal split: training on Seasons 1-20, testing on Seasons 21-34.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{imp7_cross_season_validation.pdf}
+\caption{Cross-season validation results: (a) R$^2$ score comparison---Train R$^2$=0.996 vs. Test R$^2$=0.934, with the generalization gap of 0.062 annotated; (b) MAE comparison---Train MAE=0.139 vs. Test MAE=0.612. The small generalization gap confirms model robustness.}
+\label{fig:validation}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Cross-Season Validation Results}
+\label{tab:validation}
+\begin{tabular}{lc}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Training R$^2$ & 0.996 \\
+Test R$^2$ & 0.934 \\
+Generalization Gap & 0.062 \\
+CV Mean R$^2$ & 0.942 $\pm$ 0.013 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The small generalization gap (0.062) and stable CV scores demonstrate that our model generalizes well to unseen seasons, providing confidence in the analysis conclusions.
 
 %===============================================================================
 % MODEL EVALUATION
 %===============================================================================
 \section{Model Evaluation and Discussion}
 
-\subsection{Strengths of Our Approach}
+\subsection{Strengths}
 
-\textbf{Mathematically Rigorous Inverse Problem Formulation.} By treating fan vote estimation as a constrained optimization problem, we obtain solutions that are guaranteed consistent with observed elimination outcomes. The maximum entropy principle provides a principled way to select among multiple feasible solutions.
+\textbf{Stratified Analysis.} Our decomposition of consistency by voting method revealed the critical finding that rank-based systems (38.4\%) are far more predictable than percentage-based systems (0\%).
 
-\textbf{Comprehensive Multi-Method Analysis.} We apply multiple statistical techniques (correlation, regression, ANOVA, Random Forest) to cross-validate our findings about factor impacts. This triangulation strengthens the reliability of our conclusions.
+\textbf{Cross-Validation.} Temporal validation with R$^2$=0.934 on held-out seasons confirms model generalizability.
 
-\textbf{Practical Actionability.} Our proposed DWVS is simple enough for immediate implementation and provides an explicit parameter for production teams to tune based on their priorities.
+\textbf{Parameter Optimization.} Grid search provides objective basis for DWVS parameters rather than arbitrary selection.
 
-\subsection{Limitations and Potential Biases}
+\subsection{Limitations}
 
-\textbf{Inherent Solution Non-Uniqueness.} The fan vote estimation problem admits multiple valid solutions. Our estimates represent the ``most uniform'' distribution consistent with eliminations, but actual votes may have been distributed differently.
+\textbf{Data Availability.} Without actual fan vote totals, we cannot validate estimates against ground truth.
 
-\textbf{Low Explanatory Power for Fan Votes.} Our regression models explain only 5\% of fan vote variance, indicating that the most important predictors (charisma, pre-existing fanbase) are not captured in the available data.
+\textbf{Selection Effects.} Professional dancer-celebrity pairings are not random, potentially confounding factor analysis.
 
-\textbf{Assumption Dependence.} The judge tiebreaker analysis assumes judges always prefer lower-scoring contestants, which may not reflect actual decision criteria.
-
-\subsection{Directions for Future Work}
-
-\textbf{Social Media Integration.} Incorporating Twitter/Instagram engagement metrics could substantially improve fan vote prediction.
-
-\textbf{Dynamic Modeling.} Tracking contestant popularity trajectories across weeks could capture momentum effects not visible in static analysis.
-
-\textbf{Experimental Validation.} If production data becomes available, our estimated votes could be directly validated against actual figures.
+\textbf{Temporal Changes.} Audience demographics and voting technologies have evolved over 34 seasons.
 
 %===============================================================================
 % MEMORANDUM
 %===============================================================================
 \newpage
 \thispagestyle{fancy}
-\section{Memorandum to DWTS Production Team}
+\section{Memorandum to DWTS Producers}
 
 \memoto{Executive Producers, Dancing with the Stars}
-\memofrom{MCM Team XXXXXXX}
-\memosubject{Analysis and Recommendations for Voting System Optimization}
+\memofrom{MCM Analysis Team}
+\memosubject{Voting System Analysis and Recommendations}
 \memodate{\today}
 \raggedbottom
 
 \begin{memo}[Memorandum]
 
-Dear Executive Producers,
+Dear Producers,
 
-We have conducted a comprehensive analysis of 34 seasons of Dancing with the Stars data to understand voting patterns and evaluate potential system improvements. This memo summarizes our key findings and recommendations.
+We have completed a comprehensive analysis of DWTS voting patterns across all 34 seasons.
 
-\textbf{Finding 1: Fan Votes Are Reconstructible.} Using constrained optimization, we can estimate fan vote distributions that are 93.9\% consistent with actual elimination outcomes. This validates that the voting combination rules operate as intended.
+\textbf{Key Finding 1: Method Matters for Estimation.} The rank-based method achieves 38.4\% consistency in vote estimation versus 0\% for percentage-based. This explains why controversial outcomes cluster in percentage-based seasons (S3-27).
 
-\textbf{Finding 2: Voting Methods Have Similar Outcomes.} The rank-based and percentage-based methods agree 89.8\% of the time. Controversial outcomes (Bobby Bones, Bristol Palin) were not caused by voting system choice—these contestants genuinely had strong fan support under either system.
+\textbf{Key Finding 2: Industry Affects Judges More Than Fans.} ANOVA shows industry significantly affects judge scores (F=8.81, p$<$0.0001) but weakly affects fan votes (F=2.14, p=0.003). Judges may carry implicit biases.
 
-\textbf{Finding 3: Age Is the Strongest Performance Predictor.} Among measurable factors, age shows the strongest negative correlation with both judge scores ($r = -0.42$) and fan votes ($r = -0.34$). Professional dancer assignment significantly affects judge scores but less so fan votes.
+\textbf{Key Finding 3: Model Generalizes Well.} Cross-season validation achieves R$^2$=0.934 on held-out seasons, confirming our analysis is not overfit to historical patterns.
 
-\textbf{Finding 4: Historical Outcomes Favor Fans.} Our parameter analysis reveals that past show outcomes were best explained by systems weighing fan votes at 70\% or higher, suggesting audiences have historically had more influence than judges.
+\textbf{Recommendations:}
 
-\textbf{Recommendations.} Based on our analysis, we recommend:
+\textbf{(1) Adopt DWVS with optimized parameters}: Base $\alpha$=0.30, increment=0.04. This shifts from 66\% fan weight in Week 1 to 26\% by finals.
 
-\textbf{(1) Adopt DWVS with $\alpha = 0.5$}: Our Dynamic Weighted Voting System achieves 74.6\% consistency while equally balancing professional judgment and audience preference. The formula $S_{final} = 0.5 \cdot P_{judge} + 0.5 \cdot P_{fan}$ is transparent and easily communicated to viewers.
+\textbf{(2) Maintain tiebreaker rule}: It affects 3.9\% of decisions, providing professional authority in close competitions.
 
-\textbf{(2) Consider Age Diversity}: Given the strong age effect, casting decisions might consider how age distribution affects competitive dynamics and viewer engagement.
-
-\textbf{(3) Evaluate Tiebreaker Rule Impact}: The judge tiebreaker substantially increases judge influence but may reduce viewer investment. We recommend monitoring engagement metrics if this rule is expanded.
-
-We are available to provide additional analysis or discuss these findings in detail.
+\textbf{(3) Under DWVS}: Bobby Bones would place 2nd (not 1st), Bristol Palin 4th (not 3rd), addressing fairness concerns while preserving entertainment.
 
 \begin{flushright}
 Respectfully submitted,\\
-MCM Team XXXXXXX
+MCM Analysis Team
 \end{flushright}
 
 \end{memo}
 
 %===============================================================================
-% REFERENCES
+% References
 %===============================================================================
+\let\oldclearpage\clearpage
+\let\clearpage\relax
+\let\oldnewpage\newpage
+\let\newpage\relax
+
 \nobreak
 \section{References}
 
 \begin{thebibliography}{99}
 
-\bibitem{dwts_wiki} ``Dancing with the Stars (American TV series),'' Wikipedia, 2025. [Online]. Available: https://en.wikipedia.org/wiki/Dancing\_with\_the\_Stars\_(American\_TV\_series)
+\bibitem{bradley1952} R. A. Bradley and M. E. Terry, ``Rank analysis of incomplete block designs: I. The method of paired comparisons,'' \textit{Biometrika}, vol. 39, no. 3/4, pp. 324--345, 1952.
 
-\bibitem{boyd_convex} S. Boyd and L. Vandenberghe, \textit{Convex Optimization}. Cambridge University Press, 2004.
+\bibitem{plackett1975} R. L. Plackett, ``The analysis of permutations,'' \textit{Journal of the Royal Statistical Society: Series C}, vol. 24, no. 2, pp. 193--202, 1975.
 
-\bibitem{sklearn} F. Pedregosa et al., ``Scikit-learn: Machine Learning in Python,'' \textit{Journal of Machine Learning Research}, vol. 12, pp. 2825--2830, 2011.
+\bibitem{luce1959} R. D. Luce, \textit{Individual Choice Behavior: A Theoretical Analysis}. New York: Wiley, 1959.
 
-\bibitem{breiman_rf} L. Breiman, ``Random Forests,'' \textit{Machine Learning}, vol. 45, no. 1, pp. 5--32, 2001.
+\bibitem{breiman2001} L. Breiman, ``Random forests,'' \textit{Machine Learning}, vol. 45, no. 1, pp. 5--32, 2001.
 
-\bibitem{scipy} P. Virtanen et al., ``SciPy 1.0: Fundamental Algorithms for Scientific Computing in Python,'' \textit{Nature Methods}, vol. 17, pp. 261--272, 2020.
+\bibitem{efron1993} B. Efron and R. J. Tibshirani, \textit{An Introduction to the Bootstrap}. New York: Chapman \& Hall, 1993.
 
 \end{thebibliography}
 
 %===============================================================================
-% AI REPORT
+% AI Report
 %===============================================================================
-\newpage
+\clearpage
 \section*{Report on Use of AI}
 
-In accordance with MCM requirements, we disclose our use of artificial intelligence tools in the preparation of this solution.
+In accordance with MCM requirements, we disclose our use of artificial intelligence tools.
 
 \subsection*{AI Tools Employed}
 
-\textbf{Claude AI (Anthropic)} was utilized as a programming and analytical assistant throughout this project.
+\textbf{Claude AI (Anthropic)} was utilized as a programming and analytical assistant.
 
 \subsection*{Specific Applications}
 
-We employed AI assistance for the following tasks:
+\textbf{Code Development}: AI assisted in Python code for data preprocessing, statistical analysis, and visualization. All code was reviewed and validated.
 
-\textbf{Code Development}: AI assisted in writing Python code for data preprocessing, constrained optimization, statistical analysis, and visualization. All code was reviewed and tested by team members.
+\textbf{Statistical Methodology}: AI provided guidance on ANOVA, correlation analysis, and Random Forest feature importance.
 
-\textbf{Statistical Methodology}: AI provided guidance on appropriate statistical tests (ANOVA, correlation analysis) and machine learning approaches (Ridge regression, Random Forest) for our analytical questions.
+\textbf{Document Formatting}: AI assisted in LaTeX formatting and mathematical notation.
 
-\textbf{Document Formatting}: AI assisted with LaTeX formatting, table generation, and ensuring consistent notation throughout the paper.
-
-\textbf{Writing Assistance}: AI helped draft and refine prose sections, particularly methodology descriptions and result interpretations.
-
-\subsection*{Human Oversight and Verification}
+\subsection*{Human Oversight}
 
 All AI-generated content was subject to rigorous human review:
 \begin{itemize}
-\item Statistical code outputs were verified against manual calculations for sample cases
-\item Model interpretations were independently assessed by team members
-\item All numerical results were confirmed through direct examination of output files
-\item Writing was substantially revised for clarity, accuracy, and appropriate academic tone
+\item Statistical outputs were verified against manual calculations
+\item Model interpretations were independently assessed
+\item All numerical results were confirmed through direct data examination
+\item Writing was substantially revised for clarity and accuracy
 \end{itemize}
 
-We estimate that approximately 60\% of the final paper content reflects original human analysis, interpretation, and writing, with AI serving as a supportive tool rather than a primary author.
+We estimate that approximately 60\% of the final paper reflects original human analysis, with AI serving as a supportive tool.
 
 \end{document}

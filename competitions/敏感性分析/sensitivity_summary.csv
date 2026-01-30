@@ -1,0 +1,5 @@
+problem,key_parameter,recommended_value,robustness
+Q1,noise_level,0.05,High
+Q2,alpha,0.5,High
+Q3,ridge_alpha,10.0,Medium
+Q4,base_alpha+increment,0.4+0.02,High
