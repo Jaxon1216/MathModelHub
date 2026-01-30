@@ -1,0 +1,2 @@
+total_contestants,total_seasons,vote_estimates_count,verification_weeks,overall_accuracy,rank_method_accuracy,percentage_method_accuracy,avg_certainty,certainty_std,vote_score_correlation
+421,34,2777,264,0.9393939393939394,0.803030303030303,0.9848484848484849,0.27325901831416843,0.14236424712538953,0.3708772596923268
