@@ -1,0 +1,2 @@
+best_alpha,best_beta,new_system_consistency,rank_consistency,pct_consistency,judge_weight_pct,fan_weight_pct,improvement_weight_pct
+0.3,0.0,0.7613636363636364,0.6439393939393939,0.6704545454545454,30.0,70.0,0.0

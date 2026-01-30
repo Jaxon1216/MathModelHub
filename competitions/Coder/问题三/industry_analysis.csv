@@ -1,0 +1,27 @@
+celebrity_industry,avg_score_mean,avg_score_std,count,avg_vote_mean,avg_vote_std,avg_rank
+Motivational Speaker,32.05,,1,0.147,,3.0
+Social Media Personality,31.963,4.62,8,0.12,0.031,1.5
+Fitness Instructor,31.05,,1,0.072,,3.0
+Conservationist,30.197,,1,0.141,,1.0
+Social media personality,30.136,,1,0.131,,2.0
+Musician,28.65,,1,0.132,,2.0
+Racing Driver,27.095,4.031,4,0.12,0.035,1.5
+Military,26.727,,1,0.139,,3.0
+Fashion Designer,26.5,,1,0.086,,
+Producer,26.364,,1,0.145,,2.0
+News Anchor,24.694,2.128,3,0.107,0.045,3.0
+Athlete,24.555,5.546,95,0.116,0.037,1.815
+Actor/Actress,24.535,4.99,128,0.113,0.038,2.103
+Singer/Rapper,24.34,4.77,61,0.111,0.036,2.125
+TV Personality,23.642,5.51,67,0.107,0.031,1.929
+Model,21.877,3.487,17,0.099,0.033,1.0
+Radio Personality,21.097,5.785,4,0.091,0.021,1.0
+Comedian,21.0,7.123,12,0.099,0.028,3.0
+Beauty Pagent,20.0,,1,0.09,,
+Entrepreneur,19.578,7.412,4,0.085,0.021,
+Politician,19.407,2.05,3,0.074,0.002,
+Sports Broadcaster,18.975,8.45,2,0.153,0.011,3.0
+Con artist,17.5,,1,0.075,,
+Magician,16.5,,1,0.073,,
+Astronaut,13.0,,1,0.092,,
+Journalist,13.0,,1,0.069,,
