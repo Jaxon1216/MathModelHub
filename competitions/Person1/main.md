@@ -187,6 +187,19 @@ This metadata is used to control for season-level confounding factors in our reg
 
 The fan vote estimation problem is fundamentally an **inverse problem**: given observed outcomes (eliminations) and partial information (judge scores), we seek to reconstruct the hidden variable (fan vote distribution). The key constraint is that the estimated votes must produce elimination outcomes consistent with actual results.
 
+### 3.1.1 Temporal Feature Engineering (Enhancement)
+
+To capture the dynamic nature of contestant performance, we engineer temporal features for each contestant-week observation:
+
+| Feature | Formula | Interpretation |
+|---------|---------|----------------|
+| `prev_week_score` | $J_{i,w-1}$ | Previous week's judge score |
+| `score_momentum` | $J_{i,w} - J_{i,w-1}$ | Week-over-week score change |
+| `consecutive_safe_weeks` | $\sum_{t=1}^{w-1} \mathbf{1}[\text{not eliminated}]$ | Survival streak length |
+| `relative_performance` | $J_{i,w} - \bar{J}_w$ | Performance relative to weekly average |
+
+These features enable analysis of how performance trajectory affects fan voting behavior, beyond static weekly observations.
+
 ### 3.2 Methodology
 
 #### 3.2.1 Rank-Based Method (Seasons 1-2, 28-34)
@@ -343,6 +356,35 @@ We analyze the impact of celebrity characteristics and professional dancer assig
 
 Our response variables are `overall_avg_score` (average judge score across active weeks) and `avg_vote_prop` (average estimated fan vote proportion).
 
+#### 5.1.1 Model Enhancement: Interaction Effects and Pro Dancer Integration
+
+We enhance the baseline model with two key additions:
+
+**Interaction Effects (Age × Industry):** We create interaction terms to capture non-linear relationships:
+
+$$X_{age \times industry} = Age_i \times \mathbf{1}[Industry_i = k]$$
+
+for major industries (Athlete, Actor/Actress, Singer/Rapper, TV Personality).
+
+**Professional Dancer Ability Integration:** Using our crawled `pro_dancer_stats.csv`, we incorporate historical performance metrics:
+
+| Feature | Description | Source |
+|---------|-------------|--------|
+| `wins` | Career championship count | Aggregated from 34 seasons |
+| `top3_finishes` | Top-3 finish count | Aggregated |
+| `avg_placement` | Career average placement | Calculated |
+| `seasons_participated` | Experience level | Aggregated |
+
+**Model Comparison:**
+
+| Model | Features | Judge Score R² | Fan Vote R² |
+|-------|----------|----------------|-------------|
+| Baseline | Age + Industry | 0.128 | 0.047 |
+| Enhanced | + Interactions + Pro Dancer | **0.142** | **0.053** |
+| Improvement | — | **+10.9%** | **+12.8%** |
+
+The enhanced model demonstrates improved explanatory power, particularly for predicting fan votes where the low baseline R² makes any improvement meaningful.
+
 ### 5.2 Age Effect
 
 Age demonstrates the strongest correlation with performance among all measured factors:
@@ -431,6 +473,28 @@ where:
 - $α ∈ [0, 1]$ is the judge weight parameter
 
 The contestant with the lowest $S_{final}$ is eliminated.
+
+#### 6.2.1 Enhancement: Season-Progressive α (Dynamic α)
+
+To balance entertainment value (early season) with competitive integrity (late season), we propose a **time-varying α**:
+
+$$\alpha(t) = \alpha_0 + \gamma \cdot \frac{week}{total\_weeks}$$
+
+where:
+- $\alpha_0$: Initial judge weight (recommended: 0.35)
+- $\gamma$: Growth coefficient (recommended: 0.25)
+- $week$: Current week number (1-indexed)
+- $total\_weeks$: Total weeks in season
+
+**Rationale:** Early in the season, lower α values (≈0.38) prioritize audience engagement; as the finale approaches, higher α values (≈0.60) ensure that technical excellence is appropriately weighted.
+
+| Week | α Value | Interpretation |
+|------|---------|----------------|
+| 1 | 0.375 | Fan-leaning (entertainment phase) |
+| 5 | 0.475 | Balanced |
+| 10 | 0.600 | Judge-leaning (competitive phase) |
+
+This dynamic approach provides production teams with a principled framework to adjust the judge-fan balance throughout the season.
 
 ### 6.3 Parameter Optimization
 
