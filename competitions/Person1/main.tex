@@ -49,7 +49,7 @@ Dancing with the Stars (DWTS) combines professional judge scores with audience v
 
 \textbf{For Problem 3}, we employ ANOVA, regression, and Random Forest to quantify factor impacts. Judge scores account for 87.6\% of feature importance. Age correlates moderately with placement (r=0.433). The prediction model achieves R$^2$=0.488, RMSE=2.69, MAE=2.09 positions under 5-fold CV. Cross-season validation demonstrates strong generalization: test R$^2$=0.934, test RMSE=3.08.
 
-\textbf{For Problem 4}, we propose a Dynamic Weighted Voting System (DWVS) optimized via grid search: base $\alpha$=0.30, increment=0.04, yielding initial fan weight of 66\% shifting to 26\% by finals. Under this system, controversial winner Bobby Bones would place 2nd instead of 1st.
+\textbf{For Problem 4}, we propose a Dynamic Weighted Voting System (DWVS) optimized via grid search: base $\alpha$=0.30, increment=0.04, yielding initial fan weight of 66\% shifting to 26\% by finals. Simulation across all 32 identified controversial contestants shows 78.1\% would rank lower under DWVS, with average adjustment of +0.45 positions. Bobby Bones would place 2nd instead of 1st.
 
 \begin{keywords}
 Fan Vote Estimation; Constrained Optimization; Counterfactual Analysis; Dynamic Weighted Voting; Cross-Validation
@@ -345,6 +345,41 @@ As shown in Fig.~\ref{fig:p1_controversial}, all four contestants exhibit a char
 The dual-axis visualization reveals that these contestants' fan support remained remarkably stable despite poor technical performance, suggesting dedicated fan bases that voted consistently regardless of weekly judge assessments. This pattern provides empirical support for our model's popularity factor $\alpha_i$: these contestants require positive $\alpha_i$ values to explain how they received sufficient votes to survive elimination despite low scores.
 
 \textbf{External Validation via Wikipedia Pageviews:} Our supplementary data collection reveals that Bobby Bones ranked 8th out of 13 contestants in Season 27 for Wikipedia pageviews (273,153 vs. season average of 318,942). This external metric confirms that his victory was not driven by pre-existing celebrity fame, but rather by the \textbf{high voting participation rate} of his country music radio audience—demonstrating that fan mobilization efficiency can outweigh baseline popularity.
+
+\subsubsection{Quantitative Definition and Group Analysis}
+
+To systematically identify controversial contestants, we define a \textbf{Controversy Score}:
+\begin{equation}
+\text{Controversy Score}_i = \text{Judge Rank}_i - \text{Final Placement}_i
+\end{equation}
+where Judge Rank is determined by average judge score within each season. A contestant is classified as ``controversial'' if their Controversy Score $\geq 3$, meaning their final placement exceeded their judge-assessed skill level by at least 3 positions.
+
+Applying this criterion across all 421 contestants yields \textbf{32 controversial contestants} (7.6\% of total). Table~\ref{tab:controversial_group} compares their characteristics with normal contestants.
+
+\begin{table}[H]
+\centering
+\caption{Controversial vs. Normal Contestant Characteristics}
+\label{tab:controversial_group}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Controversial (n=32)} & \textbf{Normal (n=389)} \\
+\midrule
+Avg Final Placement & 5.53 & 6.92 \\
+Avg Judge Score & 22.05 & 24.34 \\
+Avg Judge Rank & 9.41 & 6.58 \\
+Avg Controversy Score & +3.88 & -0.34 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:controversial_group} reveals a striking pattern: controversial contestants achieve \textbf{better placements (5.53 vs. 6.92)} despite \textbf{lower judge scores (22.05 vs. 24.34)}. This confirms that their success derives from fan support overriding professional assessment. The model's popularity factor $\alpha_i$ successfully captures this phenomenon---controversial contestants require elevated $\alpha_i$ values to reconcile their low scores with high placements.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{fig6_controversial_group.pdf}
+\caption{Controversial contestant group analysis: (a) Placement distribution---controversial contestants (red) cluster at lower placement numbers (better rankings) compared to normal contestants (blue), despite the mean lines showing a 1.4-position advantage; (b) Judge score comparison---controversial contestants have significantly lower judge scores (mean 22.05 vs. 24.34); (c) Controversy score distribution---most controversial contestants fall in the 3-4 range, with extreme cases reaching scores of 5-7.}
+\label{fig:controversial_group}
+\end{figure}
 %===============================================================================
 % PROBLEM 2
 %===============================================================================
@@ -645,6 +680,47 @@ Billy Ray Cyrus & 5th & 5.3 & +0.3 \\
 \end{table}
 
 Table~\ref{tab:p4_impact} demonstrates that DWVS achieves its fairness objective: Bobby Bones, the most controversial winner in DWTS history, would place 2nd rather than 1st under the proposed system. Importantly, the adjustments are modest (+0.3 to +1.2 positions), preserving the role of fan voting while preventing extreme outcomes. Contestants who legitimately balanced technical skill with popularity would see minimal impact.
+
+\subsubsection{Group-Level Validation}
+
+To verify that DWVS provides \textbf{universal correction} rather than ad-hoc adjustments, we simulate its impact on all 32 controversial contestants identified by our quantitative definition (Controversy Score $\geq 3$).
+
+\begin{table}[H]
+\centering
+\caption{DWVS Impact on All Controversial Contestants (Top 8 by Controversy Score)}
+\label{tab:dwvs_all}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Contestant} & \textbf{Season} & \textbf{Original} & \textbf{Controversy} & \textbf{Change} \\
+\midrule
+Bobby Bones & 27 & 1st & 7 & +1.1 \\
+Bill Engvall & 17 & 4th & 5 & +1.2 \\
+Alek Skarlatos & 21 & 3rd & 5 & +1.2 \\
+Iman Shumpert & 30 & 1st & 5 & +1.0 \\
+Michael Waltrip & 19 & 7th & 5 & +0.6 \\
+Vinny Guadagnino & 31 & 7th & 5 & +0.6 \\
+Cloris Leachman & 7 & 7th & 5 & +0.2 \\
+Joe Amabile & 27 & 6th & 5 & +0.6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Key findings from group-level simulation:}
+\begin{itemize}
+\item \textbf{78.1\% of controversial contestants} would rank lower under DWVS (positive change).
+\item \textbf{Average placement change: +0.45 positions}---modest but consistent.
+\item \textbf{High controversy group} (Score $\geq 5$, n=8): average change +0.81 positions.
+\item \textbf{Correlation}: Higher controversy scores correlate with larger adjustments, confirming DWVS proportionally corrects fairness violations.
+\end{itemize}
+
+This group-level validation demonstrates that DWVS is \textbf{not overfit to individual cases}. The system provides principled, proportional corrections across all controversial outcomes while preserving the competition's entertainment value for contestants who legitimately combine skill with popularity.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{fig5_dwvs_group_impact.pdf}
+\caption{DWVS impact on all controversial contestants: (a) Controversy score vs. placement change---a positive correlation (r=0.42) demonstrates that higher controversy leads to larger DWVS adjustments; key contestants annotated; (b) Top 10 controversial contestants ranked by expected placement change---red bars indicate changes $>$0.8 positions, confirming DWVS provides proportional corrections.}
+\label{fig:dwvs_group}
+\end{figure}
 
 \subsection{System Comparison}
 
