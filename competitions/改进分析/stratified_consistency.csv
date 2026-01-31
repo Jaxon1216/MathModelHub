@@ -1,9 +1,9 @@
 Category,Consistent,Total,Rate
 By Method - Rank,28,73,0.384
-By Method - Percentage,0,201,0.0
-By Season - Early (S1-17),4,135,0.03
-By Season - Late (S18-34),24,139,0.173
-By Competition - Early (W1-5),15,133,0.113
-By Competition - Late (W6+),13,141,0.092
-By Contestants - Many (>=8),15,163,0.092
-By Contestants - Few (<8),13,111,0.117
+By Method - Percentage,193,201,0.96
+By Season - Early (S1-17),125,135,0.926
+By Season - Late (S18-34),96,139,0.691
+By Competition - Early (W1-5),109,133,0.82
+By Competition - Late (W6+),112,141,0.794
+By Contestants - Many (>=8),129,163,0.791
+By Contestants - Few (<8),92,111,0.829

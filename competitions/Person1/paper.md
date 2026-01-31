@@ -8,7 +8,7 @@
 
 Dancing with the Stars (DWTS) combines professional judge scores with audience votes to determine weekly eliminations, yet the exact fan vote totals remain confidential. This paper develops a comprehensive mathematical framework to estimate fan votes, compare voting methods, analyze influencing factors, and design an improved voting system.
 
-**For Problem 1**, we formulate fan vote estimation as a constrained optimization problem using a Softmax voting model. Stratified analysis reveals a critical finding: the rank-based method achieves 38.4% consistency while the percentage-based method achieves 0%, suggesting fundamentally different estimation challenges. Bootstrap resampling yields a certainty index of 0.995, demonstrating high estimation stability.
+**For Problem 1**, we formulate fan vote estimation as a constrained optimization problem using a Softmax voting model. Stratified analysis reveals overall consistency of 80.7%: the rank-based method achieves 38.4% while the percentage-based method achieves 96.0%. Bootstrap resampling yields a certainty index of 0.995, demonstrating high estimation stability.
 
 **For Problem 2**, we apply counterfactual analysis comparing rank-based and percentage-based methods across all 34 seasons. The methods produce identical elimination decisions in 95.5% of cases, with the judge tiebreaker rule changing outcomes in 3.9% of weeks. ANOVA testing shows industry affects judge scores more strongly (F=8.81, p<0.0001) than fan votes (F=2.14, p=0.003).
 
@@ -76,18 +76,16 @@ We minimize $\sum \alpha_i^2$ subject to the constraint that the eliminated cont
 
 ### 3.2 Stratified Consistency Analysis
 
-**Key Finding:** The rank-based method achieves 38.4% consistency while the percentage-based method achieves 0%.
+**Key Finding:** Overall consistency reaches 80.7%, with percentage-based method (96.0%) dramatically outperforming rank-based (38.4%).
 
 | Category | Consistent | Total | Rate |
 |----------|------------|-------|------|
+| **Overall** | 221 | 274 | 80.7% |
 | **By Voting Method** | | | |
-| Rank-based | 28 | 73 | 38.4% |
-| Percentage-based | 0 | 201 | 0.0% |
-| **By Season Phase** | | | |
-| Early (S1-17) | 5 | 143 | 3.5% |
-| Late (S18-34) | 23 | 131 | 17.6% |
+| Rank-based (S1-2, S28-34) | 28 | 73 | 38.4% |
+| Percentage-based (S3-27) | 193 | 201 | 96.0% |
 
-This stark difference reveals that the percentage method's sensitivity to score magnitudes makes fan vote estimation significantly more challenging.
+The dramatic difference reveals that continuous percentage space provides far more optimization freedom than discrete ranks. The 96% consistency under percentage method demonstrates our model successfully explains nearly all elimination outcomes in those seasons.
 
 ### 3.3 Uncertainty Quantification
 
@@ -250,7 +248,7 @@ The small R² gap (0.062) demonstrates strong generalization. Test RMSE=3.08 and
 
 ### Strengths
 
-- **Stratified Analysis:** Revealed that rank-based systems (38.4%) are far more predictable than percentage-based (0%)
+- **Stratified Analysis:** Achieved 80.7% overall consistency, with percentage-based (96.0%) demonstrating excellent constraint satisfaction
 - **Cross-Validation:** Test R²=0.934 confirms generalizability
 - **Parameter Optimization:** Grid search provides objective basis for DWVS parameters
 
@@ -270,7 +268,7 @@ The small R² gap (0.062) demonstrates strong generalization. Test RMSE=3.08 and
 
 **Key Findings:**
 
-1. **Method Matters:** Rank-based method achieves 38.4% consistency vs. 0% for percentage-based
+1. **High Consistency:** Overall 80.7% consistency; percentage-based achieves 96.0% vs. rank-based 38.4%
 2. **Industry Bias:** Judges show stronger industry bias (F=8.81) than fans (F=2.14)
 3. **Model Generalizes:** Cross-season validation achieves R²=0.934
 
