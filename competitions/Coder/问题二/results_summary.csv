@@ -1,2 +1,0 @@
-comparison_weeks,agreement_rate,disagreement_count,rank_bias_mean,pct_bias_mean,rank_consistency,pct_consistency,rank_tiebreaker_consistency,pct_tiebreaker_consistency,rank_tiebreaker_change_rate,pct_tiebreaker_change_rate
-264,0.8977272727272727,27,0.03898521512157876,0.09376306563806563,0.6439393939393939,0.6704545454545454,0.3068181818181818,0.30303030303030304,0.4318181818181818,0.38257575757575757

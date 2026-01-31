@@ -1,0 +1,320 @@
+season,elimination_week,celebrity_name,ballroom_partner,total_score,judge_rank,judge_score_pct,placement
+1,3,Evander Holyfield,Edyta Sliwinska,13.0,5.0,12.264150943396226,5
+1,4,Rachel Hunter,Jonathan Roberts,25.0,2.0,27.173913043478258,4
+1,2,Trista Sutter,Louis van Amstel,19.0,4.0,15.702479338842975,6
+2,6,George Hamilton,Edyta Sliwinska,23.0,4.0,17.293233082706767,5
+2,3,Giselle Fernandez,Jonathan Roberts,22.0,5.0,12.087912087912088,8
+2,1,Kenny Mayne,Andrea Hale,13.0,9.0,6.666666666666667,10
+2,7,Lisa Rinna,Louis van Amstel,26.5,3.0,25.98039215686275,4
+2,4,Master P,Ashly DelGrosso,8.0,7.0,5.063291139240507,7
+2,2,Tatum O'Neal,Nick Kosovich,17.0,8.0,8.5,9
+2,5,Tia Carrere,Maksim Chmerkoskiy,22.0,6.0,14.56953642384106,6
+3,3,Harry Hamlin,Ashly DelGrosso,22.0,4.0,10.628019323671497,9
+3,7,Jerry Springer,Kym Johnson,23.0,5.0,17.037037037037038,5
+3,8,Monique Coleman,Louis van Amstel,26.5,4.0,24.31192660550459,4
+3,5,Sara Evans,Tony Dovolani,24.0,6.0,13.259668508287293,6
+3,2,Shanna Moakler,Jesse DeSoto,22.0,6.0,9.565217391304348,10
+3,1,Tucker Carlson,Elena Grinenko,12.0,11.0,5.660377358490567,11
+3,4,Vivica A. Fox,Nick Kosovich,24.0,4.0,12.121212121212121,8
+3,5,Willa Ford,Maksim Chmerkoskiy,27.0,1.0,14.917127071823206,7
+4,8,Billy Ray Cyrus,Karina Smirnoff,19.0,5.0,15.139442231075698,5
+4,5,Clyde Drexler,Elena Grinenko,13.0,8.0,7.386363636363637,8
+4,6,Heather Mills,Jonathan Roberts,23.0,5.0,13.529411764705882,7
+4,9,Ian Ziering,Cheryl Burke,29.0,4.0,24.47257383966245,4
+4,7,John Ratzenberger,Edyta Sliwinska,22.5,5.0,14.563106796116504,6
+4,4,Leeza Gibbons,Tony Dovolani,16.0,7.0,8.421052631578947,9
+4,2,Paulina Porizkova,Alec Mazo,21.0,6.0,8.571428571428571,11
+4,3,Shandi Finnessey,Brian Fortuna,21.0,6.0,9.63302752293578,10
+5,2,Albert Reed,Anna Trebunskaya,21.0,5.0,8.823529411764707,11
+5,8,Cameron Mathison,Edyta Sliwinska,25.5,3.0,19.39163498098859,5
+5,4,Floyd Mayweather Jr. ,Karina Smirnoff,23.0,8.0,9.82905982905983,9
+5,7,Jane Seymour,Tony Dovolani,25.0,6.0,16.025641025641026,6
+5,9,Jennie Garth,Derek Hough,29.0,3.0,24.786324786324787,4
+5,1,Josie Maran,Alec Mazo,16.0,12.0,6.22568093385214,12
+5,5,Mark Cuban,Kym Johnson,21.0,7.0,10.552763819095476,8
+5,6,Sabrina Bryan,Mark Ballas,25.0,4.0,13.88888888888889,7
+5,3,Wayne Newton,Cheryl Burke,18.0,10.0,7.531380753138076,10
+6,4,Adam Carolla,Julianne Hough,19.0,9.0,8.444444444444445,9
+6,8,Mario,Karina Smirnoff,26.5,3.0,19.850187265917604,5
+6,9,Marissa Jaret Winokur,Tony Dovolani,26.0,4.0,23.636363636363637,4
+6,6,Marlee Matlin,Fabian Sanchez,21.0,7.0,11.666666666666666,7
+6,2,Monica Seles,Jonathan Roberts,15.0,12.0,5.836575875486381,11
+6,2,Penn Jillette,Kym Johnson,17.0,10.0,6.614785992217899,12
+6,5,Priscilla Presley,Louis van Amstel,21.0,8.0,10.714285714285714,8
+6,7,Shannon Elizabeth,Derek Hough,25.5,4.0,16.50485436893204,6
+6,3,Steve Guttenberg,Anna Trebunskaya,21.0,6.0,9.210526315789473,10
+7,6,Cloris Leachman,Corky Ballas,15.0,7.0,9.375,7
+7,9,Cody Linley,Julianne Hough,23.0,4.0,22.885572139303484,4
+7,1,Jeffrey Ross,Edyta Sliwinska,12.0,13.0,4.761904761904762,13
+7,2,Kim Kardashian,Mark Ballas,17.0,9.0,7.6923076923076925,11
+7,8,Maurice Greene,Cheryl Burke,24.0,4.0,18.823529411764707,5
+7,2,Misty May-Treanor,Maksim Chmerkoskiy,21.0,4.0,9.502262443438914,10
+7,4,Rocco DiSpirito,Karina Smirnoff,18.0,9.0,8.866995073891626,9
+7,7,Susan Lucci,Tony Dovolani,24.0,4.0,16.3265306122449,6
+7,1,Ted McGinley,Inna Brayer,18.5,8.0,7.341269841269842,12
+7,5,Toni Braxton,Alec Mazo,22.0,5.0,11.282051282051283,8
+8,2,Belinda Carlisle,Jonathan Roberts,18.0,9.0,6.7924528301886795,13
+8,8,Chuck Wicks,Julianne Hough,25.5,5.0,16.346153846153847,6
+8,5,David Alan Grier,Kym Johnson,22.0,6.0,10.476190476190476,9
+8,3,Denise Richards,Maksim Chmerkoskiy,16.0,10.0,6.299212598425196,12
+8,4,Holly Madison,Dmitry Chaplin,16.0,9.0,6.6115702479338845,11
+8,7,Lawrence Taylor,Edyta Sliwinska,21.0,7.0,11.538461538461538,7
+8,9,Lil' Kim,Derek Hough,26.0,4.0,19.475655430711612,5
+8,4,Steve Wozniak,Karina Smirnoff,12.0,11.0,4.958677685950414,10
+8,6,Steve-O,Lacey Schwimmer,16.0,8.0,8.60215053763441,8
+8,10,Ty Murray,Chelsie Hightower,24.0,4.0,21.91780821917808,4
+9,8,Aaron Carter,Karina Smirnoff,25.0,4.0,19.083969465648856,5
+9,1,Ashley Hamiliton,Edyta Sliwinska,18.9999,15.0,4.6797967676719905,16
+9,4,Chuck Liddell,Anna Trebunskaya,17.0,9.0,7.024793388429752,11
+9,3,Debi Mazar,Maksim Chmerkoskiy,17.0,10.0,6.5891472868217065,12
+9,9,Joanna Krupa,Derek Hough,27.0,2.0,25.31258701201785,4
+9,2,Kathy Ireland,Tony Dovolani,18.0,13.0,6.122448979591836,14
+9,6,Louie Vito,Chelsie Hightower,24.0,7.0,9.230801183542559,8
+9,1,Macy Gray,Jonathan Roberts,18.9999,15.0,4.6797967676719905,15
+9,7,Mark Dacascos,Lacey Schwimmer,21.5,7.0,12.250712250712251,6
+9,6,Melissa Joan Hart,Mark Ballas,23.9999,8.0,9.230762721870962,9
+9,7,Michael Irvin,Anna Demidova,23.5,6.0,13.390313390313391,7
+9,5,Natalie Coughlin,Alec Mazo,22.0,8.0,9.090909090909092,10
+9,3,Tom DeLay,Cheryl Burke,15.0,12.0,5.813953488372093,13
+10,4,Aiden Turner,Edyta Sliwinska,16.5,8.0,8.89487870619946,9
+10,3,Buzz Aldrin,Ashly DelGrosso,13.0,10.0,6.403940886699508,10
+10,9,Chad Ochocinco,Cheryl Burke,26.0,4.0,23.008849557522122,4
+10,6,Jake Pavelka,Chelsie Hightower,24.999899999999997,7.0,11.96171470430762,7
+10,5,Kate Gosselin,Tony Dovolani,15.0,8.0,8.670520231213873,8
+10,8,Niecy Nash,Louis van Amstel,21.5,5.0,16.99604743083004,5
+10,7,Pamela Anderson,Damian Whitewood,25.5,4.0,16.39871382636656,6
+10,2,Shannen Doherty,Mark Ballas,20.0,6.0,9.090909090909092,11
+11,6,Audrina Patridge,Tony Dovolani,31.9998,2.0,15.45889285615942,7
+11,9,Brandy,Maksim Chmerkoskiy,28.5,3.0,25.0,4
+11,1,David Hasselhoff,Kym Johnson,15.0,10.0,6.607929515418502,12
+11,5,Florence Henderson,Corky Ballas,21.0,6.0,11.538461538461538,8
+11,8,Kurt Warner,Anna Trebunskaya,24.0,4.0,18.11320754716981,5
+11,3,Margaret Cho,Louis van Amstel,18.0,10.0,8.144796380090497,10
+11,2,Michael Bolton,Chelsie Hightower,12.0,11.0,5.429864253393665,11
+11,7,Rick Fox,Cheryl Burke,34.5,4.0,16.546762589928058,6
+11,4,The Situation,Karina Smirnoff,14.0,9.0,7.82122905027933,9
+12,6,Chris Jericho,Cheryl Burke,22.0,7.0,12.222222222222221,7
+12,7,Kendra Wilkinson,Louis van Amstel,30.5,4.0,16.180371352785148,6
+12,2,Mike Catherwood,Lacey Schwimmer,17.0,9.0,7.87037037037037,11
+12,5,Petra Nemcova,Dmitry Chaplin,22.0,6.0,11.34020618556701,8
+12,9,Ralph Macchio,Karina Smirnoff,24.0,4.0,20.425531914893615,4
+12,8,Romeo,Chelsie Hightower,26.0,4.0,20.0,5
+12,4,Sugar Ray Leonard,Anna Trebunskaya,21.0,8.0,10.194174757281553,9
+12,3,Wendy Williams,Tony Dovolani,15.0,10.0,7.009345794392523,10
+13,5,Carson Kressley,Anna Trebunskaya,19.0,8.0,10.106382978723403,8
+13,6,Chaz Bono,Lacey Schwimmer,19.0,7.0,11.44578313253012,7
+13,4,Chynna Phillips,Tony Dovolani,21.0,6.0,10.047846889952153,9
+13,7,David Arquette,Kym Johnson,23.5,5.0,16.040955631399317,6
+13,2,Elisabetta Canalis,Valentin Chmerkovskiy,21.0,4.0,9.417040358744394,11
+13,9,Hope Solo,Maksim Chmerkoskiy,24.4998,4.0,20.675023945248718,4
+13,3,Kristin Cavallari,Mark Ballas,24.0,4.0,10.126582278481013,10
+13,1,Metta World Peace (Ron),Peta Murgatroyd,14.0,12.0,6.451612903225806,12
+13,8,Nancy Grace,Tristan MacManus,22.0,5.0,16.988416988416986,5
+14,5,Gavin DeGraw,Karina Smirnoff,19.0,9.0,8.482142857142858,9
+14,6,Gladys Knight,Tristan MacManus,24.0,8.0,9.302350820331686,8
+14,3,Jack Wagner,Anna Trebunskaya,24.0,7.0,8.571428571428571,11
+14,7,Jaleel White,Kym Johnson,25.5,6.0,13.896457765667575,7
+14,9,Maria Menounos,Derek Hough,29.5,1.0,25.65217391304348,4
+14,2,Martina Navratilova,Tony Dovolani,17.0,12.0,6.319702602230483,12
+14,8,Melissa Gilbert,Maksim Chmerkoskiy,25.5,6.0,15.59633027522936,5
+14,8,Roshon Fegan,Chelsie Hightower,28.0,2.0,17.12538226299694,6
+14,4,Sherri Sheperd,Valentin Chmerkovskiy,21.0,9.0,9.012875536480687,10
+15,9,Apolo Anton Ohno,Karina Smirnoff,28.611,3.0,20.29153253517561,5
+15,4,Bristol Palin,Mark Ballas,32.0,8.0,9.953343701399689,9
+15,3,Drew Lachey,Anna Trebunskaya,24.0,9.0,8.633093525179856,11
+15,9,Emmitt Smith,Cheryl Burke,27.0,5.0,19.148976912716837,4
+15,8,Gilles Marini,Peta Murgatroyd,29.2777,2.0,14.691931950135839,6
+15,3,Helio Castroneves,Chelsie Hightower,25.5,4.0,9.172661870503598,10
+15,2,Joey Fatone,Kym Johnson,22.5,7.0,8.152173913043478,12
+15,8,Kirstie Alley,Maksim Chmerkoskiy,25.5,7.0,12.7962327890669,7
+15,1,Pamela Anderson,Tristan MacManus,17.0,13.0,6.148282097649186,13
+15,6,Sabrina Bryan,Louis van Amstel,30.0,1.0,13.274336283185843,8
+16,10,Alexandra Raisman,Mark Ballas,29.0,3.0,24.786345971235875,4
+16,7,Andy Dick,Sharna Burgess,17.0,7.0,9.239130434782608,7
+16,5,D. L. Hughley,Cheryl Burke,18.0,8.0,8.61244019138756,9
+16,2,Dorothy Hamill,Tristan MacManus,15.0,12.0,6.147540983606557,12
+16,9,Ingo Rademacher,Kym Johnson,25.5,5.0,18.085106382978726,5
+16,4,Lisa Vanderpump,Gleb Savchenko,18.0,9.0,8.035714285714286,10
+16,8,Sean Lowe,Peta Murgatroyd,21.0,6.0,13.504823151125404,6
+16,6,Victor Ortiz,Lindsay Arnold,20.0,8.0,10.610079575596817,8
+16,3,Wynonna Judd,Tony Dovolani,15.0,11.0,6.3829895880673835,11
+17,11,Bill Engvall,Emma Slater,25.499899999999997,4.0,22.270771724567986,4
+17,3,Bill Nye,Tyne Stecklein,16.0,10.0,6.2745098039215685,11
+17,8,Brant Daugherty,Peta Murgatroyd,27.0,5.0,14.0625,7
+17,5,Christina Milian,Mark Ballas,28.0,1.0,11.914893617021278,9
+17,9,Elizabeth Berkley Lauren,Valentin Chmerkovskiy,28.0,2.0,17.77777777777778,6
+17,2,Keyshawn Johnson,Sharna Burgess,18.0,11.0,6.7669172932330826,12
+17,10,Leah Remini,Tony Dovolani,32.5,4.0,18.571428571428573,5
+17,7,"Nicole ""Snooki"" Polizzi",Sasha Farber,27.0,5.0,12.18961625282167,8
+17,4,Valerie Harper,Tristan MacManus,18.0,10.0,7.59493670886076,10
+18,2,Billy Dee Williams,Emma Slater,15.0,11.0,6.147540983606557,10
+18,9,Charlie White,Sharna Burgess,38.0,3.0,19.895287958115183,5
+18,5,Cody Simpson,Witney Carson,34.0,8.0,10.559006211180124,9
+18,8,Danica McKellar,Valentin Chmerkovskiy,38.0,3.0,16.8141592920354,6
+18,1,Diana Nyad,Henry Byalikov,18.0,11.0,6.870229007633588,12
+18,6,Drew Carey,Cheryl Burke,32.0,7.0,11.347517730496454,8
+18,10,James Maslow,Peta Murgatroyd,29.0,3.0,25.290756490131372,4
+18,7,NeNe Leakes,Tony Dovolani,33.0,7.0,13.043478260869565,7
+18,2,Sean Avery,Karina Smirnoff,21.0,7.0,8.60655737704918,11
+19,7,Antonio Sabato Jr.,Cheryl Burke,29.5,7.0,11.411992263056092,8
+19,11,Bethany Mota,Derek Hough,38.0,4.0,24.307088074814654,4
+19,4,Betsey Johnson,Tony Dovolani,29.0,6.0,9.0625,10
+19,6,Jonathan Bennett,Allison Holker,32.0,5.0,10.921501706484642,9
+19,9,Lea Thompson,Artem Chigvintsev,35.0,5.0,16.355140186915886,6
+19,1,Lolo Jones,Keo Motsepe,22.0,12.0,5.913978494623656,13
+19,8,Michael Waltrip,Emma Slater,25.0,7.0,10.080645161290322,7
+19,3,Randy Couture,Karina Smirnoff,26.0,11.0,7.365439093484419,11
+19,2,Tavis Smiley,Sharna Burgess,28.0,8.0,7.734806629834254,12
+19,10,Tommy Chong,Peta Murgatroyd,31.0,5.0,16.986301369863014,5
+20,3,Charlotte McKinney,Keo Motsepe,22.0,10.0,7.0287539936102235,11
+20,8,Chris Soules,Witney Carson,32.0,4.0,15.130023640661939,5
+20,4,Michael Sam,Peta Murgatroyd,30.0,7.0,9.230769230769232,10
+20,9,Nastia Liukin,Derek Hough,40.0,1.0,25.477707006369428,4
+20,6,Patti LaBelle,Artem Chigvintsev,34.0,6.0,12.014134275618375,8
+20,2,Redfoo,Emma Slater,31.0,5.0,8.93371757925072,12
+20,8,Robert Herjavec,Kym Johnson,31.0,6.0,14.657210401891252,6
+20,5,Suzanne Somers,Tony Dovolani,28.0,5.0,9.89399293286219,9
+20,7,Willow Shields,Mark Ballas,39.0,2.0,15.354330708661418,7
+21,9,Alexa PenaVega,Mark Ballas,30.0,1.0,18.237082066869302,6
+21,8,Andy Grammer,Allison Holker,23.9998,7.0,12.371069188873781,7
+21,11,Carlos PenaVega,Witney Carson,30.0,1.0,25.423750359110475,4
+21,2,Chaka Khan,Keo Motsepe,15.0,13.0,5.545286506469501,13
+21,4,Gary Busey,Anna Trebunskaya,16.0,10.0,6.779661016949152,10
+21,7,Hayes Grier,Emma Slater,28.0,2.0,12.669683257918551,8
+21,2,Kim Zolciak-Biermann,Tony Dovolani,18.5,9.0,6.839186691312385,11
+21,6,Paula Deen,Louis van Amstel,24.0,9.0,7.667731629392971,9
+21,9,Tamar Braxton,Valentin Chmerkovskiy,24.5,6.0,14.893617021276595,5
+21,2,Victor Espinoza,Karina Smirnoff,18.5,9.0,6.839186691312385,12
+22,9,Antonio Brown,Sharna Burgess,27.5,5.0,19.16376306620209,5
+22,6,Doug Flutie,Karina Smirnoff,21.0,9.0,9.251101321585903,9
+22,2,Geraldo Rivera,Edyta Sliwinska,13.0,12.0,5.508474576271186,12
+22,8,Jodie Sweetin,Keo Motsepe,30.0,1.0,17.75147928994083,6
+22,7,Kim Fields,Sasha Farber,26.0,5.0,12.149532710280374,8
+22,4,Marla Maples,Tony Dovolani,28.0,8.0,8.77742946708464,10
+22,3,Mischa Barton,Artem Chigvintsev,18.0,11.0,7.59493670886076,11
+22,7,Von Miller,Witney Carson,26.0,5.0,12.149532710280374,7
+22,9,Wanya Morris,Lindsay Arnold,30.0,1.0,20.905923344947734,4
+23,6,Amber Rose,Maksim Chmerkoskiy,28.0,9.0,9.180327868852459,9
+23,4,Babyface,Allison Holker,18.0,11.0,6.896551724137931,11
+23,2,Jake T. Austin,Jenna Johnson,24.0,10.0,6.8181818181818175,13
+23,11,Jana Kramer,Gleb Savchenko,35.5,4.0,23.32976924558098,4
+23,9,Marilu Henner,Derek Hough,36.0,5.0,15.859030837004406,6
+23,7,Maureen McCormick,Artem Chigvintsev,33.0,6.0,11.978221415607985,8
+23,3,Rick Perry,Emma Slater,23.0,11.0,7.076923076923077,12
+23,8,Ryan Lochte,Cheryl Burke,26.0,5.0,12.935336254065923,7
+23,10,Terra Jole,Sasha Farber,30.0,1.0,20.477815699658702,5
+23,4,Vanilla Ice,Witney Carson,23.0,6.0,8.812260536398467,10
+24,8,Bonner Bolton,Sharna Burgess,29.0,5.0,16.6189111747851,5
+24,3,Charo,Keo Motsepe,24.0,9.0,7.6190476190476195,11
+24,2,Chris Kattan,Witney Carson,22.0,11.0,6.707317073170732,12
+24,5,Erika Jayne,Gleb Savchenko,32.0,6.0,10.526315789473683,9
+24,6,Heather Morris,Maksim Chmerkoskiy,37.0,1.0,13.754646840148698,8
+24,4,Mr. T,Kym Herjavec,28.0,10.0,8.588957055214724,10
+24,7,Nancy Kerrigan,Artem Chigvintsev,36.0,4.0,14.229249011857709,7
+24,7,Nick Viall,Peta Murgatroyd,34.0,5.0,13.438735177865613,6
+24,9,Simone Biles,Sasha Farber,40.0,1.0,26.4026402640264,4
+25,2,Barbara Corcoran,Keo Motsepe,17.0,13.0,6.2157221206581355,13
+25,2,Debbie Gibson,Alan Bersten,20.5,7.0,7.495429616087751,12
+25,4,Derek Fisher,Sharna Burgess,23.0,10.0,8.487084870848708,11
+25,10,Drew Scott,Emma Slater,37.5,4.0,23.97871457464638,4
+25,6,Nick Lachey,Peta Murgatroyd,26.0,9.0,8.49673202614379,9
+25,7,Nikki Bella,Artem Chigvintsev,24.0,8.0,11.162790697674419,8
+25,5,Sasha Pieterse,Gleb Savchenko,24.0,8.0,9.195402298850574,10
+25,8,Terrell Owens,Cheryl Burke,25.5,4.0,16.293929712460063,6
+25,7,Vanessa Lachey,Maksim Chmerkoskiy,27.0,4.0,12.558139534883722,7
+25,9,Victoria Arlen,Valentin Chmerkovskiy,28.0,3.0,20.74074074074074,5
+26,2,Arike Ogunbowale,Gleb Savchenko,35.0,3.0,13.084112149532709,7
+26,3,Chris Mazdzer,Witney Carson,33.0,5.0,15.639810426540285,5
+26,1,Jamie Anderson,Artem Chigvintsev,19.0,8.0,9.047619047619047,10
+26,3,Jennie Finch Daigle,Keo Motsepe,29.0,6.0,13.744075829383887,6
+26,1,Johnny Damon,Emma Slater,18.0,9.0,8.571428571428571,9
+26,2,Kareem Abdul-Jabbar,Lindsay Arnold,29.5,8.0,11.02803738317757,8
+26,3,Mirai Nagasu,Alan Bersten,35.0,3.0,16.587677725118482,4
+27,9,Alexis Ren,Alan Bersten,28.5,3.0,24.675324675324674,4
+27,2,Danelle Umstead,Artem Chigvintsev,18.5,11.0,6.839186691312385,12
+27,7,DeMarcus Ware,Lindsay Arnold,26.5,6.0,12.183908045977011,7
+27,8,Joe Amabile,Jenna Johnson,23.0,5.0,14.285714285714285,6
+27,7,John Schneider,Emma Slater,27.0,5.0,12.413793103448276,8
+27,8,Juan Pablo Di Pace,Cheryl Burke,30.0,1.0,18.633540372670808,5
+27,6,Mary Lou Retton,Sasha Farber,24.0,6.0,10.480349344978166,9
+27,3,Nancy McKeon,Valentin Chmerkovskiy,22.0,9.0,8.118081180811808,11
+27,1,Nikki Glaser,Gleb Savchenko,17.5,12.0,6.862745098039216,13
+27,4,Tinashe,Brandon Armstrong,26.0,2.0,11.206896551724139,10
+28,10,James Van Der Beek,Emma Slater,25.5,5.0,18.545454545454547,5
+28,7,Karamo Brown,Jenna Johnson,24.5,6.0,12.128712871287128,8
+28,8,Kate Flannery,Pasha Pashkov,25.9998,5.0,13.471454803957736,7
+28,4,Lamar Odom,Peta Murgatroyd,20.0,10.0,7.092198581560284,10
+28,11,Lauren Alaina,Gleb Savchenko,28.5,4.0,24.358974358974358,4
+28,2,Mary Wilson,Brandon Armstrong,15.0,10.0,6.8493150684931505,12
+28,2,Ray Lewis,Cheryl Burke,15.0,10.0,6.8493150684931505,11
+28,6,Sailor Brinkley-Cook,Valentin Chmerkovskiy,27.0,1.0,11.842105263157894,9
+28,9,Sean Spicer,Lindsay Arnold,25.0,6.0,11.990407673860911,6
+29,9,AJ McLean,Cheryl Burke,24.9998,6.0,12.953317941214266,7
+29,4,Anne Heche,Keo Motsepe,21.0,10.0,6.976744186046512,13
+29,3,Carole Baskin,Pasha Pashkov,12.0,14.0,4.270462633451958,14
+29,2,Charles Oakley,Emma Slater,15.0,14.0,5.4945054945054945,15
+29,8,Chrishell Stause,Gleb Savchenko,27.0,5.0,12.162184076007344,8
+29,7,Jeannie Mai,Brandon Armstrong,25.0,8.0,9.615384615384617,9
+29,5,Jesse Metcalfe,Sharna Burgess,19.0,11.0,6.620209059233449,12
+29,10,Johnny Weir,Britt Stewart,28.5,4.0,16.379310344827587,6
+29,11,Justina Machado,Sasha Farber,30.0,1.0,25.31645569620253,4
+29,7,Monica Aldama,Valentin Chmerkovskiy,22.0,10.0,8.461538461538462,10
+29,10,Skai Jackson,Alan Bersten,28.5,4.0,16.379310344827587,5
+29,6,Veron Davis,Peta Murgatroyd,21.0,10.0,7.835820895522389,11
+30,10,Amanda Kloots,Alan Bersten,39.0,3.0,24.840764331210192,4
+30,4,Brian Austin Green,Sharna Burgess,26.0,13.0,6.235011990407674,13
+30,3,Christine Chiu,Pasha Pashkov,21.0,7.0,7.046979865771812,14
+30,8,Jimmie Allen,Emma Slater,32.0,8.0,10.38961038961039,7
+30,6,Kenya Moore,Brandon Armstrong,32.0,10.0,8.791208791208792,10
+30,2,Martin Kove,Britt Stewart,15.0,15.0,3.896103896103896,15
+30,4,Matt James,Lindsay Arnold,28.5,12.0,6.83453237410072,12
+30,5,Melanie C,Gleb Savchenko,36.0,3.0,9.35064935064935,11
+30,9,Melora Hardin,Artem Chigvintsev,36.0,5.0,15.929203539823009,6
+30,7,"Mike ""The Miz"" Mizanin",Witney Carson,32.0,9.0,9.785932721712538,9
+30,8,Olivia Jade,Valentin Chmerkovskiy,36.0,6.0,11.688311688311687,8
+30,9,Suni Lee,Sasha Farber,37.5,3.0,16.5929203539823,5
+31,3,Cheryl Ladd,Louis van Amstel,24.0,13.0,5.955334987593052,14
+31,9,Daniel Durant,Britt Stewart,34.5,5.0,15.681818181818183,5
+31,8,Heidi D'Amelio,Artem Chigvintsev,35.0,7.0,11.146496815286625,8
+31,1,Jason Lewis,Peta Murgatroyd,18.0,15.0,4.712041884816754,16
+31,6,Jessie James Decker,Alan Bersten,32.0,9.0,9.27536231884058,10
+31,7,Jordin Sparks,Brandon Armstrong,34.5,8.0,10.599078341013826,9
+31,5,Joseph Baena,Daniella Karagach,35.0,10.0,7.803790412486064,11
+31,4,Sam Champion,Cheryl Burke,25.0,13.0,6.097560975609756,13
+31,5,Selma Blair,Sasha Farber,40.0,4.0,8.918617614269788,12
+31,10,Shangela,Gleb Savchenko,38.0,3.0,24.358974358974358,4
+31,2,Teresa Giudice,Pasha Pashkov,23.0,14.0,5.582524271844661,15
+31,9,Trevor Donovan,Emma Slater,32.5,6.0,14.772727272727273,6
+31,8,Vinny Guadagnino,Koko Iwasaki,29.0,8.0,9.235668789808917,7
+32,4,Adrian Peterson,Britt Stewart,21.0,6.0,8.75,11
+32,11,Alyson Hannigan,Sasha Farber,26.5,5.0,18.213058419243985,5
+32,8,Barry Williams,Peta Murgatroyd,35.0,5.0,13.83399209486166,7
+32,11,Charity Lawson,Artem Chigvintsev,29.5,3.0,20.274914089347078,4
+32,9,Harry Jowsey,Rylee Arnold,30.0,6.0,13.574660633484163,6
+32,2,Jamie Lynn Spears,Alan Bersten,16.0,9.0,6.722689075630252,13
+32,7,Lele Pons,Brandon Armstrong,36.5,3.0,12.943262411347517,8
+32,1,Matt Walsh,Koko Iwasaki,12.0,12.0,5.194805194805195,14
+32,6,Mauricio Umansky,Emma Slater,33.0,6.0,10.248447204968944,9
+32,5,Mira Sorvino,Gleb Savchenko,22.0,8.0,9.166666666666666,10
+32,3,Tyson Beckford,Jenna Johnson,20.0,12.0,6.191950464396285,12
+33,2,Anna Delvey,Ezra Sosa,17.0,11.0,6.5891472868217065,12
+33,4,Brooks Nader,Gleb Savchenko,32.0,4.0,10.884353741496598,9
+33,9,Danny Amendola,Witney Carson,28.0,5.0,19.243986254295535,5
+33,7,Dwight Howard ,Daniella Karagach,24.0,6.0,15.0,6
+33,3,Eric Roberts,Britt Stewart,23.0,10.0,7.232704402515723,10
+33,6,Jenn Tran,Sasha Farber,31.0,3.0,15.048543689320388,7
+33,5,Phaedra Parks,Val Chmerkovskiy,24.0,6.0,11.881188118811881,8
+33,3,Reginald VelJohnson,Emma Slater,21.0,11.0,6.60377358490566,10
+33,9,Stephen Nedoroscik,Rylee Arnold,29.5,2.0,20.274914089347078,4
+33,2,Tori Spelling,Pasha Pashkov,19.0,9.0,7.3643410852713185,12
+34,9,Andy Richter,Emma Slater/Kaitlyn Bristowe (week 9),29.0,7.0,10.74074074074074,7
+34,2,Baron Davis,Britt Stewart,18.0,11.0,6.474820143884892,13
+34,2,Corey Feldman,Jenna Johnson,15.0,14.0,5.39568345323741,13
+34,8,Danielle Fishel,Pasha Pashkov,37.0,7.0,12.271973466003317,8
+34,11,Dylan Efron,Daniella Karagach (Rumer Willis week 9),29.3332,4.0,19.864532303262358,4
+34,11,Elaine Hendrix,Alan Bersten (Rashad Jennings week 9),28.9998,5.0,19.63875280869962,5
+34,4,Hilaria Baldwin,Gleb Savchenko,23.0,5.0,9.274193548387096,11
+34,7,Jen Affleck,Jan Ravnik,34.0,7.0,10.240963855421686,9
+34,3,Lauren Jauregui,Brandon Armstrong,18.0,11.0,7.003891050583658,12
+34,6,Scott Hoying,Rylee Arnold,28.0,9.0,8.235294117647058,10
+34,10,Whitney Leavitt,Mark Ballas,29.0,2.0,16.86046511627907,6

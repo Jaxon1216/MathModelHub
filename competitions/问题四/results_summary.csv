@@ -1,0 +1,2 @@
+system_name,initial_alpha,final_alpha,threshold,tiebreaker_threshold
+Dynamic Weighted Voting System,0.4,0.8,0.5,0.05

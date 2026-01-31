@@ -1,0 +1,6 @@
+name,judge_corr,fan_corr,balance
+Current (α=0.3),,,
+Current (α=0.5),,,
+Current (α=0.7),,,
+Dynamic Alpha,,,
+Threshold System,,,

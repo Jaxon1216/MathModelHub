@@ -1,0 +1,31 @@
+season,week,new_score_eliminated,actual_eliminated,old_score_eliminated,new_matches_actual,old_matches_actual,systems_differ
+15,1,Kirstie Alley,Pamela Anderson,Kirstie Alley,False,False,False
+15,2,Bristol Palin,Joey Fatone,Bristol Palin,False,False,False
+15,3,Bristol Palin,Drew Lachey,Bristol Palin,False,False,False
+15,4,Kirstie Alley,Bristol Palin,Kirstie Alley,False,False,False
+15,5,Kelly Monaco,N/A,Kelly Monaco,False,False,False
+15,6,Emmitt Smith,Sabrina Bryan,Emmitt Smith,False,False,False
+15,7,Kirstie Alley,N/A,Kirstie Alley,False,False,False
+15,8,Kirstie Alley,Gilles Marini,Kirstie Alley,False,False,False
+15,9,Emmitt Smith,Apolo Anton Ohno,Emmitt Smith,False,False,False
+15,10,Shawn Johnson,N/A,Shawn Johnson,False,False,False
+27,1,Joe Amabile,Nikki Glaser,Joe Amabile,False,False,False
+27,2,Joe Amabile,Danelle Umstead,Joe Amabile,False,False,False
+27,3,Joe Amabile,Nancy McKeon,Joe Amabile,False,False,False
+27,4,Joe Amabile,Tinashe,Joe Amabile,False,False,False
+27,5,Joe Amabile,N/A,Joe Amabile,False,False,False
+27,6,John Schneider,Mary Lou Retton,John Schneider,False,False,False
+27,7,Joe Amabile,DeMarcus Ware,Joe Amabile,False,False,False
+27,8,Bobby Bones,Joe Amabile,Bobby Bones,False,False,False
+27,9,Bobby Bones,Alexis Ren,Bobby Bones,False,False,False
+28,1,Lamar Odom,N/A,Lamar Odom,False,False,False
+28,2,Lamar Odom,Mary Wilson,Lamar Odom,False,False,False
+28,3,Lamar Odom,N/A,Lamar Odom,False,False,False
+28,4,Lamar Odom,Lamar Odom,Lamar Odom,True,True,False
+28,5,Sean Spicer,N/A,Sean Spicer,False,False,False
+28,6,Sean Spicer,Sailor Brinkley-Cook,Sean Spicer,False,False,False
+28,7,Sean Spicer,Karamo Brown,Sean Spicer,False,False,False
+28,8,Sean Spicer,Kate Flannery,Sean Spicer,False,False,False
+28,9,Sean Spicer,Sean Spicer,Sean Spicer,True,True,False
+28,10,James Van Der Beek,James Van Der Beek,James Van Der Beek,True,True,False
+28,11,Lauren Alaina,Lauren Alaina,Lauren Alaina,True,True,False
