@@ -12,7 +12,7 @@ Dancing with the Stars (DWTS) combines professional judge scores with audience v
 
 **For Problem 2**, we apply counterfactual analysis comparing rank-based and percentage-based methods across all 34 seasons. The methods produce identical elimination decisions in 95.5% of cases, with the judge tiebreaker rule changing outcomes in 3.9% of weeks. ANOVA testing shows industry affects judge scores more strongly (F=8.81, p<0.0001) than fan votes (F=2.14, p=0.003).
 
-**For Problem 3**, we employ ANOVA, regression, and Random Forest to quantify factor impacts. Judge scores account for 87.6% of feature importance. Age correlates moderately with placement (r=0.433). Cross-season validation demonstrates strong generalization: training R²=0.996, test R²=0.934, with CV R²=0.942±0.013.
+**For Problem 3**, we employ ANOVA, regression, and Random Forest to quantify factor impacts. Judge scores account for 87.6% of feature importance. Age correlates moderately with placement (r=0.433). The prediction model achieves R²=0.488, RMSE=2.69, MAE=2.09 positions under 5-fold CV. Cross-season validation demonstrates strong generalization: test R²=0.934, test RMSE=3.08.
 
 **For Problem 4**, we propose a Dynamic Weighted Voting System (DWVS) optimized via grid search: base α=0.30, increment=0.04, yielding initial fan weight of 66% shifting to 26% by finals. Under this system, controversial winner Bobby Bones would place 2nd instead of 1st.
 
@@ -149,7 +149,7 @@ This reveals that professional assessments may carry implicit biases while fan s
 | Julianne Hough | 4.20 | 2 | 5 |
 | Mark Ballas | 5.19 | 3 | 30 |
 
-### 5.3 Feature Importance
+### 5.3 Feature Importance and Model Performance
 
 | Feature | Importance |
 |---------|------------|
@@ -158,7 +158,14 @@ This reveals that professional assessments may carry implicit biases while fan s
 | Age | 0.028 |
 | Industry | 0.019 |
 
-Judge scores dominate (87.6%), indicating technical dancing ability remains the primary determinant of success.
+**5-Fold CV Performance:**
+| Metric | Value | Unit |
+|--------|-------|------|
+| R² | 0.488 | ratio |
+| RMSE | 2.688 | positions |
+| MAE | 2.090 | positions |
+
+Judge scores dominate (87.6%), indicating technical dancing ability remains the primary determinant of success. The model achieves MAE=2.09, meaning average prediction error is approximately 2 placement positions.
 
 ---
 
@@ -204,14 +211,15 @@ Under DWVS, Bobby Bones would place 2nd instead of winning.
 
 Training on Seasons 1-20, testing on Seasons 21-34:
 
-| Metric | Value |
-|--------|-------|
-| Training R² | 0.996 |
-| Test R² | 0.934 |
-| Generalization Gap | 0.062 |
-| CV Mean R² | 0.942 ± 0.013 |
+| Metric | Training | Test | Gap |
+|--------|----------|------|-----|
+| R² | 0.996 | 0.934 | 0.062 |
+| RMSE | 0.874 | 3.081 | 2.207 |
+| MAE | 0.722 | 2.421 | 1.699 |
 
-The small generalization gap (0.062) and stable CV scores demonstrate strong model generalizability.
+*CV Mean R² = 0.942 ± 0.013*
+
+The small R² gap (0.062) demonstrates strong generalization. Test RMSE=3.08 and MAE=2.42 indicate prediction errors of approximately 2-3 placement positions on unseen seasons.
 
 ![Cross-Season Validation](figures/imp7_cross_season_validation.pdf)
 *Figure 5: Cross-season validation with temporal split.*

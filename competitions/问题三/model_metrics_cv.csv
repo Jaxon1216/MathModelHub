@@ -1,0 +1,4 @@
+Metric,Value,Unit
+R²,0.4875,ratio
+RMSE,2.6877,positions
+MAE,2.0898,positions

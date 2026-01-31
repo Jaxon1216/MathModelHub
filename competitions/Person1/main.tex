@@ -47,7 +47,7 @@ Dancing with the Stars (DWTS) combines professional judge scores with audience v
 
 \textbf{For Problem 2}, we apply counterfactual analysis comparing rank-based and percentage-based methods across all 34 seasons. The methods produce identical elimination decisions in 95.5\% of cases, with the judge tiebreaker rule changing outcomes in 3.9\% of weeks. ANOVA testing shows industry affects judge scores more strongly (F=8.81, p<0.0001) than fan votes (F=2.14, p=0.003).
 
-\textbf{For Problem 3}, we employ ANOVA, regression, and Random Forest to quantify factor impacts. Judge scores account for 87.6\% of feature importance. Age correlates moderately with placement (r=0.433). Cross-season validation demonstrates strong generalization: training R$^2$=0.996, test R$^2$=0.934, with CV R$^2$=0.942$\pm$0.013.
+\textbf{For Problem 3}, we employ ANOVA, regression, and Random Forest to quantify factor impacts. Judge scores account for 87.6\% of feature importance. Age correlates moderately with placement (r=0.433). The prediction model achieves R$^2$=0.488, RMSE=2.69, MAE=2.09 positions under 5-fold CV. Cross-season validation demonstrates strong generalization: test R$^2$=0.934, test RMSE=3.08.
 
 \textbf{For Problem 4}, we propose a Dynamic Weighted Voting System (DWVS) optimized via grid search: base $\alpha$=0.30, increment=0.04, yielding initial fan weight of 66\% shifting to 26\% by finals. Under this system, controversial winner Bobby Bones would place 2nd instead of 1st.
 
@@ -512,7 +512,7 @@ As illustrated in Fig.~\ref{fig:p3_importance}, the feature importance distribut
 
 \begin{table}[H]
 \centering
-\caption{Feature Importance for Placement Prediction}
+\caption{Feature Importance and Model Performance for Placement Prediction}
 \label{tab:p3_importance}
 \begin{tabular}{lc}
 \toprule
@@ -522,11 +522,17 @@ Average Judge Score & 0.876 \\
 Season & 0.074 \\
 Age & 0.028 \\
 Industry (encoded) & 0.019 \\
+\midrule
+\multicolumn{2}{l}{\textit{5-Fold CV Performance Metrics}} \\
+\midrule
+R$^2$ & 0.488 \\
+RMSE & 2.688 (positions) \\
+MAE & 2.090 (positions) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The dominance of judge scores (Table~\ref{tab:p3_importance}) provides an important calibration for interpreting controversial outcomes. While cases like Bobby Bones attract attention precisely because they deviate from judge assessments, such outcomes represent statistical outliers. For the vast majority of contestants, judge scores accurately predict final placement. This finding partially validates the current system: despite incorporating fan votes, the competition largely rewards technical dancing ability as assessed by professionals. The challenge lies in the small but visible proportion of cases where fan mobilization overcomes professional assessment.
+The model achieves R$^2$=0.488 with RMSE=2.69 and MAE=2.09 positions under 5-fold cross-validation, indicating that while judge scores dominate prediction (87.6\% importance, Table~\ref{tab:p3_importance}), the average prediction error is approximately 2 placement positions. While cases like Bobby Bones attract attention precisely because they deviate from judge assessments, such outcomes represent statistical outliers. For the vast majority of contestants, judge scores accurately predict final placement. This finding partially validates the current system: despite incorporating fan votes, the competition largely rewards technical dancing ability as assessed by professionals. The challenge lies in the small but visible proportion of cases where fan mobilization overcomes professional assessment.
 
 %===============================================================================
 % PROBLEM 4
@@ -684,7 +690,7 @@ A critical test of model generalizability employs temporal validation: we train 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{imp7_cross_season_validation.pdf}
-\caption{Cross-season validation results: (a) R$^2$ score comparison---Training R$^2$=0.996 indicates excellent model fit; Test R$^2$=0.934 demonstrates strong generalization; the annotated gap of 0.062 quantifies the modest overfitting; (b) MAE comparison---Training MAE=0.139 vs. Test MAE=0.612 shows the expected increase in prediction error on unseen data, while maintaining acceptable accuracy.}
+\caption{Cross-season validation results: (a) R$^2$ score comparison---Training R$^2$=0.996 indicates excellent model fit; Test R$^2$=0.934 demonstrates strong generalization; the annotated gap of 0.062 quantifies the modest overfitting; (b) MAE comparison---Training MAE=0.722 vs. Test MAE=2.421 (in placement positions), with corresponding RMSE of 0.874 and 3.081 respectively.}
 \label{fig:validation}
 \end{figure}
 
@@ -696,14 +702,15 @@ Fig.~\ref{fig:validation}(b) shows the corresponding MAE values: 0.139 for train
 \centering
 \caption{Cross-Season Validation Results}
 \label{tab:validation}
-\begin{tabular}{lc}
+\begin{tabular}{lccc}
 \toprule
-\textbf{Metric} & \textbf{Value} \\
+\textbf{Metric} & \textbf{Training} & \textbf{Test} & \textbf{Gap} \\
 \midrule
-Training R$^2$ & 0.996 \\
-Test R$^2$ & 0.934 \\
-Generalization Gap & 0.062 \\
-CV Mean R$^2$ & 0.942 $\pm$ 0.013 \\
+R$^2$ & 0.996 & 0.934 & 0.062 \\
+RMSE & 0.874 & 3.081 & 2.207 \\
+MAE & 0.722 & 2.421 & 1.699 \\
+\midrule
+\multicolumn{4}{l}{CV Mean R$^2$ = 0.942 $\pm$ 0.013} \\
 \bottomrule
 \end{tabular}
 \end{table}
