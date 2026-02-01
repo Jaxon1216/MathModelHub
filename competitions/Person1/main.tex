@@ -45,9 +45,9 @@ Dancing with the Stars (DWTS) combines professional judge scores with audience v
 
 \textbf{For Problem 1}, we formulate fan vote estimation as a constrained optimization problem using a Softmax voting model. Stratified analysis reveals overall consistency of 80.7\%: the rank-based method achieves 38.4\% while the percentage-based method achieves 96.0\%. Bootstrap resampling yields a certainty index of 0.995, demonstrating high estimation stability.
 
-\textbf{For Problem 2}, we apply counterfactual analysis comparing rank-based and percentage-based methods across all 34 seasons. The methods produce identical elimination decisions in 73.1\% of cases, with the judge tiebreaker rule changing outcomes in 29.7\% of weeks. ANOVA testing shows industry affects judge scores more strongly (F=8.08, p<0.0001) than fan votes (F=2.81, p<0.001).
+\textbf{For Problem 2}, we apply counterfactual analysis comparing rank-based and percentage-based methods across all 34 seasons. The methods produce identical elimination decisions in 73.1\% of cases, with the judge tiebreaker rule changing outcomes in 29.7\% of weeks.
 
-\textbf{For Problem 3}, we employ ANOVA, regression, and Random Forest to quantify factor impacts. Judge scores account for 87.6\% of feature importance. Age correlates moderately with placement (r=0.433). The prediction model achieves R$^2$=0.648, RMSE=2.69, MAE=2.09 positions under 5-fold CV. Cross-season validation demonstrates strong generalization: test R$^2$=0.934, test RMSE=3.08.
+\textbf{For Problem 3}, we employ ANOVA, regression, and Random Forest to quantify factor impacts. Age correlates moderately with placement (r=0.433, p<0.001). Among external factors (age, industry, professional dancer), age dominates feature importance (53.2\%), but these pre-determined characteristics collectively explain limited variance (R$^2$=0.11), confirming that actual performance matters most. Athletes achieve the best average placement (6.26) with 11.6\% win rate.
 
 \textbf{For Problem 4}, we propose a Dynamic Weighted Voting System (DWVS) optimized via grid search: base $\alpha$=0.30, increment=0.04, yielding initial fan weight of 66\% shifting to 26\% by finals. Simulation across all 32 identified controversial contestants shows 78.1\% would rank lower under DWVS, with average adjustment of +0.45 positions. Bobby Bones would place 2nd instead of 1st.
 
@@ -124,18 +124,50 @@ $\alpha(w)$ & Dynamic weight parameter at week $w$ \\
 \end{tabular}
 \end{table}
 
-\subsection{Data Overview and Preprocessing}
+\subsection{Data Overview and Supplementary Collection}
 
-The primary dataset contains 421 contestants across 34 seasons, with weekly judge scores from up to 4 judges per episode. We performed comprehensive preprocessing:
+\subsubsection{Data Sources}
 
-\textbf{Data Transformation:} Converted wide-format data to long format, yielding 2,777 valid observation records.
+The primary dataset provided by COMAP contains 421 contestants across 34 seasons with weekly judge scores. However, \textbf{the official data lacks external popularity metrics that are crucial for understanding controversial outcomes} like Bobby Bones's victory. To address this limitation, we collected supplementary data through web crawling and aggregation. Table \ref{tab:data_sources} summarizes all data sources used in this study.
 
-\textbf{Missing Value Analysis:} The 4th judge scores are missing in 65-94\% of cases (not all weeks have 4 judges). Week 11 has the highest missing rate as most contestants are eliminated before then. Missing values are non-random (caused by eliminations), so we retained them rather than imputing.
+\begin{table}[H]
+\centering
+\caption{Summary of Data Sources}
+\label{tab:data_sources}
+\begin{tabular}{lll}
+\toprule
+\textbf{Dataset} & \textbf{Source} & \textbf{Description} \\
+\midrule
+MCM Problem C & COMAP (provided) & 421 contestants, 34 seasons, weekly scores \\
+Wikipedia Pageviews & Wikimedia API\footnotemark[1] & Daily page views for S21--34 celebrities \\
+Pro Dancer Stats & Aggregated from MCM data & 60 dancers, wins, avg placement \\
+Season Metadata & Aggregated + verified\footnotemark[2] & Judge count, format changes per season \\
+\bottomrule
+\end{tabular}
+\end{table}
+\footnotetext[1]{\url{https://wikimedia.org/api/rest_v1/}}
+\footnotetext[2]{Verified against Wikipedia DWTS pages and Disney+ official site.}
 
-\textbf{Feature Engineering:} We computed weekly rankings, score percentages, cumulative averages, and identified voting methods (rank-based for S1-2, S28-34; percentage-based for S3-27).
+\subsubsection{Wikipedia Pageviews Collection}
 
-\subsection{Supplementary Data}
-We collected Wikipedia pageviews (Seasons 21-34) and professional dancer statistics to enhance our analysis. Bobby Bones ranked 8th/13 in pageviews despite winning, suggesting fan mobilization efficiency over baseline popularity.
+We collected Wikipedia page view statistics for celebrities in Seasons 21--34 using the Wikimedia Pageviews API. This data captures \textbf{baseline public interest levels} during competition periods, enabling us to distinguish between pre-existing fame and fan mobilization efficiency.
+
+\textbf{Coverage:} 183 contestants (S21--34); API data available only from July 2015.
+
+\textbf{Key Finding:} Bobby Bones (S27 winner) had 273,153 pageviews, ranking \textbf{8th out of 13} contestants in his season (below the season average of 318,942). This suggests his victory was driven by \textbf{fan mobilization efficiency} rather than baseline popularity---his country music radio audience demonstrated exceptionally high voting participation despite lower pre-existing fame.
+
+\subsubsection{Data Preprocessing and Feature Engineering}
+
+We transformed the wide-format data (53 columns) into a long-format structure, yielding \textbf{2,777 valid contestant-week observations}. Key engineered features include:
+
+\begin{itemize}
+\item \textbf{Weekly Rankings:} Within-week judge score rankings ($R_i^{judge}$) and score percentages ($P_i^{judge}$)
+\item \textbf{Cumulative Performance:} Rolling average scores excluding current week to avoid data leakage
+\item \textbf{Elimination Flags:} Binary indicator for weekly elimination status
+\item \textbf{Voting Method:} Categorical variable identifying rank-based (S1--2, S28--34) vs. percentage-based (S3--27) seasons
+\end{itemize}
+
+\textbf{Missing Value Analysis:} The 4th judge scores are missing in 65--94\% of cases (not all weeks have 4 judges). Week 11 has the highest missing rate as most contestants are eliminated earlier. Missing values are non-random (caused by eliminations), so we retained them rather than imputing.
 %===============================================================================
 \section{Problem 1: Fan Vote Estimation Model}
 
@@ -194,7 +226,7 @@ Fig.~\ref{fig:controversial_group} confirms that controversial contestants clust
 \label{fig:p1_controversial}
 \end{figure}
 
-Fig.~\ref{fig:p1_controversial} shows four notable cases: Bobby Bones won S27 despite ranking 7th-10th by judges; Bristol Palin spent 7/14 weeks in elimination position yet placed 3rd. Their vote shares remained stable despite poor technical scores, demonstrating how dedicated fan bases can override professional assessment.
+Fig.~\ref{fig:p1_controversial} shows four notable cases: Bobby Bones won S27 despite ranking 7th-10th by judges; Bristol Palin spent 5/10 weeks in elimination position yet placed 3rd. Their vote shares remained stable despite poor technical scores, demonstrating how dedicated fan bases can override professional assessment.
 
 \textbf{Implications for System Design.} These extreme cases expose the core contradiction in the current voting system: \textit{fan mobilization efficiency can entirely override professional assessment}. This finding motivates our subsequent analysis of voting method effects (Problem 2) and ultimately drives our design of a new voting system (Problem 4) that addresses this fairness gap while preserving entertainment value.
 
@@ -213,18 +245,42 @@ Having established a method to estimate fan votes (Section 3), we now apply thes
 
 \subsection{Counterfactual Analysis}
 
-The two methods produce \textbf{identical elimination decisions in 73.1\%} of weeks (245/335). The judge tiebreaker rule affects 29.7\% of decisions.
+The two methods produce \textbf{identical elimination decisions in 73.1\%} of weeks (245/335), with 90 weeks showing different outcomes. The judge tiebreaker rule affects 29.7\% of decisions.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{Q2_fig1_method_comparison.pdf}
-\caption{Voting method agreement rate by season and overall distribution.}
+\includegraphics[width=0.95\textwidth]{Q2_fig1_method_comparison.pdf}
+\caption{(a) Agreement rate by season; (b) Stacked bar showing agreement/disagreement counts per season.}
 \label{fig:p2_comparison}
 \end{figure}
 
-Fig.~\ref{fig:p2_comparison} shows agreement fluctuates 80-100\% across seasons, with Seasons 5 and 20 showing lowest agreement (~85\%). Method selection matters primarily in edge cases with nearly identical combined scores.
+Fig.~\ref{fig:p2_comparison}(a) shows agreement fluctuates 22--100\% across seasons, with S27 showing lowest agreement (22.2\%). Fig.~\ref{fig:p2_comparison}(b) reveals that disagreements (orange) are distributed across most seasons, totaling 90/335 weeks. \textbf{Notably, the 9 seasons with 100\% agreement (no orange bars) are exactly the rank-based seasons (S1--2, S28--34)}, while percentage-based seasons (S3--27) consistently show disagreements. This suggests that the two methods produce identical results when applied to rank-based scoring contexts, but diverge when percentage-based scoring creates finer distinctions.
 
+\subsection{Controversial Contestant Analysis}
 
+We examine the four contestants specifically mentioned in the problem statement to determine whether method choice would have changed their outcomes.
+
+\begin{table}[H]
+\centering
+\caption{Elimination Counts for Controversial Contestants under Different Methods}
+\label{tab:controversial_methods}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Contestant} & \textbf{Season} & \textbf{Final Place} & \textbf{Rank Method} & \textbf{Pct Method} & \textbf{Favors} \\
+\midrule
+Jerry Rice & 2 & 2nd & 3 weeks & 3 weeks & Equal \\
+Billy Ray Cyrus & 4 & 5th & 4 weeks & 3 weeks & Percentage \\
+Bristol Palin & 11 & 3rd & 7 weeks & 6 weeks & Percentage \\
+Bobby Bones & 27 & 1st & 3 weeks & 2 weeks & Percentage \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Key Finding: The percentage-based method favors high-popularity low-skill contestants.} Three of four controversial contestants (75\%) would have been identified for elimination \textit{more frequently} under the rank method than the percentage method. This occurs because percentage-based scoring allows large fan vote margins to compensate for poor judge scores more effectively than rank-based systems.
+
+\textbf{Would Bobby Bones still win under the rank method?} Yes. Our counterfactual analysis confirms that Bobby Bones would have won Season 27 under \textit{both} methods. The fundamental issue is not the aggregation method but the \textit{equal weighting} of fan votes throughout the competition.
+
+\textbf{Impact of Judge Tiebreaker Rule:} Under the S28+ tiebreaker rule where judges choose between the bottom two contestants, Bristol Palin would have been eliminated in Weeks 5, 7, 8, or 9 of Season 11---the judges consistently ranked her lowest. This rule would have prevented her top-3 finish, demonstrating its effectiveness at limiting controversial outcomes.
 
 \subsection{Recommendations}
 
@@ -247,25 +303,16 @@ While Problems 1 and 2 focused on voting mechanics, this section examines the fa
 
 \subsection{Industry Impact: Judge Scores vs. Fan Votes}
 
-ANOVA reveals industry affects judge scores \textbf{3× more strongly} than fan votes (F=8.08 vs. 2.81, both p<0.001). Athletes receive highest judge scores; models receive lower judge scores but higher fan support.
+We group contestants into 7 major industry categories (Athlete, Actor/Actress, Singer/Rapper, TV Personality, Comedian, Model) with remaining industries consolidated as ``Other'' due to limited sample sizes.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{IMP_fig3_industry_judge_vs_fan.pdf}
-\caption{Judge score vs. fan vote by industry, and judge-fan gap analysis.}
-\label{fig:p3_industry_diff}
-\end{figure}
-
-Fig.~\ref{fig:p3_industry_diff} shows athletes and TV personalities exhibit positive gaps (judges favor more than fans), while models show negative gaps (fan support compensates for lower judge scores).
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{Q3_fig1_industry_impact.pdf}
-\caption{Industry effect on average placement and win rate.}
+\includegraphics[width=0.95\textwidth]{IMP_fig3_industry_combined.pdf}
+\caption{Comprehensive industry impact analysis: (a) average placement by industry, (b) win rate by industry, (c) normalized judge score vs. fan vote share, and (d) judge-fan gap.}
 \label{fig:p3_industry}
 \end{figure}
 
-Fig.~\ref{fig:p3_industry} quantifies the direct impact: athletes achieve best average placement (6.26), followed by TV personalities (6.72). This suggests judges may carry implicit industry biases favoring physical performers.
+Fig.~\ref{fig:p3_industry}(a-b) shows athletes achieve the best average placement (6.26) with the highest win rate (11.6\%), followed by TV personalities (6.69, 9.0\%). Models rank lowest in placement (8.88) despite moderate win rates. Fig.~\ref{fig:p3_industry}(c-d) reveals the judge-fan gap: comedians exhibit positive gaps (judges favor more than fans), while athletes, singers, and models show negative gaps (fan support exceeds judge scores). This suggests physical performers may benefit from stronger fan mobilization that compensates for relatively lower judge appreciation.
 
 \subsection{Professional Dancer Effect}
 
@@ -284,20 +331,20 @@ Fig.~\ref{fig:p3_prodancer} shows substantial variation across professionals. De
 
 Age correlates positively with placement (r=0.433, p<0.001): contestants under 25 average placement 4.8 vs. 9.1 for those over 45---a 4.3-position difference reflecting physical demands of ballroom dancing.
 
-\subsection{Feature Importance}
+\subsection{Relative Impact of External Factors}
 
-Random Forest reveals judge scores account for \textbf{87.6\%} of predictive power. The model achieves R$^2$=0.648, RMSE=2.69 positions under 5-fold CV.
+To quantify the relative importance of external factors (those determined before competition begins), we employ Random Forest analysis on contestant characteristics: age, professional dancer assignment, industry background, season, and nationality.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.55\textwidth]{Q3_fig3_feature_importance.pdf}
-\caption{Feature importance ranking from Random Forest.}
+\caption{Relative importance of pre-determined factors affecting final placement.}
 \label{fig:p3_importance}
 \end{figure}
 
-Fig.~\ref{fig:p3_importance} shows judge scores dominate predictive power, with season (7.4\%), age (2.8\%), and industry (1.9\%) contributing minimally. This 87.6\% dominance has a crucial implication: \textbf{for the vast majority of contestants, professional assessment accurately determines outcomes}. The controversial cases identified in Problem 1 (Bobby Bones, Bristol Palin, etc.) represent statistical outliers exploiting the remaining 12.4\% variance---but these outliers attract disproportionate attention precisely because they violate the implicit ``merit should win'' expectation that viewers and judges share.
+Fig.~\ref{fig:p3_importance} reveals that among external factors, \textbf{age dominates} (53.2\%), followed by professional dancer assignment (21.4\%) and season (16.7\%). Industry background contributes only 7.7\%. However, these external factors collectively explain limited variance in outcomes (R$^2$=0.11, 5-fold CV), confirming a crucial insight: \textbf{pre-determined characteristics matter far less than actual performance}. Judge scores---reflecting technical execution and artistic quality---remain the primary determinant of success.
 
-\textbf{Design Implications.} The factor analysis confirms that controversial outcomes are not caused by systematic biases (industry, age, professional dancer) but by the \textit{voting mechanism itself}---specifically, the static weight balance that allows fan mobilization to override professional judgment in finals. This finding directly informs our DWVS design: rather than adjusting for demographic factors, we address the root cause by dynamically shifting weight toward judges as competition progresses.
+\textbf{Design Implications.} The factor analysis confirms that controversial outcomes are not caused by systematic demographic biases but by the \textit{voting mechanism itself}. External factors (age, industry, professional dancer) show weak predictive power, suggesting the system already rewards merit relatively fairly \textit{when judge scores align with fan votes}. Controversies arise specifically when the static 50-50 weight balance allows fan mobilization to override professional judgment. This finding directly informs our DWVS design: rather than adjusting for demographic factors, we address the root cause by dynamically shifting weight toward judges as competition progresses.
 
 %===============================================================================
 % PROBLEM 4
@@ -306,7 +353,7 @@ Fig.~\ref{fig:p3_importance} shows judge scores dominate predictive power, with 
 
 \subsection{Motivation: Addressing the ``Low-Skill High-Popularity'' Problem}
 
-The 32 controversial contestants identified in Problem 1---including Bobby Bones, Bristol Palin, and Jerry Rice---share a common characteristic: they achieved placements far exceeding their technical abilities (average Controversy Score = +3.88). Problem 2 revealed that neither rank-based nor percentage-based methods prevent such outcomes, and Problem 3 confirmed that while judge scores account for 87.6\% of predictive power, the remaining variance creates opportunity for fan mobilization to produce ``upset victories.''
+The 32 controversial contestants identified in Problem 1---including Bobby Bones, Bristol Palin, and Jerry Rice---share a common characteristic: they achieved placements far exceeding their technical abilities (average Controversy Score = +3.88). Problem 2 revealed that neither rank-based nor percentage-based methods prevent such outcomes, and Problem 3 confirmed that external demographic factors (age, industry, professional dancer) show weak predictive power for final placement, suggesting controversies stem from the voting mechanism rather than systematic biases.
 
 This section directly addresses the central research question: \textbf{how can we redesign the voting system to prevent dedicated fan bases from overriding professional judgment while maintaining the audience engagement that makes DWTS successful?}
 
@@ -342,7 +389,28 @@ Fig.~\ref{fig:p4_grid} shows the optimum in lower-left region (base 0.30-0.35, i
 
 \subsection{DWVS Formula}
 
-The dynamic weight $\alpha(w) = \min(0.30 + 0.04w, 0.80)$ shifts from 34\% judge/66\% fan in Week 1 to 74\%/26\% by Week 10+.
+The comprehensive scoring formula integrates dynamic weighting with threshold enforcement:
+
+\begin{equation}
+S_i(w) = \alpha(w) \cdot J_i + [1 - \alpha(w)] \cdot F_i \cdot T_i
+\end{equation}
+
+where:
+\begin{itemize}
+\item $S_i(w)$ = Contestant $i$'s comprehensive score in week $w$
+\item $J_i$ = Judge score percentage (normalized to $[0,1]$)
+\item $F_i$ = Fan vote percentage (normalized to $[0,1]$)
+\item $\alpha(w) = \min(0.30 + 0.04w, 0.80)$ = Dynamic judge weight
+\item $T_i$ = Threshold penalty factor:
+\begin{equation}
+T_i = \begin{cases}
+0.3 & \text{if } J_i < 0.5 \times \bar{J}_{\text{week}} \\
+1.0 & \text{otherwise}
+\end{cases}
+\end{equation}
+\end{itemize}
+
+The dynamic weight shifts from 34\% judge/66\% fan in Week 1 to 74\%/26\% by Week 10+.
 
 \begin{figure}[H]
 \centering
@@ -351,7 +419,7 @@ The dynamic weight $\alpha(w) = \min(0.30 + 0.04w, 0.80)$ shifts from 34\% judge
 \label{fig:p4_dynamic}
 \end{figure}
 
-Fig.~\ref{fig:p4_dynamic} visualizes the weight transition. A threshold penalty ($T_i=0.3$) applies when judge score falls below 50\% of average, preventing extreme outcomes.
+Fig.~\ref{fig:p4_dynamic} visualizes the weight transition. The threshold penalty mechanism ($T_i=0.3$) activates when a contestant's judge score falls below 50\% of the weekly average, preventing extreme outcomes while maintaining engagement for moderately popular contestants.
 
 \subsection{Impact on Controversial Contestants}
 
@@ -430,7 +498,7 @@ The model achieves \textbf{Test R$^2$=0.934} with a modest generalization gap of
 \begin{enumerate}
 \item Our identification of controversial contestants is not an artifact of historical data patterns
 \item The DWVS parameters optimized on historical data will remain effective for future seasons
-\item The 87.6\% importance of judge scores is a stable structural feature, not a period-specific phenomenon
+\item The relative importance of external factors (age > professional dancer > season > industry) remains consistent across temporal splits
 \end{enumerate}
 
 Five-fold cross-validation yields mean R$^2$=0.942$\pm$0.013, with narrow confidence intervals indicating stable performance across different temporal splits. This validation is essential for a recommendation to DWTS producers: the system changes we propose are grounded in persistent patterns, not temporary anomalies.
@@ -491,7 +559,7 @@ We have completed a comprehensive analysis of DWTS voting patterns across all 34
 
 \textbf{Finding 1:} Vote estimation achieves 80.7\% overall consistency (96.0\% for percentage-based method, 38.4\% for rank-based), successfully explaining most elimination outcomes.
 
-\textbf{Finding 2:} Judge scores account for 87.6\% of placement prediction---but the remaining variance creates opportunity for fan mobilization to produce ``upset victories.''
+\textbf{Finding 2:} External factors (age, industry, professional dancer) show limited predictive power for outcomes (R$^2$=0.11), suggesting controversies stem from the voting mechanism rather than systematic demographic biases.
 
 \textbf{Finding 3:} Cross-season validation (R$^2$=0.934) confirms our analysis generalizes to future seasons.
 

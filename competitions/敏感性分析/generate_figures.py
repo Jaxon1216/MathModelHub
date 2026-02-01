@@ -150,14 +150,13 @@ print("✓ SA_fig4_q4_sensitivity.pdf")
 plt.close()
 
 # ============================================
-# SA_fig5: 综合敏感性雷达图
+# SA_fig5: 综合敏感性分组条形图
 # ============================================
-fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(projection='polar'))
+fig, ax = plt.subplots(figsize=(12, 6))
 
 # 各问题的敏感性指标
 categories = ['Noise\nRobustness', 'Sample\nStability', 'Parameter\nSensitivity', 
               'Method\nConvergence', 'Cross-Season\nValidity', 'Computational\nEfficiency']
-n_categories = len(categories)
 
 # 各问题的得分 (0-1, 越高越好/越稳定)
 q1_scores = [0.92, 0.88, 0.85, 0.78, 0.82, 0.95]
@@ -165,48 +164,52 @@ q2_scores = [0.88, 0.90, 0.75, 0.92, 0.80, 0.90]
 q3_scores = [0.82, 0.85, 0.70, 0.88, 0.78, 0.85]
 q4_scores = [0.85, 0.87, 0.80, 0.85, 0.88, 0.80]
 
-# 计算角度
-angles = np.linspace(0, 2 * np.pi, n_categories, endpoint=False).tolist()
-angles += angles[:1]  # 闭合
+x = np.arange(len(categories))
+width = 0.2
 
-# 数据也要闭合
-q1_scores += q1_scores[:1]
-q2_scores += q2_scores[:1]
-q3_scores += q3_scores[:1]
-q4_scores += q4_scores[:1]
+# 绘制分组条形图
+bars1 = ax.bar(x - 1.5*width, q1_scores, width, label='Q1: Vote Estimation', 
+               color=LINE_COLORS['line1'], edgecolor='white', linewidth=1.5)
+bars2 = ax.bar(x - 0.5*width, q2_scores, width, label='Q2: Method Comparison', 
+               color=LINE_COLORS['line2'], edgecolor='white', linewidth=1.5)
+bars3 = ax.bar(x + 0.5*width, q3_scores, width, label='Q3: Factor Analysis', 
+               color=LINE_COLORS['line3'], edgecolor='white', linewidth=1.5)
+bars4 = ax.bar(x + 1.5*width, q4_scores, width, label='Q4: DWVS System', 
+               color=LINE_COLORS['line4'], edgecolor='white', linewidth=1.5)
 
-# 绑图
-ax.plot(angles, q1_scores, 'o-', linewidth=2, markersize=6, 
-       color=LINE_COLORS['line1'], label='Q1: Vote Estimation')
-ax.fill(angles, q1_scores, alpha=0.1, color=LINE_COLORS['line1'])
+# 在每个柱子上添加数值
+def add_value_labels(bars):
+    for bar in bars:
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2., height,
+                f'{height:.2f}',
+                ha='center', va='bottom', fontsize=8)
 
-ax.plot(angles, q2_scores, 's--', linewidth=2, markersize=6, 
-       color=LINE_COLORS['line2'], label='Q2: Method Comparison')
-ax.fill(angles, q2_scores, alpha=0.1, color=LINE_COLORS['line2'])
-
-ax.plot(angles, q3_scores, '^-.', linewidth=2, markersize=6, 
-       color=LINE_COLORS['line3'], label='Q3: Factor Analysis')
-ax.fill(angles, q3_scores, alpha=0.1, color=LINE_COLORS['line3'])
-
-ax.plot(angles, q4_scores, 'D:', linewidth=2, markersize=6, 
-       color=LINE_COLORS['line4'], label='Q4: DWVS System')
-ax.fill(angles, q4_scores, alpha=0.1, color=LINE_COLORS['line4'])
+add_value_labels(bars1)
+add_value_labels(bars2)
+add_value_labels(bars3)
+add_value_labels(bars4)
 
 # 设置标签
-ax.set_xticks(angles[:-1])
+ax.set_xlabel('Sensitivity Dimension', fontweight='bold', fontsize=11)
+ax.set_ylabel('Robustness Score', fontweight='bold', fontsize=11)
+ax.set_title('Comprehensive Sensitivity Analysis (Higher = More Robust)', 
+             fontweight='bold', fontsize=13, pad=15)
+ax.set_xticks(x)
 ax.set_xticklabels(categories, fontsize=10)
-ax.set_ylim(0, 1)
-ax.set_yticks([0.2, 0.4, 0.6, 0.8, 1.0])
-ax.set_yticklabels(['0.2', '0.4', '0.6', '0.8', '1.0'], fontsize=9)
+ax.set_ylim(0, 1.05)
+ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
 
-ax.set_title('Comprehensive Sensitivity Analysis\n(Higher = More Robust)', 
-            fontsize=12, fontweight='bold', pad=20)
-ax.legend(loc='upper right', bbox_to_anchor=(1.3, 1.0), frameon=True, 
-         fancybox=True, edgecolor='lightgray')
+# 图例放在图内中上方，横向排列
+ax.legend(loc='upper center', bbox_to_anchor=(0.5, 0.98), frameon=True, 
+         fancybox=True, edgecolor='gray', fontsize=10, ncol=4,
+         framealpha=1.0, facecolor='white')
+
+ax.grid(axis='y', alpha=0.3, linestyle='--')
 
 plt.tight_layout()
-plt.savefig('figures/SA_fig5_radar_comprehensive.pdf', format='pdf')
-print("✓ SA_fig5_radar_comprehensive.pdf")
+plt.savefig('figures/SA_fig5_radar_comprehensive.pdf', format='pdf', bbox_inches='tight')
+print("✓ SA_fig5_radar_comprehensive.pdf (分组条形图)")
 plt.close()
 
 # ============================================
