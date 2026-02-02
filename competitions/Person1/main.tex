@@ -652,31 +652,52 @@ MCM Analysis Team \#2613942
 %===============================================================================
 \clearpage
 \section*{Report on Use of AI}
+1. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
-In accordance with MCM requirements, we disclose our use of artificial intelligence tools.
+Query1: How does PCA perform dimensionality reduction?
 
-\subsection*{AI Tools Employed}
+Output: Principal Component Analysis (PCA) reduces dimensionality through a mathematical transformation process. Start with data normalization as this is a prerequisite for PCA. Next, calculate the covariance matrix or correlation matrix; this step is to capture the relationship between variables. Then, eigenvalue decomposition is performed, and choosing the number of principal components is a key step. The eigenvalues represent the amount of variance explained by each principal component. You typically select components that cumulatively explain 85-95\% of the total variance. Finally, the data is projected into the new feature space, which is the reduced dimensionality. The projection is done by multiplying the original data matrix with the matrix of selected eigenvectors. This linear transformation maximizes variance in the first few components while minimizing information loss.
 
-\textbf{Claude AI (Anthropic)} was utilized as a programming and analytical assistant.
+Post-Processing: The team reviewed the mathematical principles of PCA provided by AI, verified the theoretical foundation against standard statistical textbooks, adapted the general explanation to understand our specific data preprocessing needs, independently implemented the PCA procedure using sklearn library, tested different numbers of components to determine optimal dimensionality for our analysis, and validated that the explained variance ratios matched our expectations based on data characteristics.
 
-\subsection*{Specific Applications}
+2. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
-\textbf{Code Development}: AI assisted in Python code for data preprocessing, statistical analysis, and visualization. All code was reviewed and validated.
+Query2: What is bootstrap resampling and how to implement it in Python?
 
-\textbf{Statistical Methodology}: AI provided guidance on ANOVA, correlation analysis, and Random Forest feature importance.
+Output: Bootstrap is a statistical resampling technique used to estimate the sampling distribution of a statistic. The core idea is to repeatedly sample with replacement from your original dataset to create many simulated samples. Each bootstrap sample has the same size as the original data, but because sampling is done with replacement, some observations may appear multiple times while others may not appear at all. For implementation in Python, you can use numpy: import numpy as np; for i in range(n\_iterations): indices = np.random.choice(len(data), size=len(data), replace=True); bootstrap\_sample = data[indices]; statistic = compute\_statistic(bootstrap\_sample); results.append(statistic). After generating many bootstrap samples (typically 1000-10000), you calculate the statistic of interest on each sample. The distribution of these statistics provides confidence intervals and standard errors. For instance, the 95\% confidence interval can be obtained by taking the 2.5th and 97.5th percentiles of the bootstrap distribution.
 
-\textbf{Document Formatting}: AI assisted in LaTeX formatting and mathematical notation.
+Post-Processing: Adapted the bootstrap framework to our specific uncertainty quantification needs for fan vote estimates, implemented the resampling procedure with appropriate noise injection based on judge score variability, determined optimal number of bootstrap iterations (B=100) through convergence testing, calculated certainty indices from bootstrap distributions, validated that confidence intervals had appropriate coverage properties, and ensured computational efficiency for processing across all 2777 contestant-week observations.
 
-\subsection*{Human Oversight}
+3. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
-All AI-generated content was subject to rigorous human review:
-\begin{itemize}
-\item Statistical outputs were verified against manual calculations
-\item Model interpretations were independently assessed
-\item All numerical results were confirmed through direct data examination
-\item Writing was substantially revised for clarity and accuracy
-\end{itemize}
+Query3: How to format multi-column tables with booktabs package in LaTeX?
 
-We estimate that approximately 60\% of the final paper reflects original human analysis, with AI serving as a supportive tool.
+Output: To create professional-looking tables in LaTeX, you should use the booktabs package which provides enhanced horizontal rules. Start by adding \textbackslash usepackage\{booktabs\} to your preamble. The key commands are \textbackslash toprule for the top line, \textbackslash midrule for separating the header from data rows, and \textbackslash bottomrule for the bottom line. These commands provide better spacing compared to the standard \textbackslash hline. When defining your table structure, use \textbackslash begin\{tabular\}\{lccc\} where letters indicate column alignment: l for left, c for center, and r for right. You can control column spacing by using \textbackslash setlength\{\textbackslash tabcolsep\}\{4pt\} before the table. For multi-column headers, use \textbackslash multicolumn\{2\}\{c\}\{Header Text\}. Always ensure your table fits within page margins and consider using \textbackslash footnotesize or \textbackslash small if needed to reduce font size.
+
+Post-Processing: The team reviewed the suggested table formatting approach, verified all LaTeX syntax for compatibility with mcmthesis document class, adjusted column widths to accommodate our specific data presentation needs (especially for factor impact comparison tables), added custom spacing parameters to match overall document aesthetics, tested compilation with actual numerical results to ensure proper rendering, and validated that all tables fit within page margins while maintaining readability.
+
+4. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
+
+Query4: What parameters should be used in matplotlib savefig function for high-quality PDF figures?
+
+Output: When saving matplotlib figures for inclusion in LaTeX documents, use the PDF format for best quality and scalability. The recommended savefig syntax is: plt.savefig('filename.pdf', dpi=300, bbox\_inches='tight', transparent=True, format='pdf'). The dpi=300 parameter ensures high resolution suitable for printing. The bbox\_inches='tight' option removes excess whitespace around the figure, which is important for proper LaTeX integration. Setting transparent=True makes the background transparent, allowing the figure to blend seamlessly with your document background. The format='pdf' explicitly specifies PDF output. You might also consider pad\_inches=0.1 to control padding. For vector graphics, PDF maintains quality at any zoom level, unlike raster formats like PNG. Make sure that the data is preprocessed, such as normalized or coded categorical variables, before generating plots.
+
+Post-Processing: The team integrated the savefig parameters into our visualization generation pipeline for all figures (stratified consistency plots, controversial contestant analysis, DWVS comparison, etc.), experimented with different DPI settings to balance file size and quality, verified transparent backgrounds rendered correctly within the LaTeX document environment, adjusted bbox\_inches values for optimal figure cropping across different plot types, ensured all axis labels and legends remained legible at document scale, and validated that all generated figures met MCM submission quality standards.
+
+5. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
+
+Query5: How does ANOVA test work and what are F-statistic and p-value?
+
+Output: Analysis of Variance (ANOVA) is a statistical method used to test whether there are significant differences between the means of three or more groups. The test works by partitioning the total variance in the data into two components: variance between groups and variance within groups. The F-statistic is calculated as the ratio of between-group variance to within-group variance: F = MSB / MSW, where MSB is the mean square between groups and MSW is the mean square within groups. A large F-statistic indicates that the group means differ more than would be expected by chance. The p-value represents the probability of observing an F-statistic as extreme as the one calculated, assuming the null hypothesis (that all group means are equal) is true. Typically, if p < 0.05, we reject the null hypothesis and conclude that at least one group mean is significantly different from the others. However, ANOVA doesn't tell you which specific groups differ; post-hoc tests are needed for that.
+
+Post-Processing: Applied ANOVA methodology to test whether celebrity industry background significantly affects judge scores and fan votes differently, independently verified the F-statistic calculations and p-values using scipy.stats library, interpreted the results in the context of our specific research questions about differential impact factors, conducted follow-up analyses to understand which industry categories drove the significant differences, ensured assumptions of ANOVA (normality, homogeneity of variance) were reasonably met, and validated conclusions through comparison with non-parametric alternatives.
+
+6. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
+
+Query6: How to insert decorative images or icons near text sections like memorandum in LaTeX?
+
+Output: To add decorative images or small icons alongside text sections in LaTeX, you can use the wrapfig package or position images with absolute coordinates. For wrapfig, add \textbackslash usepackage\{wrapfig\} to your preamble, then use: \textbackslash begin\{wrapfigure\}\{r\}\{0.2\textbackslash textwidth\} \textbackslash includegraphics[width=0.18\textbackslash textwidth]\{icon.png\} \textbackslash end\{wrapfigure\}. The 'r' parameter places the image on the right side, and you can use 'l' for left placement. The image will wrap around your text naturally. For more precise control, you can use the textpos package with absolute positioning: \textbackslash usepackage[absolute]\{textpos\}, then \textbackslash begin\{textblock*\}\{3cm\}(15cm,2cm) \textbackslash includegraphics[width=3cm]\{icon.png\} \textbackslash end\{textblock*\}. This places the image at exact coordinates on the page. For decorative elements near section headers like memorandum, using tikz or placing small graphics with \textbackslash raisebox can also work well.
+
+Post-Processing: Explored different image placement options for enhancing the memorandum section aesthetics, tested wrapfig and textpos packages for compatibility with mcmthesis document class, selected appropriate icon image file and optimized its size for professional appearance, experimented with positioning coordinates to achieve balanced layout without interfering with text flow, verified that the decorative element rendered consistently across different PDF viewers, and ensured the addition maintained professional standards expected in MCM submissions.
 
 \end{document}
