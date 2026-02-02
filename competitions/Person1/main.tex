@@ -223,7 +223,7 @@ Bootstrap resampling ($\epsilon \sim N(0, 0.05 \cdot \text{std}(s))$, $B=100$) y
 
 We identify \textbf{32 controversial contestants} (7.6\%) where Controversy Score $= \text{Judge Rank} - \text{Final Placement} \geq 3$. These contestants achieve better placements (5.53 vs. 6.92) despite lower judge scores (22.05 vs. 24.34).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.62\textwidth]{Q1_fig6_controversial_group.pdf}
 \caption{Controversial vs. normal contestants: placement, judge scores, and controversy distributions.}
@@ -483,7 +483,7 @@ Fig.~\ref{fig:p4_dynamic} visualizes the weight transition. The threshold penalt
 
 Under DWVS, \textbf{78.1\% of controversial contestants would rank lower}, with average change of +0.34 positions. Bobby Bones would place \textbf{2nd instead of 1st}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{Q4_fig5_dwvs_group_impact.pdf}
 \caption{DWVS impact: controversy score vs. placement change, and top 10 affected contestants.}
@@ -505,7 +505,7 @@ We evaluate DWVS against three alternative systems across four key dimensions, u
 \item \textbf{Fairness} (1-5): Prevention of ``low-skill high-popularity'' victories (Bobby Bones scenarios)
 \end{itemize}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.56\textwidth]{Q4_fig2_system_comparison.pdf}
 \caption{Multi-dimensional comparison: DWVS vs. current, judge-only, and fan-only systems. Scores reflect qualitative assessment against design objectives.}
@@ -529,7 +529,7 @@ The validity of our conclusions depends on the robustness of our models to param
 
 The certainty index remains stable (0.888-0.889) across noise levels $\sigma$=0.01-0.20, demonstrating robustness to score perturbations.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{SA_fig1_q1_sensitivity.pdf}
 \caption{Sensitivity to noise level and sampling ratio.}
@@ -538,14 +538,14 @@ The certainty index remains stable (0.888-0.889) across noise levels $\sigma$=0.
 
 As presented in Fig.~\ref{fig:sens_q1}, consistency stabilizes above 30\% sampling ratio. Our optimization-based estimation is robust to judge score errors.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{SA_fig5_radar_comprehensive.pdf}
-\caption{Comprehensive sensitivity radar across all four problems.}
+\caption{Comprehensive sensitivity analysis across all four problems.}
 \label{fig:sens_radar}
 \end{figure}
 
-An integrated view of model robustness across all four problems is provided in Fig.~\ref{fig:sens_radar}. The radar plot illustrates that each problem's conclusions achieve stability scores exceeding 0.8 across parameter variations.
+An integrated view of model robustness across all four problems is provided in Fig.~\ref{fig:sens_radar}. The grouped bar chart compares robustness scores across six sensitivity dimensions (noise robustness, sample stability, parameter sensitivity, method convergence, cross-season validity, and computational efficiency) for each problem. Most dimensions demonstrate scores exceeding 0.8, indicating strong model stability across parameter variations.
 
 \textbf{Implications for DWVS Adoption.} The high robustness of Problem 4 metrics (DWVS performance) is particularly important: it confirms that the system's fairness improvements are not sensitive to exact parameter choices within the optimal region (base $\alpha$=0.25-0.35, increment=0.03-0.05). Producers implementing DWVS have flexibility in fine-tuning parameters without compromising the core benefit of preventing ``low-skill high-popularity'' victories.
 
@@ -553,7 +553,7 @@ An integrated view of model robustness across all four problems is provided in F
 
 A critical question for DWVS adoption is whether our findings generalize to future seasons. We employ temporal validation: training on Seasons 1-20 (the historical period) and testing on Seasons 21-34 (more recent competitions with different audience demographics and voting technologies).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{IMP_fig7_cross_season_validation.pdf}
 \caption{Cross-season validation: R$^2$ and MAE comparison between training and test sets.}
@@ -664,8 +664,6 @@ MCM Analysis Team \#2613942
 
 \bibitem{efron1993} B. Efron and R. J. Tibshirani, \textit{An Introduction to the Bootstrap}. Springer, 1993.
 
-\bibitem{diciccio1996} T. J. DiCiccio and B. Efron, ``Bootstrap confidence intervals,'' \textit{Statistical Science}, vol. 11, no. 3, pp. 189--228, 1996.
-
 \end{thebibliography}
 
 %===============================================================================
@@ -699,7 +697,7 @@ Output: To create professional-looking tables in LaTeX, you should use the bookt
 
 Query4: What parameters should be used in matplotlib savefig function for high-quality PDF figures?
 
-Output: When saving matplotlib figures for inclusion in LaTeX documents, use the PDF format for best quality and scalability. The recommended savefig syntax is: plt.savefig('filename.pdf', dpi=300, bbox\_inches='tight', transparent=True, format='pdf'). The dpi=300 parameter ensures high resolution suitable for printing. The bbox\_inches='tight' option removes excess whitespace around the figure, which is important for proper LaTeX integration. Setting transparent=True makes the background transparent, allowing the figure to blend seamlessly with your document background. The format='pdf' explicitly specifies PDF output. You might also consider pad\_inches=0.1 to control padding. For vector graphics, PDF maintains quality at any zoom level, unlike raster formats like PNG. Make sure that the data is preprocessed, such as normalized or coded categorical variables, before generating plots.
+Output: When saving matplotlib figures for inclusion in LaTeX documents, use the PDF format for best quality and scalability. The recommended savefig function should include several key parameters: set the resolution to 300 DPI for high-quality printing output; enable tight bounding box to automatically crop excess whitespace around the figure for proper LaTeX integration; make the background transparent to allow seamless blending with the document; and explicitly specify PDF as the output format. You might also consider controlling padding with small values around 0.1 inches. For vector graphics, PDF maintains quality at any zoom level, unlike raster formats like PNG. Make sure that the data is preprocessed, such as normalized or coded categorical variables, before generating plots.
 
 5. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
