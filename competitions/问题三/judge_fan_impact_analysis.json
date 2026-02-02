@@ -1,0 +1,27 @@
+{
+  "age_analysis": {
+    "age_vs_judge_score": {
+      "correlation": -0.3019631292623748,
+      "p_value": 1.2180781832310813e-59,
+      "strength": "strong"
+    },
+    "age_vs_fan_vote": {
+      "correlation": -0.2353884680002472,
+      "p_value": 2.867111361645499e-36,
+      "strength": "moderate"
+    },
+    "impact_comparison": {
+      "judge_stronger": true,
+      "difference": 0.06657466126212758
+    }
+  },
+  "dancer_analysis": {
+    "judge_score_cv": 0.1374229131390793,
+    "fan_vote_cv": 0.25522404817652816,
+    "dancer_correlation": 0.15994811542491302,
+    "impact_comparison": {
+      "judge_stronger": false,
+      "difference_pct": 85.72161100836789
+    }
+  }
+}

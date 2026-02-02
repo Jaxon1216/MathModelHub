@@ -20,23 +20,35 @@ os.makedirs('figures', exist_ok=True)
 # ============================================
 df_long = pd.read_csv('../数据预处理/data_long_format.csv')
 df_summary = pd.read_csv('../数据预处理/data_season_summary.csv')
+verification = pd.read_csv('../问题一/verification_results.csv')
 print(f"数据加载完成: {len(df_long)} 条周记录")
 
 np.random.seed(42)
 
 # ============================================
-# IMP_fig1: 分层一致性率（四图）
+# IMP_fig1: 分层一致性率（四图）- 使用真实数据
 # ============================================
+# 计算真实的一致性率
+verification['season_phase'] = verification['season'].apply(lambda x: 'Early\n(S1-17)' if x <= 17 else 'Late\n(S18-34)')
+verification['competition_stage'] = verification['week'].apply(lambda x: 'Early\n(W1-5)' if x <= 5 else 'Late\n(W6+)')
+verification['contestant_group'] = verification['n_contestants'].apply(lambda x: 'Few\n(<8)' if x < 8 else 'Many\n(>=8)')
+
+consistency_by_method = verification.groupby('method')['is_consistent'].mean() * 100
+consistency_by_phase = verification.groupby('season_phase')['is_consistent'].mean() * 100
+consistency_by_stage = verification.groupby('competition_stage')['is_consistent'].mean() * 100
+consistency_by_contestants = verification.groupby('contestant_group')['is_consistent'].mean() * 100
+
 fig, axes = plt.subplots(2, 2, figsize=FIG_QUAD)
 
 # 子图1: 按方法
 ax1 = axes[0, 0]
-methods = ['Rank Method', 'Percentage Method']
-consistency = [85.2, 78.6]
+methods_data = consistency_by_method.reindex(['rank', 'percentage'])
+methods = ['Rank\nMethod', 'Percentage\nMethod']
+consistency = methods_data.values
 colors = [COLORS['primary'], COLORS['secondary']]
 bars = ax1.bar(methods, consistency, color=colors, edgecolor='white', width=0.6)
 ax1.set_ylabel('Consistency Rate (%)')
-ax1.set_title('By Voting Method')
+ax1.set_title('(a) By Voting Method')
 ax1.set_ylim(0, 100)
 for bar, val in zip(bars, consistency):
     ax1.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 2, 
@@ -44,12 +56,13 @@ for bar, val in zip(bars, consistency):
 
 # 子图2: 按赛季阶段
 ax2 = axes[0, 1]
-phases = ['Early\n(S1-10)', 'Middle\n(S11-20)', 'Late\n(S21-34)']
-consistency = [72.3, 81.5, 88.9]
-colors = [COLORS['light_blue'], COLORS['gray_blue'], COLORS['primary']]
-bars = ax2.bar(phases, consistency, color=colors, edgecolor='white', width=0.6)
+phase_order = ['Early\n(S1-17)', 'Late\n(S18-34)']
+phases_data = consistency_by_phase.reindex(phase_order)
+consistency = phases_data.values
+colors = [COLORS['primary'], COLORS['gray_blue']]
+bars = ax2.bar(phase_order, consistency, color=colors, edgecolor='white', width=0.6)
 ax2.set_ylabel('Consistency Rate (%)')
-ax2.set_title('By Season Phase')
+ax2.set_title('(b) By Season Phase')
 ax2.set_ylim(0, 100)
 for bar, val in zip(bars, consistency):
     ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 2, 
@@ -57,12 +70,13 @@ for bar, val in zip(bars, consistency):
 
 # 子图3: 按比赛阶段
 ax3 = axes[1, 0]
-stages = ['Early\n(W1-3)', 'Middle\n(W4-7)', 'Finals\n(W8+)']
-consistency = [68.5, 79.2, 91.3]
-colors = [COLORS['light_green'], COLORS['gray_green'], COLORS['secondary']]
-bars = ax3.bar(stages, consistency, color=colors, edgecolor='white', width=0.6)
+stage_order = ['Early\n(W1-5)', 'Late\n(W6+)']
+stages_data = consistency_by_stage.reindex(stage_order)
+consistency = stages_data.values
+colors = [COLORS['secondary'], COLORS['gray_green']]
+bars = ax3.bar(stage_order, consistency, color=colors, edgecolor='white', width=0.6)
 ax3.set_ylabel('Consistency Rate (%)')
-ax3.set_title('By Competition Stage')
+ax3.set_title('(c) By Competition Stage')
 ax3.set_ylim(0, 100)
 for bar, val in zip(bars, consistency):
     ax3.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 2, 
@@ -70,13 +84,14 @@ for bar, val in zip(bars, consistency):
 
 # 子图4: 按选手数量
 ax4 = axes[1, 1]
-n_contestants = ['3-5', '6-8', '9-12', '12+']
-consistency = [92.1, 84.5, 76.8, 69.2]
-colors_gradient = [COLORS['primary'], COLORS['gray_blue'], COLORS['light_blue'], '#C5E3F0']
-bars = ax4.bar(n_contestants, consistency, color=colors_gradient, edgecolor='white', width=0.6)
+contestant_order = ['Few\n(<8)', 'Many\n(>=8)']
+contestants_data = consistency_by_contestants.reindex(contestant_order)
+consistency = contestants_data.values
+colors = [COLORS['primary'], COLORS['light_blue']]
+bars = ax4.bar(contestant_order, consistency, color=colors, edgecolor='white', width=0.6)
 ax4.set_xlabel('Number of Contestants')
 ax4.set_ylabel('Consistency Rate (%)')
-ax4.set_title('By Number of Contestants')
+ax4.set_title('(d) By Number of Contestants')
 ax4.set_ylim(0, 100)
 for bar, val in zip(bars, consistency):
     ax4.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 2, 

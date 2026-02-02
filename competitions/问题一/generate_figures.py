@@ -140,10 +140,11 @@ for i, name in enumerate(controversial):
         season = data['season'].iloc[0]
         axes[i].set_title(f'{name} (S{int(season)})')
         
-        # 合并图例
+        # 合并图例 - 往左移3/16个横坐标单元格
         lines1, labels1 = axes[i].get_legend_handles_labels()
         lines2, labels2 = ax2.get_legend_handles_labels()
-        axes[i].legend(lines1 + lines2, labels1 + labels2, loc='upper right',
+        axes[i].legend(lines1 + lines2, labels1 + labels2, 
+                      bbox_to_anchor=(0.8125, 1.0), loc='upper right',
                       frameon=True, fancybox=True, edgecolor='lightgray', fontsize=8)
 
 plt.tight_layout()
@@ -247,6 +248,7 @@ ax.axvline(controversial_all['placement'].mean(), color=COLORS['orange'], linest
 ax.axvline(normal_all['placement'].mean(), color=COLORS['primary'], linestyle='--', linewidth=2)
 ax.set_xlabel('Final Placement')
 ax.set_ylabel('Count')
+ax.set_ylim(0, 40)  # 纵坐标加长到40
 ax.set_title('Placement Distribution')
 add_legend(ax, fontsize=8)
 
@@ -274,10 +276,15 @@ bars = ax.bar(controversy_counts.index, controversy_counts.values,
 ax.set_xlabel('Controversy Score')
 ax.set_ylabel('Number of Contestants')
 ax.set_title('Controversy Score Distribution')
-for bar in bars:
+# 添加数值标签，第六个分数（如果没有数据）标注为0
+for idx, bar in enumerate(bars):
     height = bar.get_height()
     ax.annotate(f'{int(height)}', xy=(bar.get_x() + bar.get_width()/2, height),
                 xytext=(0, 3), textcoords='offset points', ha='center', fontsize=9)
+# 如果第6个分数不存在，手动标注0
+if 6 not in controversy_counts.index:
+    ax.annotate('0', xy=(6, 0), xytext=(0, 3), 
+                textcoords='offset points', ha='center', fontsize=9)
 
 plt.tight_layout()
 plt.savefig('figures/Q1_fig6_controversial_group.pdf', format='pdf')
