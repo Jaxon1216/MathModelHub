@@ -170,23 +170,11 @@ The primary dataset (COMAP) contains 421 contestants across 34 seasons with week
 
 \subsection{Our Work: Methodological Framework}
 
-Our research follows a four-stage analytical framework addressing the Bobby Bones controversy:
-
-\begin{itemize}
-\item \textbf{Fan Vote Estimation (Problem 1):} Constrained optimization with uncertainty quantification
-\item \textbf{Voting Method Comparison (Problem 2):} Counterfactual analysis across 34 seasons
-\item \textbf{Factor Impact Analysis (Problem 3):} ANOVA, correlation, and feature importance
-\item \textbf{System Design (Problem 4):} Dynamic Weighted Voting System (DWVS) with grid search optimization
-\end{itemize}
-
-Figure \ref{fig:workflow} illustrates the end-to-end workflow and model interactions.
-
 \begin{figure}[H]
 \centering
-\fbox{\parbox{0.8\textwidth}{\centering\vspace{1.5cm}
-\textit{[Placeholder: Data → Estimation → Analysis → Design]}
-\vspace{1.5cm}}}
-\caption{End-to-end methodological framework and workflow.}
+\centering
+\includegraphics[width=1\textwidth]{ourwork .pdf}
+\caption{Methodology and Workflow of Our Work}
 \label{fig:workflow}
 \end{figure}
 
@@ -212,7 +200,7 @@ Our model achieves \textbf{80.7\% overall consistency}, with percentage-based me
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{IMP_fig1_stratified_consistency.pdf}
+\includegraphics[width=0.8\textwidth]{IMP_fig1_stratified_consistency.pdf}
 \caption{Stratified consistency by voting method, season phase, competition stage, and contestant count.}
 \label{fig:p1_stratified}
 \end{figure}
@@ -228,16 +216,16 @@ Bootstrap resampling ($\epsilon \sim N(0, 0.05 \cdot \text{std}(s))$, $B=100$) y
 
 We identify \textbf{32 controversial contestants} (7.6\%) where Controversy Score $= \text{Judge Rank} - \text{Final Placement} \geq 3$. These contestants achieve better placements (5.53 vs. 6.92) despite lower judge scores (22.05 vs. 24.34).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.9\textwidth]{Q1_fig6_controversial_group.pdf}
+\includegraphics[width=0.62\textwidth]{Q1_fig6_controversial_group.pdf}
 \caption{Controversial vs. normal contestants: placement, judge scores, and controversy distributions.}
 \label{fig:controversial_group}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{Q1_fig3_controversial_analysis.pdf}
+\includegraphics[width=0.8\textwidth]{Q1_fig3_controversial_analysis.pdf}
 \caption{Vote-rank dynamics for Jerry Rice, Billy Ray Cyrus, Bristol Palin, and Bobby Bones.}
 \label{fig:p1_controversial}
 \end{figure}
@@ -325,7 +313,7 @@ We group contestants into 7 major industry categories (Athlete, Actor/Actress, S
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\textwidth]{IMP_fig3_industry_combined.pdf}
+\includegraphics[width=0.82\textwidth]{IMP_fig3_industry_combined.pdf}
 \caption{Comprehensive industry impact analysis: (a) average placement by industry, (b) win rate by industry, (c) normalized judge score vs. fan vote share, and (d) judge-fan gap.}
 \label{fig:p3_industry}
 \end{figure}
@@ -488,7 +476,7 @@ Fig.~\ref{fig:p4_dynamic} visualizes the weight transition. The threshold penalt
 
 Under DWVS, \textbf{78.1\% of controversial contestants would rank lower}, with average change of +0.34 positions. Bobby Bones would place \textbf{2nd instead of 1st}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{Q4_fig5_dwvs_group_impact.pdf}
 \caption{DWVS impact: controversy score vs. placement change, and top 10 affected contestants.}
@@ -510,7 +498,7 @@ We evaluate DWVS against three alternative systems across four key dimensions, u
 \item \textbf{Fairness} (1-5): Prevention of ``low-skill high-popularity'' victories (Bobby Bones scenarios)
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.56\textwidth]{Q4_fig2_system_comparison.pdf}
 \caption{Multi-dimensional comparison: DWVS vs. current, judge-only, and fan-only systems. Scores reflect qualitative assessment against design objectives.}
@@ -534,7 +522,7 @@ The validity of our conclusions depends on the robustness of our models to param
 
 The certainty index remains stable (0.888-0.889) across noise levels $\sigma$=0.01-0.20, demonstrating robustness to score perturbations.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{SA_fig1_q1_sensitivity.pdf}
 \caption{Sensitivity to noise level and sampling ratio.}
@@ -543,9 +531,9 @@ The certainty index remains stable (0.888-0.889) across noise levels $\sigma$=0.
 
 As presented in Fig.~\ref{fig:sens_q1}, consistency stabilizes above 30\% sampling ratio. Our optimization-based estimation is robust to judge score errors.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.65\textwidth]{SA_fig5_radar_comprehensive.pdf}
+\includegraphics[width=0.7\textwidth]{SA_fig5_radar_comprehensive.pdf}
 \caption{Comprehensive sensitivity radar across all four problems.}
 \label{fig:sens_radar}
 \end{figure}
@@ -558,7 +546,7 @@ An integrated view of model robustness across all four problems is provided in F
 
 A critical question for DWVS adoption is whether our findings generalize to future seasons. We employ temporal validation: training on Seasons 1-20 (the historical period) and testing on Seasons 21-34 (more recent competitions with different audience demographics and voting technologies).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.9\textwidth]{IMP_fig7_cross_season_validation.pdf}
 \caption{Cross-season validation: R$^2$ and MAE comparison between training and test sets.}
@@ -612,157 +600,37 @@ The broader implication extends beyond DWTS: any hybrid expert-audience system f
 % MEMORANDUM
 %===============================================================================
 \newpage
-\thispagestyle{fancy}
-\section*{Memorandum to DWTS Producers}
+\section{Memorandum to DWTS Producers}
 
-\memoto{Executive Producers, Dancing with the Stars}
-\memofrom{MCM Analysis Team}
-\memosubject{Voting System Analysis and Recommendations}
-\memodate{\today}
-\raggedbottom
+% 头部信息紧凑化
+\noindent \textbf{To:} Executive Producers, \textit{Dancing with the Stars} \\
+\textbf{From:} MCM Analysis Team \#2613942\\
+\textbf{Subject:} Voting System Analysis and Recommendations \\
+\textbf{Date:} February 3, 2026
 
-\begin{memo}[Memorandum]
 
-Dear Producers,
+\vspace{0.5em} % 压缩头部与正文的间距
 
-We have completed a comprehensive analysis of DWTS voting patterns across all 34 seasons, with particular focus on controversial outcomes like Bobby Bones (S27) and Bristol Palin (S11).
+\noindent Dear Executive Producers,
 
-\textbf{The Core Problem.} Our analysis identified 32 controversial contestants (7.6\%) who achieved placements far exceeding their technical abilities. Bobby Bones, ranking 7th-10th among judges throughout Season 27, won the competition---demonstrating that dedicated fan bases can completely override professional assessment under the current system.
+We submit our analysis of voting mechanics across 34 seasons of \textit{Dancing with the Stars}. Our research quantifies the impact of voting combinations on competition integrity and proposes a scientifically grounded optimization. We identified that the current Static Equal-Weighting Protocol (fixed 50\% judge/50\% fan split) creates a "meritocracy deficit" in late stages. While driving early engagement, it allows fan mobilization to override professional judgment when stakes are highest, directly leading to anomalies like the Season 27 victory of Bobby Bones despite his consistently low technical scores.
 
-\textbf{Key Findings:}
+To resolve the tension between entertainment and technical excellence, we recommend transitioning to a Dynamic Weighted Voting System (DWVS). DWVS employs a Time-Varying Weight Adjustment mechanism derived from our grid-search optimization ($\alpha_{base}=0.35, \Delta=0.03$). We suggest initiating with a 65\% Fan Vote weight (Weeks 1-4) to maximize audience investment. Subsequently, the Judge's weight should automatically increment by 3\% per week, shifting control from popularity to expertise. By the finals (Week 10+), the Judge's weight stabilizes at 65\%. This trajectory ensures that while fans select finalists, judges determine the champion, preventing "low-skill, high-popularity" victories.
 
-\textbf{Finding 1:} Vote estimation achieves 80.7\% overall consistency (96.0\% for percentage-based method, 38.4\% for rank-based), successfully explaining most elimination outcomes.
+Furthermore, to protect against "ironic voting" campaigns, we propose a Threshold Penalty Mechanism. Our model applies a penalty factor ($T_i=0.3$) to the fan vote weight if a contestant's technical score falls below 50\% of the weekly average. Simulations confirm high effectiveness: under DWVS, 78.1\% of controversial contestants would have been re-ranked to positions matching their technical merit. Specifically, in Season 27, Bobby Bones would have placed 2nd rather than 1st, acknowledging his popularity while correctly awarding the title to the superior dancer.
 
-\textbf{Finding 2:} External factors (age, industry, professional dancer) show limited predictive power for outcomes (R$^2$=0.11), suggesting controversies stem from the voting mechanism rather than systematic demographic biases.
-
-\textbf{Finding 3:} Cross-season validation (R$^2$=0.934) confirms our analysis generalizes to future seasons.
-
-\textbf{Primary Recommendation: Adopt the Dynamic Weighted Voting System (DWVS)}
-
-We propose DWVS with optimized parameters (base $\alpha$=0.35, increment=0.03):
-
-$\bullet$ \textbf{Early weeks}: 65\% fan weight maintains entertainment and audience building
-
-$\bullet$ \textbf{Finals}: 65\% judge weight ensures technical merit determines the winner
-
-$\bullet$ \textbf{Threshold penalty}: Prevents ``low-skill high-popularity'' contestants from winning
-
-\textbf{Impact:} Under DWVS, Bobby Bones would place \textbf{2nd instead of 1st}; Bristol Palin would place 4th instead of 3rd. Simulation shows 78.1\% of controversial contestants would rank appropriately lower, while contestants who legitimately balance skill with popularity see minimal impact.
-
-\textbf{Secondary Recommendation:} Maintain the judge tiebreaker rule (affects 29.7\% of decisions).
-
-\begin{flushright}
-Respectfully submitted,\\
-MCM Analysis Team
-\end{flushright}
-
-\end{memo}
-%===============================================================================
-% MEMORANDUM2222222
-%===============================================================================
-\newpage
-\thispagestyle{fancy}
-\section*{Memorandum to DWTS Producers}
-
-\memoto{Executive Producers, Dancing with the Stars}
-\memofrom{MCM Analysis Team}
-\memosubject{Voting System Analysis and Recommendations}
-\memodate{\today}
-\raggedbottom
-
-\begin{memo}[Memorandum]
-
-\textbf{For Problem 2}, using these estimates, \textbf{Counterfactual Analysis} reveals that rank-based and percentage-based methods yield identical outcomes in \textbf{73.1\%} of cases. However, percentage scoring disproportionately favors "high-popularity, low-skill" contestants. For controversial figures like Rice, Cyrus, Palin, and Bones, switching methods alters results in only 25\% of cases. Crucially, the \textbf{Judges’ Tiebreaker Rule} is the primary defense, changing \textbf{29.7\%} of decisions and effectively blocking mid-tier outliers like Bristol Palin.
-
-\textbf{For Problem 3}, using \textbf{ANOVA} and \textbf{Random Forest}, we find external factors like age or industry have limited predictive power ($R^2=0.11$). Controversies stem not from demographic bias but a \textbf{static weight balance} that lets fanbases override judges in finals.
-
-% --- EXECUTIVE SUMMARY ---
-% Section titles are created with \noindent\textbf{...} to avoid indentation and standard section spacing.
-\noindent\textbf{Executive Summary}
-
-\noindent % Ensure the paragraph starts without indentation.
-Dancing with the Stars thrives on a unique tension: the balance between professional excellence and audience participation. However, recent controversial outcomes—most notably the Season 27 victory of Bobby Bones despite consistently low technical scores—have exposed a structural vulnerability in the current format. Our analysis confirms that the current static 50/50 weighting system allows fan mobilization to completely override professional judgment.
-
-\noindent
-To preserve the show’s entertainment value while ensuring the Mirrorball Trophy rewards merit, we recommend transitioning to a Dynamic Weighted Voting System (DWVS). This new framework shifts influence from fans to judges as the season progresses. Simulations confirm this system would have corrected historical anomalies (placing Bobby Bones 2nd) while maintaining audience engagement.
-
-\vspace{1em}
-
-% --- THE CORE PROBLEM ---
-\noindent\textbf{The Core Problem: Static Weighting in a Dynamic Competition}
-
-\noindent
-Our mathematical reconstruction of 34 seasons reveals that "upset" victories are not random accidents but predictable consequences of the current mechanics:
-% Use 'itemize' for unnumbered lists.
-\begin{itemize}
-    \item \textbf{The "Percentage" Pitfall:} The percentage-based combination method (used in S3-27) disproportionately favors high-popularity/low-skill contestants. Unlike rank-based systems, it allows massive margins in fan votes to wipe out significant deficits in judge scores.
-    \item \textbf{The Mobilization Factor:} Analysis shows that external factors like age or industry are less predictive of winning than the efficiency of a star’s fan base. Under the current 50/50 split, a mobilized fan base creates an insurmountable advantage that renders the judges’ technical critiques mathematically irrelevant in the finals.
-\end{itemize}
-
-\vspace{1em}
-
-% --- STRATEGIC RECOMMENDATIONS ---
-\noindent\textbf{Strategic Recommendations for Future Seasons}
-
-\noindent
-We propose the following optimizations for the 2026 season and beyond:
-\begin{itemize}
-    % Main recommendation point.
-    \item \textbf{Implement the Dynamic Weighted Voting System (DWVS)}
-        
-        \noindent % Text directly under an item, without a sub-list.
-        Instead of a static 50/50 split, the weight should shift as the competition intensifies:
-        % Use a nested 'itemize' for sub-points to create visual indentation.
-        \begin{itemize}
-            \item \textit{Early Rounds (Weeks 1-4):} Set fan weight at \textbf{66\%}. This maximizes audience engagement and "fan-favorite" narratives during the season's recruitment phase. % The '%' character is escaped.
-            \item \textit{The Progression:} Increase the judge's weighting by \textbf{4\% per week}.
-            \item \textit{Finals:} Elevate judge weight to \textbf{74\%}. This ensures that the eventual champion possesses the technical mastery required of a winner, preventing "low-skill, high-popularity" contestants from taking the title.
-        \end{itemize}
-    
-    % Second recommendation point.
-    \item \textbf{Introduce a "Threshold Penalty" Mechanism}
-    
-        \noindent
-        To protect the show’s technical standards, we recommend a threshold where if a contestant's judge score falls in the bottom 10\% for three consecutive weeks, their fan vote weight is marginally reduced. This prevents "ironic voting" or meme-driven campaigns from disrupting the competition's integrity.
-\end{itemize}
-
-\vspace{1em}
-
-% --- EXPECTED OUTCOMES & ROI ---
-\noindent\textbf{Expected Outcomes \& ROI}
-
-\noindent
-Our simulations of the proposed DWVS model across historical data demonstrate significant improvements:
-\begin{itemize}
-    \item \textbf{Controversy Reduction:} The system would have appropriately re-ranked \textbf{78.1\% of historically controversial contestants}. For example, in Season 27, Bobby Bones would have placed \textbf{2nd} instead of winning—acknowledging his popularity while honoring the technical superior.
-    \item \textbf{Predictive Stability:} With a cross-season validation score of \textbf{****}, our model ensures that these recommendations are robust against future changes in celebrity casting.
-\end{itemize}
-
-\vspace{1em}
-
-% --- CONCLUSION ---
-\noindent\textbf{Conclusion}
-
-\noindent
-By adopting a dynamic approach to voting weights, \textit{DWTS} can celebrate the fans' voice while upholding the professional standards that make the competition elite. We are prepared to assist your technical team in integrating the DWVS algorithm into your existing voting infrastructure.
+Our predictive model, validated through rigorous cross-season testing (Test $R^2=0.934$), confirms these recommendations are robust against demographic and casting variations. Adopting DWVS offers a sustainable path celebrating the fan voice without compromising the professional standards defining the franchise's elite status.
 
 
 \begin{flushright}
-Respectfully submitted,\\
-MCM Analysis Team
+Respectfully submitted, \\
+MCM Analysis Team \#2613942
 \end{flushright}
 
-\end{memo}
 %===============================================================================
 % References
 %===============================================================================
-\let\oldclearpage\clearpage
-\let\clearpage\relax
-\let\oldnewpage\newpage
-\let\newpage\relax
-
-\nobreak
-\section*{References}
+\newpage
 \addcontentsline{toc}{section}{References}
 
 \begin{thebibliography}{99}
