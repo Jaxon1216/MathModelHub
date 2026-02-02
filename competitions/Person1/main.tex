@@ -15,6 +15,18 @@
     abstract = true
 }
 
+\usepackage[subfigure]{tocloft} 
+
+% --- 标题居中设置 ---
+\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries} % 居中并加粗标题
+\renewcommand{\cftaftertoctitle}{\hfill}               % 配合上一行实现物理居中
+
+% --- 紧凑度设置 ---
+\setlength{\cftaftertoctitleskip}{10pt} % 标题与下方内容的间距
+\setlength{\cftbeforesecskip}{5pt}      % 一级标题间距% 默认值通常是 1.0em 左右，这里改为 0pt 甚至负值
+\setlength{\cftbeforesubsecskip}{0pt}   % 二级标题间距
+\setlength{\cftbeforetoctitleskip}{-10pt} % 标题上方的间距（某些模板有效）
+\renewcommand{\cftdotsep}{4}             % 引导点间距
 \usepackage{palatino}
 \usepackage{graphicx}
 \usepackage{subfigure}
@@ -26,7 +38,7 @@
 \usepackage{indentfirst}
 \usepackage{hyperref}
 \usepackage{enumitem}
-
+\usepackage{setspace}
 \graphicspath{{figures/}}
 
 \title{Dancing with Data: A Mathematical Framework for Fan Vote Estimation and Voting System Optimization in DWTS}
@@ -64,8 +76,11 @@ Dynamic Weighted Voting System; Bootstrap Resampling
 \maketitle
 
 \setcounter{page}{2}
-% Set table of contents depth: show all subsections by default
-\setcounter{tocdepth}{2}
+% --- 核心：手动向上提拉，数值可以从 -1.0cm 试到 -3.0cm ---
+\nopagebreak % 防止在提拉处断页
+\vspace{-2.5cm} 
+
+% 此时不需要再用 spacing{0.5} 了，因为 tocloft 已经从底层把间距抽走了
 \tableofcontents
 \newpage
 
@@ -642,7 +657,102 @@ MCM Analysis Team
 \end{flushright}
 
 \end{memo}
+%===============================================================================
+% MEMORANDUM2222222
+%===============================================================================
+\newpage
+\thispagestyle{fancy}
+\section*{Memorandum to DWTS Producers}
 
+\memoto{Executive Producers, Dancing with the Stars}
+\memofrom{MCM Analysis Team}
+\memosubject{Voting System Analysis and Recommendations}
+\memodate{\today}
+\raggedbottom
+
+\begin{memo}[Memorandum]
+
+\textbf{For Problem 2}, using these estimates, \textbf{Counterfactual Analysis} reveals that rank-based and percentage-based methods yield identical outcomes in \textbf{73.1\%} of cases. However, percentage scoring disproportionately favors "high-popularity, low-skill" contestants. For controversial figures like Rice, Cyrus, Palin, and Bones, switching methods alters results in only 25\% of cases. Crucially, the \textbf{Judges’ Tiebreaker Rule} is the primary defense, changing \textbf{29.7\%} of decisions and effectively blocking mid-tier outliers like Bristol Palin.
+
+\textbf{For Problem 3}, using \textbf{ANOVA} and \textbf{Random Forest}, we find external factors like age or industry have limited predictive power ($R^2=0.11$). Controversies stem not from demographic bias but a \textbf{static weight balance} that lets fanbases override judges in finals.
+
+% --- EXECUTIVE SUMMARY ---
+% Section titles are created with \noindent\textbf{...} to avoid indentation and standard section spacing.
+\noindent\textbf{Executive Summary}
+
+\noindent % Ensure the paragraph starts without indentation.
+Dancing with the Stars thrives on a unique tension: the balance between professional excellence and audience participation. However, recent controversial outcomes—most notably the Season 27 victory of Bobby Bones despite consistently low technical scores—have exposed a structural vulnerability in the current format. Our analysis confirms that the current static 50/50 weighting system allows fan mobilization to completely override professional judgment.
+
+\noindent
+To preserve the show’s entertainment value while ensuring the Mirrorball Trophy rewards merit, we recommend transitioning to a Dynamic Weighted Voting System (DWVS). This new framework shifts influence from fans to judges as the season progresses. Simulations confirm this system would have corrected historical anomalies (placing Bobby Bones 2nd) while maintaining audience engagement.
+
+\vspace{1em}
+
+% --- THE CORE PROBLEM ---
+\noindent\textbf{The Core Problem: Static Weighting in a Dynamic Competition}
+
+\noindent
+Our mathematical reconstruction of 34 seasons reveals that "upset" victories are not random accidents but predictable consequences of the current mechanics:
+% Use 'itemize' for unnumbered lists.
+\begin{itemize}
+    \item \textbf{The "Percentage" Pitfall:} The percentage-based combination method (used in S3-27) disproportionately favors high-popularity/low-skill contestants. Unlike rank-based systems, it allows massive margins in fan votes to wipe out significant deficits in judge scores.
+    \item \textbf{The Mobilization Factor:} Analysis shows that external factors like age or industry are less predictive of winning than the efficiency of a star’s fan base. Under the current 50/50 split, a mobilized fan base creates an insurmountable advantage that renders the judges’ technical critiques mathematically irrelevant in the finals.
+\end{itemize}
+
+\vspace{1em}
+
+% --- STRATEGIC RECOMMENDATIONS ---
+\noindent\textbf{Strategic Recommendations for Future Seasons}
+
+\noindent
+We propose the following optimizations for the 2026 season and beyond:
+\begin{itemize}
+    % Main recommendation point.
+    \item \textbf{Implement the Dynamic Weighted Voting System (DWVS)}
+        
+        \noindent % Text directly under an item, without a sub-list.
+        Instead of a static 50/50 split, the weight should shift as the competition intensifies:
+        % Use a nested 'itemize' for sub-points to create visual indentation.
+        \begin{itemize}
+            \item \textit{Early Rounds (Weeks 1-4):} Set fan weight at \textbf{66\%}. This maximizes audience engagement and "fan-favorite" narratives during the season's recruitment phase. % The '%' character is escaped.
+            \item \textit{The Progression:} Increase the judge's weighting by \textbf{4\% per week}.
+            \item \textit{Finals:} Elevate judge weight to \textbf{74\%}. This ensures that the eventual champion possesses the technical mastery required of a winner, preventing "low-skill, high-popularity" contestants from taking the title.
+        \end{itemize}
+    
+    % Second recommendation point.
+    \item \textbf{Introduce a "Threshold Penalty" Mechanism}
+    
+        \noindent
+        To protect the show’s technical standards, we recommend a threshold where if a contestant's judge score falls in the bottom 10\% for three consecutive weeks, their fan vote weight is marginally reduced. This prevents "ironic voting" or meme-driven campaigns from disrupting the competition's integrity.
+\end{itemize}
+
+\vspace{1em}
+
+% --- EXPECTED OUTCOMES & ROI ---
+\noindent\textbf{Expected Outcomes \& ROI}
+
+\noindent
+Our simulations of the proposed DWVS model across historical data demonstrate significant improvements:
+\begin{itemize}
+    \item \textbf{Controversy Reduction:} The system would have appropriately re-ranked \textbf{78.1\% of historically controversial contestants}. For example, in Season 27, Bobby Bones would have placed \textbf{2nd} instead of winning—acknowledging his popularity while honoring the technical superior.
+    \item \textbf{Predictive Stability:} With a cross-season validation score of \textbf{****}, our model ensures that these recommendations are robust against future changes in celebrity casting.
+\end{itemize}
+
+\vspace{1em}
+
+% --- CONCLUSION ---
+\noindent\textbf{Conclusion}
+
+\noindent
+By adopting a dynamic approach to voting weights, \textit{DWTS} can celebrate the fans' voice while upholding the professional standards that make the competition elite. We are prepared to assist your technical team in integrating the DWVS algorithm into your existing voting infrastructure.
+
+
+\begin{flushright}
+Respectfully submitted,\\
+MCM Analysis Team
+\end{flushright}
+
+\end{memo}
 %===============================================================================
 % References
 %===============================================================================
