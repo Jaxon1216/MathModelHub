@@ -47,6 +47,8 @@
 \usepackage{enumitem}
 \usepackage{setspace}
 \graphicspath{{figures/}}
+\usepackage[absolute,overlay]{textpos}
+\setlength{\TPHorizModule}{1cm} \setlength{\TPVertModule}{1cm}
 
 \title{Dancing with Data: A Mathematical Framework for Fan Vote Estimation and Voting System Optimization in DWTS}
 
@@ -225,7 +227,7 @@ We identify \textbf{32 controversial contestants} (7.6\%) where Controversy Scor
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.62\textwidth]{Q1_fig6_controversial_group.pdf}
+\includegraphics[width=0.82\textwidth]{Q1_fig6_controversial_group.pdf}
 \caption{Controversial vs. normal contestants: placement, judge scores, and controversy distributions.}
 \label{fig:controversial_group}
 \end{figure}
@@ -607,20 +609,34 @@ The broader implication extends beyond DWTS: any hybrid expert-audience system f
 % MEMORANDUM
 %===============================================================================
 \newpage
-\section{Memorandum to DWTS Producers}
 
-% 头部信息紧凑化
-\noindent \textbf{To:} Executive Producers, \textit{Dancing with the Stars} \\
-\textbf{From:} MCM Analysis Team \#2613942\\
-\textbf{Subject:} Voting System Analysis and Recommendations \\
-\textbf{Date:} February 3, 2026
-% 在右上角插入图片，使用picture环境进行绝对定位
-\begin{picture}(0,0)
-\put(200,0){\includegraphics[width=0.3\textwidth]{icon.png}}
-\end{picture}
+% ------------------- 代码修改部分开始 -------------------
+
+% --- 步骤 1: 定义备忘录头部信息 ---
+% 这部分保持不变
+\section{Memorandum}
+\memoto{Executive Producers, Dancing with the Stars}
+\memofrom{MCM Analysis Team \# 2613942}
+\memosubject{Voting System Analysis and Recommendations}
+\memodate{\today}
+
+% --- 步骤 2: 使用 textpos 精确放置图片 ---
+% 这部分也保持不变，因为它已经成功解决了图片定位问题
+\begin{textblock*}{4.6cm}(14cm, 3.85cm)
+    \includegraphics[width=\linewidth]{icon.png}
+\end{textblock*}
+
+% --- 步骤 3: 强制压缩头部与横线的间距 ---
+% 这是新的核心修改。
+% \vspace* 命令会强制插入一个垂直空间。我们使用一个负值来“向上拉”后面的内容。
+% -2\baselineskip 的意思是向上移动大约两行文字的高度。
+% 您可以微调 -2 这个数字（比如 -1.5, -2.5）来获得最完美的间距。
+\vspace*{-2\baselineskip}
 
 
-\vspace{0.5em} % 压缩头部与正文的间距
+\begin{memo}[Memorandum]
+
+% ------------------- 代码修改部分结束 -------------------
 
 \noindent Dear Executive Producers,
 
@@ -632,12 +648,12 @@ Furthermore, to protect against "ironic voting" campaigns, we propose a Threshol
 
 Our predictive model, validated through rigorous cross-season testing (Test $R^2=0.934$), confirms these recommendations are robust against demographic and casting variations. Adopting DWVS offers a sustainable path celebrating the fan voice without compromising the professional standards defining the franchise's elite status.
 
-
 \begin{flushright}
-Respectfully submitted, \\
-MCM Analysis Team \#2613942
+Sincerely, \\
+MCM Analysis Team \# 2613942
 \end{flushright}
 
+\end{memo}
 %===============================================================================
 % References
 %===============================================================================
