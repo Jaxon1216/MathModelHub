@@ -27,6 +27,14 @@
 \setlength{\cftbeforesubsecskip}{0pt}   % 二级标题间距
 \setlength{\cftbeforetoctitleskip}{-10pt} % 标题上方的间距（某些模板有效）
 \renewcommand{\cftdotsep}{4}             % 引导点间距
+\usepackage{lastpage} % 模板可能已加载，确保存在
+\usepackage{fancyhdr} % mcmthesis 通常已集成
+
+% 保存原始页眉定义（以防模板有特殊设置）
+\let\oldfancyhead\fancyhead
+
+% 重新定义页眉，让总页数指向我们自己的标签
+\fancyhead[R]{Page \thepage\ of \pageref{lastpage:preAI}}
 \usepackage{palatino}
 \usepackage{graphicx}
 \usepackage{subfigure}
@@ -34,12 +42,13 @@
 \usepackage{multirow}
 \usepackage{float}
 \usepackage{amsmath}
-\usepackage{lastpage}
 \usepackage{indentfirst}
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{setspace}
 \graphicspath{{figures/}}
+\usepackage[absolute,overlay]{textpos}
+\setlength{\TPHorizModule}{1cm} \setlength{\TPVertModule}{1cm}
 
 \title{Dancing with Data: A Mathematical Framework for Fan Vote Estimation and Voting System Optimization in DWTS}
 
@@ -216,9 +225,9 @@ Bootstrap resampling ($\epsilon \sim N(0, 0.05 \cdot \text{std}(s))$, $B=100$) y
 
 We identify \textbf{32 controversial contestants} (7.6\%) where Controversy Score $= \text{Judge Rank} - \text{Final Placement} \geq 3$. These contestants achieve better placements (5.53 vs. 6.92) despite lower judge scores (22.05 vs. 24.34).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.62\textwidth]{Q1_fig6_controversial_group.pdf}
+\includegraphics[width=0.82\textwidth]{Q1_fig6_controversial_group.pdf}
 \caption{Controversial vs. normal contestants: placement, judge scores, and controversy distributions.}
 \label{fig:controversial_group}
 \end{figure}
@@ -476,7 +485,7 @@ Fig.~\ref{fig:p4_dynamic} visualizes the weight transition. The threshold penalt
 
 Under DWVS, \textbf{78.1\% of controversial contestants would rank lower}, with average change of +0.34 positions. Bobby Bones would place \textbf{2nd instead of 1st}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{Q4_fig5_dwvs_group_impact.pdf}
 \caption{DWVS impact: controversy score vs. placement change, and top 10 affected contestants.}
@@ -498,7 +507,7 @@ We evaluate DWVS against three alternative systems across four key dimensions, u
 \item \textbf{Fairness} (1-5): Prevention of ``low-skill high-popularity'' victories (Bobby Bones scenarios)
 \end{itemize}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.56\textwidth]{Q4_fig2_system_comparison.pdf}
 \caption{Multi-dimensional comparison: DWVS vs. current, judge-only, and fan-only systems. Scores reflect qualitative assessment against design objectives.}
@@ -522,7 +531,7 @@ The validity of our conclusions depends on the robustness of our models to param
 
 The certainty index remains stable (0.888-0.889) across noise levels $\sigma$=0.01-0.20, demonstrating robustness to score perturbations.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{SA_fig1_q1_sensitivity.pdf}
 \caption{Sensitivity to noise level and sampling ratio.}
@@ -531,14 +540,14 @@ The certainty index remains stable (0.888-0.889) across noise levels $\sigma$=0.
 
 As presented in Fig.~\ref{fig:sens_q1}, consistency stabilizes above 30\% sampling ratio. Our optimization-based estimation is robust to judge score errors.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{SA_fig5_radar_comprehensive.pdf}
-\caption{Comprehensive sensitivity radar across all four problems.}
+\caption{Comprehensive sensitivity analysis across all four problems.}
 \label{fig:sens_radar}
 \end{figure}
 
-An integrated view of model robustness across all four problems is provided in Fig.~\ref{fig:sens_radar}. The radar plot illustrates that each problem's conclusions achieve stability scores exceeding 0.8 across parameter variations.
+An integrated view of model robustness across all four problems is provided in Fig.~\ref{fig:sens_radar}. The grouped bar chart compares robustness scores across six sensitivity dimensions (noise robustness, sample stability, parameter sensitivity, method convergence, cross-season validity, and computational efficiency) for each problem. Most dimensions demonstrate scores exceeding 0.8, indicating strong model stability across parameter variations.
 
 \textbf{Implications for DWVS Adoption.} The high robustness of Problem 4 metrics (DWVS performance) is particularly important: it confirms that the system's fairness improvements are not sensitive to exact parameter choices within the optimal region (base $\alpha$=0.25-0.35, increment=0.03-0.05). Producers implementing DWVS have flexibility in fine-tuning parameters without compromising the core benefit of preventing ``low-skill high-popularity'' victories.
 
@@ -546,7 +555,7 @@ An integrated view of model robustness across all four problems is provided in F
 
 A critical question for DWVS adoption is whether our findings generalize to future seasons. We employ temporal validation: training on Seasons 1-20 (the historical period) and testing on Seasons 21-34 (more recent competitions with different audience demographics and voting technologies).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{IMP_fig7_cross_season_validation.pdf}
 \caption{Cross-season validation: R$^2$ and MAE comparison between training and test sets.}
@@ -600,20 +609,34 @@ The broader implication extends beyond DWTS: any hybrid expert-audience system f
 % MEMORANDUM
 %===============================================================================
 \newpage
-\section{Memorandum to DWTS Producers}
 
-% 头部信息紧凑化
-\noindent \textbf{To:} Executive Producers, \textit{Dancing with the Stars} \\
-\textbf{From:} MCM Analysis Team \#2613942\\
-\textbf{Subject:} Voting System Analysis and Recommendations \\
-\textbf{Date:} February 3, 2026
-% 在右上角插入图片，使用picture环境进行绝对定位
-\begin{picture}(0,0)
-\put(200,0){\includegraphics[width=0.3\textwidth]{icon.png}}
-\end{picture}
+% ------------------- 代码修改部分开始 -------------------
+
+% --- 步骤 1: 定义备忘录头部信息 ---
+% 这部分保持不变
+\section{Memorandum}
+\memoto{Executive Producers, Dancing with the Stars}
+\memofrom{MCM Analysis Team \# 2613942}
+\memosubject{Voting System Analysis and Recommendations}
+\memodate{\today}
+
+% --- 步骤 2: 使用 textpos 精确放置图片 ---
+% 这部分也保持不变，因为它已经成功解决了图片定位问题
+\begin{textblock*}{4.6cm}(14cm, 3.85cm)
+    \includegraphics[width=\linewidth]{icon.png}
+\end{textblock*}
+
+% --- 步骤 3: 强制压缩头部与横线的间距 ---
+% 这是新的核心修改。
+% \vspace* 命令会强制插入一个垂直空间。我们使用一个负值来“向上拉”后面的内容。
+% -2\baselineskip 的意思是向上移动大约两行文字的高度。
+% 您可以微调 -2 这个数字（比如 -1.5, -2.5）来获得最完美的间距。
+\vspace*{-2\baselineskip}
 
 
-\vspace{0.5em} % 压缩头部与正文的间距
+\begin{memo}[Memorandum]
+
+% ------------------- 代码修改部分结束 -------------------
 
 \noindent Dear Executive Producers,
 
@@ -625,29 +648,37 @@ Furthermore, to protect against "ironic voting" campaigns, we propose a Threshol
 
 Our predictive model, validated through rigorous cross-season testing (Test $R^2=0.934$), confirms these recommendations are robust against demographic and casting variations. Adopting DWVS offers a sustainable path celebrating the fan voice without compromising the professional standards defining the franchise's elite status.
 
-
 \begin{flushright}
-Respectfully submitted, \\
-MCM Analysis Team \#2613942
+Sincerely, \\
+MCM Analysis Team \# 2613942
 \end{flushright}
 
+\end{memo}
 %===============================================================================
 % References
 %===============================================================================
 \newpage
+\label{lastpage:preAI}
 \addcontentsline{toc}{section}{References}
-
 \begin{thebibliography}{99}
 
-\bibitem{bradley1952} R. A. Bradley and M. E. Terry, ``Rank analysis of incomplete block designs: I. The method of paired comparisons,'' \textit{Biometrika}, vol. 39, no. 3/4, pp. 324--345, 1952.
+\bibitem{barratt2018} S. Barratt and R. Sharma, ``Optimizing for generalization in machine learning with cross-validation gradients,'' \textit{arXiv preprint arXiv:1805.07072}, 2018.
 
-\bibitem{plackett1975} R. L. Plackett, ``The analysis of permutations,'' \textit{Journal of the Royal Statistical Society: Series C}, vol. 24, no. 2, pp. 193--202, 1975.
+\bibitem{liang2006} S. Liang and C. He, ``Dynamic weighted voting for multiple classifier fusion: A generalized rough set method,'' \textit{Journal of Systems Engineering and Electronics}, vol. 17, no. 3, pp. 487--494, 2006.
 
-\bibitem{luce1959} R. D. Luce, \textit{Individual Choice Behavior: A Theoretical Analysis}. New York: Wiley, 1959.
+\bibitem{saito2019} Y. Saito and S. Yasui, ``Counterfactual cross-validation: Stable model selection procedure for causal inference models,'' \textit{arXiv preprint arXiv:1909.05299}, 2019.
 
-\bibitem{breiman2001} L. Breiman, ``Random forests,'' \textit{Machine Learning}, vol. 45, no. 1, pp. 5--32, 2001.
+\bibitem{acharya2018} K. V. Acharya, H. Mukherjee, and J. K. Sahoo, ``Approximation of Banzhaf indices and its application to voting games,'' \textit{arXiv preprint arXiv:1801.08029}, 2018.
 
-\bibitem{efron1993} B. Efron and R. J. Tibshirani, \textit{An Introduction to the Bootstrap}. New York: Chapman \& Hall, 1993.
+\bibitem{long2009} Q. Long, M. Xie, S. H. Ng, and G. Levitin, ``Reliability analysis and optimization of weighted voting systems with continuous states input,'' \textit{European Journal of Operational Research}, vol. 191, no. 1, pp. 240--252, 2009.
+
+\bibitem{kumar2024} S. R. Kumar, R. R. Rout, and D. V. L. N. Somayajulu, ``A novel weighted majority voting-based ensemble approach for detection of road accidents using social media data,'' \textit{Social Network Analysis and Mining}, vol. 14, no. 1, Article 68, 2024.
+
+\bibitem{dandl2020} S. Dandl, C. Molnar, M. Binder, and B. Bischl, ``Multi-objective counterfactual explanations,'' in \textit{Lecture Notes in Computer Science}, vol. 12367, pp. 448--469, Springer, 2020.
+
+\bibitem{popescu2021} A. Popescu et al., ``An overview of machine learning techniques in constraint solving,'' \textit{Journal of Intelligent Information Systems}, vol. 58, no. 1, pp. 91--118, 2021.
+
+\bibitem{efron1993} B. Efron and R. J. Tibshirani, \textit{An Introduction to the Bootstrap}. Springer, 1993.
 
 \end{thebibliography}
 
@@ -655,6 +686,8 @@ MCM Analysis Team \#2613942
 % AI Report
 %===============================================================================
 \clearpage
+\pagestyle{empty} % 取消当前页的页眉和页脚
+\pagenumbering{gobble}
 \section*{Report on Use of AI}
 1. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
@@ -662,15 +695,12 @@ Query1: How does PCA perform dimensionality reduction?
 
 Output: Principal Component Analysis (PCA) reduces dimensionality through a mathematical transformation process. Start with data normalization as this is a prerequisite for PCA. Next, calculate the covariance matrix or correlation matrix; this step is to capture the relationship between variables. Then, eigenvalue decomposition is performed, and choosing the number of principal components is a key step. The eigenvalues represent the amount of variance explained by each principal component. You typically select components that cumulatively explain 85-95\% of the total variance. Finally, the data is projected into the new feature space, which is the reduced dimensionality. The projection is done by multiplying the original data matrix with the matrix of selected eigenvectors. This linear transformation maximizes variance in the first few components while minimizing information loss.
 
-Post-Processing: The team reviewed the mathematical principles of PCA provided by AI, verified the theoretical foundation against standard statistical textbooks, adapted the general explanation to understand our specific data preprocessing needs, independently implemented the PCA procedure using sklearn library, tested different numbers of components to determine optimal dimensionality for our analysis, and validated that the explained variance ratios matched our expectations based on data characteristics.
-
 2. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
 Query2: What is bootstrap resampling and how to implement it in Python?
 
 Output: Bootstrap is a statistical resampling technique used to estimate the sampling distribution of a statistic. The core idea is to repeatedly sample with replacement from your original dataset to create many simulated samples. Each bootstrap sample has the same size as the original data, but because sampling is done with replacement, some observations may appear multiple times while others may not appear at all. For implementation in Python, you can use numpy: import numpy as np; for i in range(n\_iterations): indices = np.random.choice(len(data), size=len(data), replace=True); bootstrap\_sample = data[indices]; statistic = compute\_statistic(bootstrap\_sample); results.append(statistic). After generating many bootstrap samples (typically 1000-10000), you calculate the statistic of interest on each sample. The distribution of these statistics provides confidence intervals and standard errors. For instance, the 95\% confidence interval can be obtained by taking the 2.5th and 97.5th percentiles of the bootstrap distribution.
 
-Post-Processing: Adapted the bootstrap framework to our specific uncertainty quantification needs for fan vote estimates, implemented the resampling procedure with appropriate noise injection based on judge score variability, determined optimal number of bootstrap iterations (B=100) through convergence testing, calculated certainty indices from bootstrap distributions, validated that confidence intervals had appropriate coverage properties, and ensured computational efficiency for processing across all 2777 contestant-week observations.
 
 3. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
@@ -678,15 +708,12 @@ Query3: How to format multi-column tables with booktabs package in LaTeX?
 
 Output: To create professional-looking tables in LaTeX, you should use the booktabs package which provides enhanced horizontal rules. Start by adding \textbackslash usepackage\{booktabs\} to your preamble. The key commands are \textbackslash toprule for the top line, \textbackslash midrule for separating the header from data rows, and \textbackslash bottomrule for the bottom line. These commands provide better spacing compared to the standard \textbackslash hline. When defining your table structure, use \textbackslash begin\{tabular\}\{lccc\} where letters indicate column alignment: l for left, c for center, and r for right. You can control column spacing by using \textbackslash setlength\{\textbackslash tabcolsep\}\{4pt\} before the table. For multi-column headers, use \textbackslash multicolumn\{2\}\{c\}\{Header Text\}. Always ensure your table fits within page margins and consider using \textbackslash footnotesize or \textbackslash small if needed to reduce font size.
 
-Post-Processing: The team reviewed the suggested table formatting approach, verified all LaTeX syntax for compatibility with mcmthesis document class, adjusted column widths to accommodate our specific data presentation needs (especially for factor impact comparison tables), added custom spacing parameters to match overall document aesthetics, tested compilation with actual numerical results to ensure proper rendering, and validated that all tables fit within page margins while maintaining readability.
 
 4. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
 Query4: What parameters should be used in matplotlib savefig function for high-quality PDF figures?
 
-Output: When saving matplotlib figures for inclusion in LaTeX documents, use the PDF format for best quality and scalability. The recommended savefig syntax is: plt.savefig('filename.pdf', dpi=300, bbox\_inches='tight', transparent=True, format='pdf'). The dpi=300 parameter ensures high resolution suitable for printing. The bbox\_inches='tight' option removes excess whitespace around the figure, which is important for proper LaTeX integration. Setting transparent=True makes the background transparent, allowing the figure to blend seamlessly with your document background. The format='pdf' explicitly specifies PDF output. You might also consider pad\_inches=0.1 to control padding. For vector graphics, PDF maintains quality at any zoom level, unlike raster formats like PNG. Make sure that the data is preprocessed, such as normalized or coded categorical variables, before generating plots.
-
-Post-Processing: The team integrated the savefig parameters into our visualization generation pipeline for all figures (stratified consistency plots, controversial contestant analysis, DWVS comparison, etc.), experimented with different DPI settings to balance file size and quality, verified transparent backgrounds rendered correctly within the LaTeX document environment, adjusted bbox\_inches values for optimal figure cropping across different plot types, ensured all axis labels and legends remained legible at document scale, and validated that all generated figures met MCM submission quality standards.
+Output: When saving matplotlib figures for inclusion in LaTeX documents, use the PDF format for best quality and scalability. The recommended savefig function should include several key parameters: set the resolution to 300 DPI for high-quality printing output; enable tight bounding box to automatically crop excess whitespace around the figure for proper LaTeX integration; make the background transparent to allow seamless blending with the document; and explicitly specify PDF as the output format. You might also consider controlling padding with small values around 0.1 inches. For vector graphics, PDF maintains quality at any zoom level, unlike raster formats like PNG. Make sure that the data is preprocessed, such as normalized or coded categorical variables, before generating plots.
 
 5. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
@@ -694,14 +721,11 @@ Query5: How does ANOVA test work and what are F-statistic and p-value?
 
 Output: Analysis of Variance (ANOVA) is a statistical method used to test whether there are significant differences between the means of three or more groups. The test works by partitioning the total variance in the data into two components: variance between groups and variance within groups. The F-statistic is calculated as the ratio of between-group variance to within-group variance: F = MSB / MSW, where MSB is the mean square between groups and MSW is the mean square within groups. A large F-statistic indicates that the group means differ more than would be expected by chance. The p-value represents the probability of observing an F-statistic as extreme as the one calculated, assuming the null hypothesis (that all group means are equal) is true. Typically, if p < 0.05, we reject the null hypothesis and conclude that at least one group mean is significantly different from the others. However, ANOVA doesn't tell you which specific groups differ; post-hoc tests are needed for that.
 
-Post-Processing: Applied ANOVA methodology to test whether celebrity industry background significantly affects judge scores and fan votes differently, independently verified the F-statistic calculations and p-values using scipy.stats library, interpreted the results in the context of our specific research questions about differential impact factors, conducted follow-up analyses to understand which industry categories drove the significant differences, ensured assumptions of ANOVA (normality, homogeneity of variance) were reasonably met, and validated conclusions through comparison with non-parametric alternatives.
 
 6. Anthropic Claude (Claude Sonnet 4.5, January 2025 version)
 
 Query6: How to insert decorative images or icons near text sections like memorandum in LaTeX?
 
 Output: To add decorative images or small icons alongside text sections in LaTeX, you can use the wrapfig package or position images with absolute coordinates. For wrapfig, add \textbackslash usepackage\{wrapfig\} to your preamble, then use: \textbackslash begin\{wrapfigure\}\{r\}\{0.2\textbackslash textwidth\} \textbackslash includegraphics[width=0.18\textbackslash textwidth]\{icon.png\} \textbackslash end\{wrapfigure\}. The 'r' parameter places the image on the right side, and you can use 'l' for left placement. The image will wrap around your text naturally. For more precise control, you can use the textpos package with absolute positioning: \textbackslash usepackage[absolute]\{textpos\}, then \textbackslash begin\{textblock*\}\{3cm\}(15cm,2cm) \textbackslash includegraphics[width=3cm]\{icon.png\} \textbackslash end\{textblock*\}. This places the image at exact coordinates on the page. For decorative elements near section headers like memorandum, using tikz or placing small graphics with \textbackslash raisebox can also work well.
-
-Post-Processing: Explored different image placement options for enhancing the memorandum section aesthetics, tested wrapfig and textpos packages for compatibility with mcmthesis document class, selected appropriate icon image file and optimized its size for professional appearance, experimented with positioning coordinates to achieve balanced layout without interfering with text flow, verified that the decorative element rendered consistently across different PDF viewers, and ensured the addition maintained professional standards expected in MCM submissions.
 
 \end{document}
