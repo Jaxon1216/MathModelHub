@@ -227,10 +227,11 @@ We identify \textbf{32 controversial contestants} (7.6\%) where Controversy Scor
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{Q1_fig6_controversial_group.pdf}
+\includegraphics[width=1\textwidth]{Q1_fig6_controversial_group.pdf}
 \caption{Controversial vs. normal contestants: placement, judge scores, and controversy distributions.}
 \label{fig:controversial_group}
 \end{figure}
+As depicted in Fig.~\ref{fig:p1_controversial}, four notable cases emerge: Bobby Bones won S27 despite ranking 7th-10th by judges; Bristol Palin spent 5/10 weeks in elimination position yet placed 3rd. Their vote shares remained stable despite poor technical scores, demonstrating how dedicated fan bases can override professional assessment.
 
 \begin{figure}[H]
 \centering
@@ -239,7 +240,6 @@ We identify \textbf{32 controversial contestants} (7.6\%) where Controversy Scor
 \label{fig:p1_controversial}
 \end{figure}
 
-As depicted in Fig.~\ref{fig:p1_controversial}, four notable cases emerge: Bobby Bones won S27 despite ranking 7th-10th by judges; Bristol Palin spent 5/10 weeks in elimination position yet placed 3rd. Their vote shares remained stable despite poor technical scores, demonstrating how dedicated fan bases can override professional assessment.
 
 \textbf{Implications for System Design.} These extreme cases expose the core contradiction in the current voting system: \textit{fan mobilization efficiency can entirely override professional assessment}. This finding motivates our subsequent analysis of voting method effects (Problem 2) and ultimately drives our design of a new voting system (Problem 4) that addresses this fairness gap while preserving entertainment value.
 
@@ -375,6 +375,8 @@ Fig.~\ref{fig:p3_age} visualizes the age effect through two complementary perspe
 
 To quantify the relative importance of external factors (those determined before competition begins), we employ Random Forest analysis on contestant characteristics: age, professional dancer assignment, industry background, season, and nationality.
 
+The relative importance analysis in Fig.~\ref{fig:p3_importance} demonstrates that among external factors, \textbf{age dominates} (53.2\%), followed by professional dancer assignment (21.4\%) and season (16.7\%). Industry background contributes only 7.7\%. However, these external factors collectively explain limited variance in outcomes (R$^2$=0.11, 5-fold CV), confirming a crucial insight: \textbf{pre-determined characteristics matter far less than actual performance}. Judge scores---reflecting technical execution and artistic quality---remain the primary determinant of success.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.55\textwidth]{Q3_fig3_feature_importance.pdf}
@@ -382,7 +384,6 @@ To quantify the relative importance of external factors (those determined before
 \label{fig:p3_importance}
 \end{figure}
 
-The relative importance analysis in Fig.~\ref{fig:p3_importance} demonstrates that among external factors, \textbf{age dominates} (53.2\%), followed by professional dancer assignment (21.4\%) and season (16.7\%). Industry background contributes only 7.7\%. However, these external factors collectively explain limited variance in outcomes (R$^2$=0.11, 5-fold CV), confirming a crucial insight: \textbf{pre-determined characteristics matter far less than actual performance}. Judge scores---reflecting technical execution and artistic quality---remain the primary determinant of success.
 
 \subsection{Differential Impact: Judges vs. Fans}
 
@@ -533,7 +534,7 @@ The certainty index remains stable (0.888-0.889) across noise levels $\sigma$=0.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{SA_fig1_q1_sensitivity.pdf}
+\includegraphics[width=0.95\textwidth]{SA_fig1_q1_sensitivity.pdf}
 \caption{Sensitivity to noise level and sampling ratio.}
 \label{fig:sens_q1}
 \end{figure}
@@ -542,7 +543,7 @@ As presented in Fig.~\ref{fig:sens_q1}, consistency stabilizes above 30\% sampli
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{SA_fig5_radar_comprehensive.pdf}
+\includegraphics[width=1\textwidth]{SA_fig5_radar_comprehensive.pdf}
 \caption{Comprehensive sensitivity analysis across all four problems.}
 \label{fig:sens_radar}
 \end{figure}
@@ -622,7 +623,7 @@ The broader implication extends beyond DWTS: any hybrid expert-audience system f
 
 % --- 步骤 2: 使用 textpos 精确放置图片 ---
 % 这部分也保持不变，因为它已经成功解决了图片定位问题
-\begin{textblock*}{4.6cm}(14cm, 3.85cm)
+\begin{textblock*}{4.7cm}(13.6cm, 3.87cm)
     \includegraphics[width=\linewidth]{icon.png}
 \end{textblock*}
 
