@@ -1,2 +1,0 @@
-task,target_word,best_model,overall_accuracy,overall_f1,eerie_prediction
-Word Difficulty Classification,EERIE,Random Forest,0.6666666666666666,0.6617955573837927,Medium

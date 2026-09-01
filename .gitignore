@@ -1,91 +1,11 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environment
-venv/
-env/
-ENV/
-.venv
-
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb_checkpoints/
-
-# IDEs
-.vscode/
+# MathModelHub 是纯文档仓库。本文件只屏蔽本地工具噪声；
+# 非文档业务文件不应依靠 ignore 隐藏，而应避免加入仓库。
+.DS_Store
 .idea/
+.vscode/
+.cursor/
+.claude/
+.venv/
 *.swp
 *.swo
 *~
-.DS_Store
-
-# Data files (可根据需要调整)
-
-
-*.xls
-!datasets/README.md
-!datasets/**/*.csv
-
-# Large files
-*.zip
-*.tar.gz
-*.7z
-*.rar
-
-# Compiled documents
-*.aux
-*.log
-*.out
-*.toc
-*.synctex.gz
-*.fdb_latexmk
-*.fls
-*.bbl
-*.blg
-
-# Word temporary files
-~$*.doc*
-~$*.ppt*
-
-# Sensitive information
-*.env
-secrets.txt
-credentials.json
-
-# Competition specific (实际比赛时的临时文件)
-competitions/**/temp/
-competitions/**/cache/
-
-# OS
-Thumbs.db
-.DS_Store
-
-# 临时文档和草稿
-LaTeX_编译指南.md
-CURSOR_快捷键.md
-compile.sh
-draft.tex
-draft.pdf
-
-
-# skill
-.cursor/

@@ -1,4 +1,0 @@
-metric,paper_value,actual_value,match,source,hypothesis
-Number of Controversial Contestants,32.0,32.0,True,问题一/controversial_contestants.csv,A
-Controversial Percentage (%),7.6,7.600950118764846,True,问题一/controversial_contestants.csv,A
-DWVS Optimal Base Alpha,0.35,0.35,True,改进分析/grid_search_results.csv,D

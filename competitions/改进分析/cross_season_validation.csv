@@ -1,8 +1,0 @@
-Metric,Value
-Train R²,0.9959
-Train MAE,0.1387
-Test R²,0.9335
-Test MAE,0.6116
-Generalization Gap,0.0624
-CV Mean R²,0.9424
-CV Std R²,0.0128
